@@ -1,3 +1,3 @@
 # blanjaloka
 Project Blanjaloka
->>>>>>> f27fb5705e2c8ffc0b8821657afbfb83a2701ff2
+![blanjaloka](https://user-images.githubusercontent.com/61740978/136319398-051741c4-71e2-4698-9354-459fc1fc5e76.png)
