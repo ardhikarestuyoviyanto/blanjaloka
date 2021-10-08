@@ -15,3 +15,15 @@
 ![Capture](https://user-images.githubusercontent.com/61740978/136487918-b7f9d868-a1c8-40ef-b7fd-da144aa44ca4.PNG)
 
 3. Penulisan file js diletakkan di paling bawah file views dinamis
+
+## Membuat Controller & Routes & Model & Router
+1. Buat Controller harus di lokasi app/Http/Controlers
+2. Buat Model harus di lokasi app/Models
+3. Mengubah dan menambah routes di lokasi routes/web.php
+4. <b>KETIKA MENAMBAH, MENGHAPUS, MENGEDIT CONTROLLER, ROUTERS, MODEL DIDISKUSIKAN DAHULU DI GROUB WA<b>
+    
+# Cara Kontribusi
+1. Fork repositori ini
+2. Lakukan pull request ke repositori ini, ketika telah selesai merevisi atau membuat fitur baru.
+3. Usahakan ketika melakukan pull request, jangan banyak - banyak file yang ditambah atau diubah. untuk menghindari conflik saat penggabungan
+4. Satu fitur satu kali pull request
