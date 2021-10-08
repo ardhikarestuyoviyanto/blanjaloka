@@ -1,0 +1,381 @@
+
+
+/* MAIN STYLE */
+html {
+    scroll-behavior: smooth;
+}
+
+.navbar {
+    box-shadow: 0 4px 7px -4px gray;
+}
+.navbar .bi-bell-fill:hover, 
+.navbar .bi-person-circle:hover,
+.navbar .bi-cart3:hover {
+    color: #203864 !important;
+}
+.form-select:focus, .btn:focus, .form-control:focus {
+    box-shadow: 0 0px 0px 3px #006d7786;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+section {
+    margin-top: 4em;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.cai-color {
+    background-color: #006D77;
+}
+
+.cai-color-text {
+    color: #006D77;
+}
+.text-secondary-light{
+    color: #E9E9E9;
+}
+.border-r-sip{
+    border-radius: 14px;
+}
+.border-r-sip-xl {
+    border-radius: 30px;
+}
+.text-kecil{
+    font-size: 12px;
+}
+.text-kecil2{
+    font-size: 15px;
+}
+
+.link-text {
+    text-decoration: none;
+    color: #203864;
+}
+.link-text:hover {
+    color: #006D77;
+}
+
+.shapeTop {
+    background: linear-gradient(180deg, #006D77 9.35%, #55888C 100%);
+}
+
+.slogan {
+    position: absolute;
+    font-size: 3em;
+    margin-top: 50px;
+}
+
+.buah-gede {
+    position: absolute;
+    width: 550px;
+    right: -100px;
+}
+
+#deskripsi-pasar-asia {
+    margin-top: 150px;
+}
+
+#unduh-aplikasi .phones {
+    position: relative;
+    width: 250px;
+    bottom: -30px;
+
+}
+
+
+#contact div a,
+#contact .container .row div h5 {
+    color: inherit;
+    text-decoration: none;
+    line-height: 3em;
+}
+
+#contact .col-xl-3 a:hover,#contact .col-xl-2 a:hover {
+    text-decoration: underline;
+}
+
+#contact .col div a img {
+    height: 50px;
+}
+
+@media (max-width:768px) {
+    .phones {
+        position: relative;
+        top: 10px;
+    }
+
+    .col-phones {
+        max-height: 220px;
+    }
+
+    #unduh-aplikasi {
+        text-align: center;
+    }
+
+    .slogan {
+        position: static;
+        font-size: 2em;
+        text-align: center;
+        margin-top: 0px;
+    }
+
+    .buah-gede {
+        position: static;
+        transform: rotate(14deg);
+    }
+
+    .col-buah {
+        margin: auto;
+        width: 85%;
+    }
+
+    #deskripsi-pasar-asia {
+        margin-top: 30px;
+    }
+}
+
+/* ------------------------ LOGIN and REGIST STYLE ------------------------ */
+#form-section {
+    border-radius: 20px;
+    box-shadow: 0 6px 15px 0px gray;
+}
+.line-masuk-dengan {
+    border: 0.5px solid rgba(0, 0, 0, 0.12);
+    width: 33%;
+    display: inline-block;
+}
+
+.h-daftar {
+    color: #203864;
+}
+
+#login-section {
+    margin-right: -16px;
+}
+
+
+/* ------------------------ HOME STYLE ------------------------ */
+.header-banner {
+    font-size: 3em;
+}
+.carousel-indicators {
+    margin-bottom: -40px;
+}
+
+.indicator-dot {
+    border-radius: 50%;
+    width: 15px !important;
+    height: 15px !important;
+    background-color: #006D77 !important;
+    transition: opacity 1s ease !important;
+    
+}
+
+.bungkus-chevron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50%;
+    background-color: white !important;
+}
+
+.bg-modern-market {
+    background-image:url("../images/modern-market.jpg");
+    background-size: cover;
+    position: relative;
+    min-height: 150px;
+}
+.kategori-card {
+    width: 135px;
+    height: 150px;
+    transition: background-color .3s ease, color .6s ease;
+}
+.kategori-card:hover {
+    background-color: #006d77bd;
+    color: white;
+}
+#kategori > div > a {
+    text-decoration: none;
+    color: black;
+}
+
+.disc-rounded {
+    background-color: #FAF469;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#produk-terlaris .card,#promo-agustus .card, .card-kategori .card{
+    box-shadow: 0 4px 6px 0px rgba(0, 0, 0, 0.212);
+    transition: box-shadow .2s ease;
+}
+.tombol-like:hover {
+    color: #EF2A36 !important;
+}
+
+#produk-terlaris .card:hover, 
+#promo-agustus .card:hover,
+.card-kategori .card:hover{
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.212);
+}
+
+#promo-agustus .card-body > a:hover{
+    background-color: #00383df1 !important;
+}
+
+#resep-section .card {
+    border: 0px solid #00383d00 !important;
+}
+#resep-section .card-img-overlay {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45.42%, rgba(0, 0, 0, 0.55) 110%);
+}
+#locationModal .modal-body a :hover{
+    background-color: #F5F5F5;
+}
+
+
+
+
+@media (max-width:768px) {
+    .indicator-dot {
+        width: 8px !important;
+        height: 8px !important;
+    }
+    
+    .bungkus-chevron {
+        width: 25px !important;
+        height: 25px !important;
+        box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+    }
+    .carousel-indicators {
+        margin-bottom: -30px;
+    }
+    .header-banner {
+        position: relative;
+        top: -20px;
+        font-size: 13px;
+    }
+    .p-banner {
+        position: relative;
+        top: -20px;
+        font-size: 7px;
+    }
+    .kategori-card {
+        width: 80px;
+        height: 85px;
+        
+    }
+    .kategori-card img {
+        width: 30px;
+    }
+    .disc-rounded {
+        width: 40px;
+        height: 40px;
+    }
+    .card-body .card-title{
+        font-weight: bold;
+        font-size: 13px;
+        height: 35px;
+    }
+    #resep-section .card-title {
+        font-size: 15px !important;
+    }
+}
+
+/* KATEGORI STYLE */
+.cai-border {
+    border: 2px solid #006D77;
+}
+#card-product-by-kategori .card .btn:hover {
+    transition: background-color .5s ease;
+    background-color: #006D77;
+    color: white;
+}
+#filter-section a > div:hover {
+    background-color: #006d777e;
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.pagination > li > a:hover,
+.page-active {
+    color: #006D77 !important;
+    border-bottom: 2px solid #006D77;
+}
+
+
+/* PRODUCT PAGE STYLE */
+#breadcrumb > ol > li > a:hover {
+    color: #203864;
+}
+
+#images-product > div > a > img {
+    opacity: 50%;
+}
+.image-active {
+    opacity: 100% !important;
+    border: 6px solid #006D77;
+}
+#action-min:focus,
+#action-plus:focus {
+    box-shadow: 0 0px 0px 0px red !important;
+}
+#action-min:hover,
+#action-plus:hover {
+    color: #006d778e !important;
+}
+
+
+@media (max-width: 768px){
+    .card-kategori .card-body .btn{
+        font-size: 11px !important;
+    }
+    
+    #action-to-pedagang .btn {
+        font-size: 11px !important;
+    }
+}
+
+/* RESEP STYLE */
+.bg-exposure-black {
+    background: rgba(0, 0, 0, 0.705);
+}
+.bg-linear-black {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45.42%, rgba(0, 0, 0, 0.55) 110%);
+}
+
+/* NOTIFIKASI STYLE */
+.shadow-tebel-bawah {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.notif-active {
+    background-color: #006D77;
+    color: white;
+} 
+
+.belum-dibaca{
+    background-color: rgba(96, 177, 185, 0.12) !important;
+}
+
+#list-notification .container {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+    #list-notification .container > a > div {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+}

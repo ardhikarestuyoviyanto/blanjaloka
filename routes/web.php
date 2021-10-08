@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Homepage;
+use App\Http\Controllers\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [Homepage::class, 'index']);
+
+// authentification users login and registers
+Route::get('/login', [Auth::class, 'userslogin']);
+Route::get('/register', [Auth::class, 'usersregister']);
