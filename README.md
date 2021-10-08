@@ -29,6 +29,5 @@
 4. Satu fitur satu kali pull request
 
 # Lihat Rancangan Database
-1. Buka Link dibawah untuk melihat
-   https://tinyurl.com/akk6de9y
+Buka Link untuk melihat : https://tinyurl.com/akk6de9y
    
