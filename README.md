@@ -27,3 +27,8 @@
 2. Lakukan pull request ke repositori ini, ketika telah selesai merevisi atau membuat fitur baru.
 3. Usahakan ketika melakukan pull request, jangan banyak - banyak file yang ditambah atau diubah. untuk menghindari conflik saat penggabungan
 4. Satu fitur satu kali pull request
+
+# Lihat Rancangan Database
+1. Buka Link dibawah untuk melihat
+   shorturl.at/rAEH6
+   
