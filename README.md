@@ -30,5 +30,5 @@
 
 # Lihat Rancangan Database
 1. Buka Link dibawah untuk melihat
-   shorturl.at/rAEH6
+   https://tinyurl.com/akk6de9y
    
