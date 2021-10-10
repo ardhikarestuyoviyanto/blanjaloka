@@ -13,7 +13,17 @@
                 width="120%">
             </div>
             <div class="col-12 col-lg-4 mt-4 mt-xl-5 mb-4" id="login-section">
-                <form action="login.html" class="bg-white p-3 p-xl-5 " id="form-section">
+
+                {{-- Notif, Link Verifikasi Telah Dikirim Ke Email Pendaftar --}}
+                @if($status = Session::get('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{$status}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+
+                <form action="{{url('usersregister')}}" class="bg-white p-3 p-xl-5 login-form" id="form-section" method="POST">
+                    @csrf
                     <div class="text-center">
                         <h5 class="fw-bold h-daftar fs-4">Daftar Sekarang</h5>
                         <h5 class="fw-light mb-xl-5 mb-3 text-kecil2">Sudah punya akun Blanjaloka?
@@ -22,20 +32,40 @@
                     </div>
                     <div class="mb-2 mb-xl-3">
                         <label for="inputNama" class="form-label fw-bold">Nama</label>
-                        <input placeholder="Nama" type="text" class="form-control py-2 border-r-sip" id="nama" aria-describedby="nama">
+                        <input placeholder="Nama" type="text" class="form-control py-2 border-r-sip" id="nama" name="nama_user" aria-describedby="nama" value="{{old('nama_user')}}">
+                        @if($errors->has('nama_user'))
+                            <div class="text-danger text-small">
+                                @foreach($errors->get('nama_user') as $err)
+                                    {{$err}}
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-2 mb-xl-3">
-                        <label for="inputEmailTelp" class="form-label fw-bold">Email/Nomor Telepon</label>
-                        <input placeholder="Masukan Email/No Telepon" type="text" class="form-control py-2 border-r-sip" id="inputEmailTelp">
+                        <label for="inputEmailTelp" class="form-label fw-bold">Email</label>
+                        <input placeholder="Masukan Email Anda" type="text" class="form-control py-2 border-r-sip" id="inputEmailTelp" name="email" value="{{old('email')}}">
+                        @if($errors->has('email'))
+                            <div class="text-danger text-small">
+                                @foreach($errors->get('email') as $err)
+                                    {{$err}}
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-2 mb-xl-3">
                         <label for="inputPassword" class="form-label fw-bold">Kata Sandi</label>
-                        <input placeholder="Kata Sandi" type="password" class="form-control py-2 border-r-sip" id="inputPassword">
+                        <input placeholder="Kata Sandi" type="password" class="form-control py-2 border-r-sip" id="inputPassword" name="password" value="{{old('password')}}">
+                        @if($errors->has('password'))
+                            <div class="text-danger text-small">
+                                @foreach($errors->get('password') as $err)
+                                    {{$err}}
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label text-secondary text-kecil2 " for="exampleCheck1">saya ingin menerima penawaran eksklusif  dan promosi 
-                        melalui SMS/EMAIL</label>
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                        <label class="form-check-label text-secondary text-kecil2 " for="exampleCheck1">Saya menyetujui syarat dan ketentuan yang ditetapkan oleh Blanjaloka</label>
                     </div>
                     <button type="submit" class="btn cai-color text-white fs-5 py-2 w-100 mb-3 border-r-sip">Daftar</button>
                     <div class="mb-4 d-flex align-items-center justify-content-center ">

@@ -13,6 +13,15 @@
                 width="104%">
             </div>
             <div class="col-12 col-lg-5 mt-4 mt-xl-5 mb-4 ms-lg-auto" id="login-section">
+
+                {{-- Notif Jika Akun Berhasil diverifikasi --}}
+                @if($status = Session::get('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{$status}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+
                 <form action="home.html" class="bg-white p-3 p-xl-5 " id="form-section">
                     <div class="text-center">
                         <img 
