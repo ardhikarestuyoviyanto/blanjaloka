@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Homepage;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\AuthFacebook;
 use App\Http\Controllers\Users;
 
 /*
@@ -25,6 +26,10 @@ Route::get('/register', [Auth::class, 'usersregister']);
 Route::post('/usersregister', [Auth::class, 'usersregister_handler']);
 # aktifasi akun users handler
 Route::get('verification/{id}', [Auth::class, 'usersverification']);
+
+#facebook
+Route::get('facebook', [AuthFacebook::class, 'facebook']);
+Route::get('auth/facebook/callback', [AuthFacebook::class, 'facebook_callback']);
 
 # Register / Login With Google
 Route::get('auth/google', [Auth::class, 'google']);
