@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Homepage;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\Users;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,17 @@ Route::get('/register', [Auth::class, 'usersregister']);
 Route::post('/usersregister', [Auth::class, 'usersregister_handler']);
 # aktifasi akun users handler
 Route::get('verification/{id}', [Auth::class, 'usersverification']);
+
+# Register / Login With Google
+Route::get('auth/google', [Auth::class, 'google']);
+Route::get('auth/google/callback', [Auth::class, 'google_callback']);
+
+# users login handler
+Route::post('/userslogin', [Auth::class, 'userslogin_handler']);
+
+# Logout Semua Akun
+Route::get('logout', [Auth::class, 'logout']);
+
+//---------------------------------------------------------------------
+# Login Berhasil
+Route::get('/index', [Users::class, 'index'])->middleware('sessionusers');
