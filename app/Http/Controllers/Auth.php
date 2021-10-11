@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 use App\Models\Users;
@@ -59,8 +60,12 @@ class Auth extends Controller
 
             try{
 
+                # Buat Token Aktifasi Email
+                $token = Str::random(15);
+                $request->session()->put(['token' => $token]);
+
                 # Kirim Link Aktifasi Akun, Lewat Email
-                Mail::to($request->post('email'))->send(new EmailVerification(['email'=>$request->post('email'), 'nama_user'=>$request->post('nama_user')]));
+                Mail::to($request->post('email'))->send(new EmailVerification(['email'=>$request->post('email'), 'nama_user'=>$request->post('nama_user'), 'token'=>$token]));
 
             }catch(Exception $e){
 
@@ -77,12 +82,33 @@ class Auth extends Controller
     # proses aktifasi akun users
     public function usersverification(Request $request)
     {
+        try{
 
-        # Update Status Akun off -> on
-        Users::where('email', $request->segment(2))->update(['status' => 'on']);
+            # Cocokkan token
+            if($request->session()->get('token') == $request->segment(3)){
 
-        # Redirect ke halaman login dengan pesan sukses
-        return redirect('login')->with('success', 'Selamat Akun anda Berhasil di Aktifasi');
+                # Update Status Akun off -> on
+                Users::where('email', $request->segment(2))->update(['status' => 'on']);
+
+                # Delete token
+                $request->session()->flush();
+
+                # Redirect ke halaman login dengan pesan sukses
+                return redirect('login')->with('success', 'Selamat Akun anda Berhasil di Aktifasi');
+
+            }else{
+
+                echo 'Token verifikasi salah, silahkan coba lagi';
+
+            }
+
+        }catch(Exception $e){
+
+            # Tampilkan Pesan Error
+            dd($e->getMessage());
+        }
+
+
     }
 
     # Login Manual

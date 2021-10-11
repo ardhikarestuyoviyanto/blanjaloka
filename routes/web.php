@@ -24,7 +24,7 @@ Route::get('/register', [Auth::class, 'usersregister']);
 # users register handler
 Route::post('/usersregister', [Auth::class, 'usersregister_handler']);
 # aktifasi akun users handler
-Route::get('verification/{id}', [Auth::class, 'usersverification']);
+Route::get('verification/{id}/{token}', [Auth::class, 'usersverification']);
 
 #facebook
 Route::get('auth/facebook', [Auth::class, 'facebook']);

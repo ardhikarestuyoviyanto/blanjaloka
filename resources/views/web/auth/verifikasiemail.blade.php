@@ -22,7 +22,7 @@
 <body>
     <h1>Aktifasi Akun Blanjaloka</h1>
     <p>Hai, {{$details['nama_user']}}. Terimakasih telah memilih Blanjaloka Sebagai Platform Jual Beli anda, Sebelum Lanjut Belanja Verifikasi Emailmu dulu yuk</p>
-    <p><a type="button" href="{{url('verification/'.$details['email'])}}">Aktifasi Email</a></p>
+    <p><a type="button" href="{{url('verification/'.$details['email'].'/'.$details['token'])}}">Aktifasi Email</a></p>
     <p>Thank You</p>
 </body>
 </html>
