@@ -34,16 +34,7 @@
                         <h5 class="fw-light mb-0 text-kecil2">Belum punya akun Blanjaloka?</h5>
                         <a href="{{ url('register') }}" class="link-text">Daftar</a>
                     </div>
-                    <div class="mb-2">
-
-                        <input placeholder="Nomor telepon atau email" type="email"
-                            class="form-control py-3 border-r-sip mt-2" id="exampleInputEmail1"
-                            aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">Example: email@blanjaloka.com</div>
-                    </div>
                     <div class="mb-3">
-                        <input placeholder="Kata Sandi" type="password" class="form-control py-3 border-r-sip"
-                            id="exampleInputPassword1">
                         <input placeholder="Contoh: email@blanjaloka.com" value="{{old('email')}}" type="text" class="form-control py-3 border-r-sip mt-2" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
                         @if($errors->has('email'))
                             <div class="text-danger text-small">
@@ -71,21 +62,14 @@
                         <span class="line-masuk-dengan"></span>
                     </div>
                     <div class="d-xl-flex d-block justify-content-between">
-                        <a href="{{ url('/facebook') }}" type="button"
+                        <a href="{{ url('auth/facebook') }}" type="button"
                             class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
                             <img src="{{ asset('assets/blanjaloka/img/Facebook-2.png') }}" width="38" alt="">
                             <span class="text-black" style="color: black;">facebook</span>
                         </a>
-                        <a href="#" type="button"
-                            class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
+                        <a href="{{url('auth/google')}}" type="button" class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
                             <img src="{{ asset('assets/blanjaloka/img/google.png') }}" width="38" alt="">
                             <span class="text-black" style="color: black;">google</span>
-                        <a href="{{url('auth/google')}}" type="button" class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
-                        <img 
-                        src="{{asset('assets/blanjaloka/img/google.png')}}" 
-                        width="38" 
-                        alt="">
-                        <span class="text-black" style="color: black;">google</span>
                         </a>
                     </div>
                 </form>

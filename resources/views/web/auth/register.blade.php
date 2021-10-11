@@ -76,26 +76,13 @@
                         <span class="line-masuk-dengan"></span>
                     </div>
                     <div class="d-xl-flex d-block justify-content-between mb-2">
-                        <a href="{{ url('/facebook') }}" type="button"
+                        <a href="{{ url('auth/facebook') }}" type="button"
                             class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
                             <img src="{{ asset('assets/blanjaloka/img/Facebook-2.png') }}" width="38" alt="">
                             <span class="text-black" style="color: black;">facebook</span>
                         </a>
-                        <a href="#" type="button"
-                            class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
+                        <a href="{{url('auth/google')}}" type="button" class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
                             <img src="{{ asset('assets/blanjaloka/img/google.png') }}" width="38" alt="">
-                        <a href="#" type="button" class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
-                            <img 
-                            src="{{asset('assets/blanjaloka/img/Facebook-2.png')}}" 
-                            width="38" 
-                            alt="">
-                            <span class="text-black" style="color: black;">facebook</span> 
-                            </a>
-                            <a href="{{url('auth/google')}}" type="button" class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
-                            <img 
-                            src="{{asset('assets/blanjaloka/img/google.png')}}" 
-                            width="38" 
-                            alt="">
                             <span class="text-black" style="color: black;">google</span>
                         </a>
                     </div>
