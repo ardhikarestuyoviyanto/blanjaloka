@@ -84,6 +84,18 @@
                         <a href="#" type="button"
                             class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
                             <img src="{{ asset('assets/blanjaloka/img/google.png') }}" width="38" alt="">
+                        <a href="#" type="button" class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
+                            <img 
+                            src="{{asset('assets/blanjaloka/img/Facebook-2.png')}}" 
+                            width="38" 
+                            alt="">
+                            <span class="text-black" style="color: black;">facebook</span> 
+                            </a>
+                            <a href="{{url('auth/google')}}" type="button" class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
+                            <img 
+                            src="{{asset('assets/blanjaloka/img/google.png')}}" 
+                            width="38" 
+                            alt="">
                             <span class="text-black" style="color: black;">google</span>
                         </a>
                     </div>

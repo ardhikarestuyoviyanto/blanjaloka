@@ -19,7 +19,16 @@
                     </div>
                 @endif
 
-                <form action="home.html" class="bg-white p-3 p-xl-5 " id="form-section">
+                {{-- Notif Jika Gagal Login --}}
+                @if($status = Session::get('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{$status}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+
+                <form action="{{url('userslogin')}}" class="bg-white p-3 p-xl-5 " id="form-section" method="POST">
+                    @csrf
                     <div class="text-center">
                         <img class="mb-3" src="{{ asset('assets/blanjaloka/img/blanjaloka.png') }}" alt="">
                         <h5 class="fw-light mb-0 text-kecil2">Belum punya akun Blanjaloka?</h5>
@@ -35,6 +44,24 @@
                     <div class="mb-3">
                         <input placeholder="Kata Sandi" type="password" class="form-control py-3 border-r-sip"
                             id="exampleInputPassword1">
+                        <input placeholder="Contoh: email@blanjaloka.com" value="{{old('email')}}" type="text" class="form-control py-3 border-r-sip mt-2" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        @if($errors->has('email'))
+                            <div class="text-danger text-small">
+                                @foreach($errors->get('email') as $err)
+                                    {{$err}}
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                    <div class="mb-3">
+                        <input placeholder="Kata Sandi" type="password" class="form-control py-3 border-r-sip" name="password" id="exampleInputPassword1">
+                        @if($errors->has('password'))
+                            <div class="text-danger text-small">
+                                @foreach($errors->get('password') as $err)
+                                    {{$err}}
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                     <button type="submit"
                         class="btn cai-color text-white fs-5 fw-bold p-2 w-100 mb-3 border-r-sip">Login</button>
@@ -53,6 +80,12 @@
                             class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
                             <img src="{{ asset('assets/blanjaloka/img/google.png') }}" width="38" alt="">
                             <span class="text-black" style="color: black;">google</span>
+                        <a href="{{url('auth/google')}}" type="button" class="btn btn-outline-light px-4 border-r-sip border border-secondary w-100 m-1">
+                        <img 
+                        src="{{asset('assets/blanjaloka/img/google.png')}}" 
+                        width="38" 
+                        alt="">
+                        <span class="text-black" style="color: black;">google</span>
                         </a>
                     </div>
                 </form>
