@@ -319,6 +319,13 @@ class Auth extends Controller
         }
     }
 
+    # menampilkan halaman login admin
+    public function adminlogin(){
+
+        return view('admin/auth/login');
+
+    }
+
     # Logout Semua Akun
     public function logout(Request $request){
         $request->session()->flush();
