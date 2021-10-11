@@ -57,8 +57,6 @@ class Auth extends Controller
             # Insert Data Tabel Users
             Users::create($data);
 
-            # Kirim Link Aktifasi Akun, Lewat Email
-            Mail::to($request->post('email'))->send(new EmailVerification(['email' => $request->post('email'), 'nama_user' => $request->post('nama_user')]));
             try{
 
                 # Kirim Link Aktifasi Akun, Lewat Email
