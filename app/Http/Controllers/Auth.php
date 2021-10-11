@@ -231,6 +231,96 @@ class Auth extends Controller
 
     }
 
+    # Login dan Register via facebook
+    public function facebook(){
+
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    # callback facebook
+    public function facebook_callback(Request $request){
+
+        try{
+
+            $user = Socialite::driver('facebook')->user();
+
+            # cek di tabel users apakah value di kolom google_id sudah ada, atau belum
+            $isUser = Users::where('facebook_id', $user->id)->first();
+
+            # jika sudah ada, redirect ke halaman dashboard users (Berhasil Login)
+            if($isUser){
+
+                # set session
+                $session = array(
+                    'isUsers' => true,
+                    'id_users' => $isUser->id_users,
+                    'nama_user' => $isUser->nama_user
+                );
+
+                # simpan session
+                $request->session()->put($session);
+
+                # redirect ke laman dashboard pembeli
+                return redirect('index');
+
+            }else{
+
+                # Jika kolom google_id di tabel users masih null value nya, registerkan secara otomatis
+                # Get Email dari Google
+                if($user->getEmail() != null){
+
+                    # Cek email users udah pernah registrasi atau belum
+                    $cekusers = Users::where('email', $user->getEmail())->get();
+                    
+                    if($cekusers->count() > 0){
+
+                        # Jika email telah didaftarakan, tambahkan google_id
+                        Users::where('email', $user->getEmail())->update(['facebook_id'=>$user->getId()]);
+
+                    }else{
+
+                        # Jika Email sama sekali belum pernah didaftarkan Lakukan Registrasi Otomatis
+                        $data = array(
+                            'nama_user' => $user->getName(),
+                            'email' => $user->getEmail(),
+                            'password' => password_hash(rand(0, 1000), PASSWORD_DEFAULT),
+                            'status' => 'on',
+                            'facebook_id' => $user->getId()
+                        );
+
+                        # Tambah Akun Users Baru
+                        Users::create($data);
+
+                    }
+
+                    # Dapatkan data users
+                    $isUser = Users::where('facebook_id', $user->id)->first();
+
+                    # set session
+                    $session = array(
+                        'isUsers' => true,
+                        'id_users' => $isUser->id_users,
+                        'nama_user' => $isUser->nama_user
+                    );
+                    
+                    # simpan session
+                    $request->session()->put($session);
+
+                    # redirect ke laman dashboard pembeli
+                    return redirect('index');
+
+                } 
+
+            }
+
+        }catch(Exception $e){
+
+            # Tampilkan pesan error
+            dd($e->getMessage());
+
+        }
+    }
+
     # Logout Semua Akun
     public function logout(Request $request){
         $request->session()->flush();
