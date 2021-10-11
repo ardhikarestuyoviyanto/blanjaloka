@@ -244,7 +244,7 @@ class Auth extends Controller
 
             $user = Socialite::driver('facebook')->user();
 
-            # cek di tabel users apakah value di kolom google_id sudah ada, atau belum
+            # cek di tabel users apakah value di kolom facebook_id sudah ada, atau belum
             $isUser = Users::where('facebook_id', $user->id)->first();
 
             # jika sudah ada, redirect ke halaman dashboard users (Berhasil Login)
@@ -265,8 +265,8 @@ class Auth extends Controller
 
             }else{
 
-                # Jika kolom google_id di tabel users masih null value nya, registerkan secara otomatis
-                # Get Email dari Google
+                # Jika kolom facebook_id di tabel users masih null value nya, registerkan secara otomatis
+                # Get Email dari Facebook
                 if($user->getEmail() != null){
 
                     # Cek email users udah pernah registrasi atau belum
