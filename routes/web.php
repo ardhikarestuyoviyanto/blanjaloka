@@ -40,6 +40,9 @@ Route::post('/userslogin', [Auth::class, 'userslogin_handler']);
 # Logout Semua Akun
 Route::get('logout', [Auth::class, 'logout']);
 
+# login admin
+Route::get('auth/loginadmin', [Auth::class, 'adminlogin']);
+
 //---------------------------------------------------------------------
 # Login Berhasil
 Route::get('/index', [Users::class, 'index'])->middleware('sessionusers');
