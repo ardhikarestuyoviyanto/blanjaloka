@@ -10,7 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 use App\Models\Users;
 use App\Mail\EmailVerification;
-
+use Exception;
 
 class Auth extends Controller
 {
