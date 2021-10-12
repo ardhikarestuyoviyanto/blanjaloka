@@ -24,3 +24,6 @@ Route::get('/register', [Auth::class, 'usersregister']);
 Route::post('/usersregister', [Auth::class, 'usersregister_handler']);
 # aktifasi akun users handler
 Route::get('verification/{id}', [Auth::class, 'usersverification']);
+
+# halaman admin
+Route::get('/admin', [App\Http\Controllers\Admin::class, 'index']);
