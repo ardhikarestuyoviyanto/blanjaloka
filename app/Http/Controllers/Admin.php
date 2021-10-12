@@ -20,5 +20,10 @@ class Admin extends Controller
 
     }
 
+    public function customers()
+    {
+        return view('admin/customers/index')->with(['title' => 'Data Customers', 'sidebar' => 'Data Customers']);
+    }
+
     
 }

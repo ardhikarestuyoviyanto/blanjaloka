@@ -51,6 +51,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [Admin::class, 'index']);
     # Pasar
     Route::get('pasar', [Admin::class, 'pasar']);
+    # Customer
+    Route::get('customers', [Admin::class, 'customers']);
 });
 
 //---------------------------------------------------------------------
