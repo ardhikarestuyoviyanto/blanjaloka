@@ -25,20 +25,15 @@
   <link rel="stylesheet" href="{{ asset('template/admin/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('template/admin/plugins/summernote/summernote-bs4.min.css') }}">
+  <link rel="shortcut icon" href="http://accounting.com.my/wp-content/uploads/2016/08/buy_logo1.png" type="image/x-icon">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
+      @include('admin/partition/sidebar-admin')
+      
+      @yield('content')
 
-    @include('web/partition/sidebar-admin')
-
-    <!-- Content Wrapper. Contains page content -->
-    
-    @yield('content')
-
-    @include('web/partition/footer-admin')
+      @include('admin/partition/footer-admin')
     </div>
-<!-- ./wrapper -->
-
-
 </body>
 </html>

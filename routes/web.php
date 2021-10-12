@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Homepage;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Users;
+use App\Http\Controllers\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,7 @@ Route::get('/register', [Auth::class, 'usersregister']);
 # users register handler
 Route::post('/usersregister', [Auth::class, 'usersregister_handler']);
 
-# halaman admin
-Route::get('/admin', [App\Http\Controllers\Admin::class, 'index']);
+# aktifasi email
 Route::get('verification/{id}/{token}', [Auth::class, 'usersverification']);
 
 #facebook
@@ -43,9 +43,17 @@ Route::post('/userslogin', [Auth::class, 'userslogin_handler']);
 Route::get('logout', [Auth::class, 'logout']);
 
 # login admin
-Route::get('auth/loginadmin', [Auth::class, 'adminlogin']);
+Route::get('auth/admin', [Auth::class, 'adminlogin']);
+//---------------------------------------------------------------------------------------
+# Halaman admin
+Route::prefix('admin')->group(function () {
+    # Homepage Admin
+    Route::get('/', [Admin::class, 'index']);
+    # Pasar
+    Route::get('pasar', [Admin::class, 'pasar']);
+});
 
 //---------------------------------------------------------------------
-# Login Berhasil
+# Login Berhasil Penjual & Pembeli
 Route::get('/index', [Users::class, 'index'])->middleware('sessionusers');
 

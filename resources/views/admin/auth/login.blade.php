@@ -25,7 +25,7 @@
                 <img src="{{asset('assets/blanjaloka/img/blanjaloka.png')}}" alt="logo" class="logo">
               </div>
               <p class="login-card-description">Login Administrator</p>
-              <form action="#!">
+              <form action="{{url('admin')}}">
                   <div class="form-group">
                     <label for="email" class="sr-only">Email</label>
                     <input type="email" name="email" id="email" class="form-control" placeholder="Email address">
@@ -34,7 +34,7 @@
                     <label for="password" class="sr-only">Password</label>
                     <input type="password" name="password" id="password" class="form-control" placeholder="***********">
                   </div>
-                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Login">
+                  <button type="submit" class="btn btn-block login-btn mb-4">Login</button>
                 </form>
                 <nav class="login-card-footer-nav">
                   © 2021 | blanjaloka, All Rights Reserved.
