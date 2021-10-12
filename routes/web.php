@@ -23,7 +23,9 @@ Route::get('/login', [Auth::class, 'userslogin']);
 Route::get('/register', [Auth::class, 'usersregister']);
 # users register handler
 Route::post('/usersregister', [Auth::class, 'usersregister_handler']);
-# aktifasi akun users handler
+
+# halaman admin
+Route::get('/admin', [App\Http\Controllers\Admin::class, 'index']);
 Route::get('verification/{id}/{token}', [Auth::class, 'usersverification']);
 
 #facebook
@@ -46,3 +48,4 @@ Route::get('auth/loginadmin', [Auth::class, 'adminlogin']);
 //---------------------------------------------------------------------
 # Login Berhasil
 Route::get('/index', [Users::class, 'index'])->middleware('sessionusers');
+
