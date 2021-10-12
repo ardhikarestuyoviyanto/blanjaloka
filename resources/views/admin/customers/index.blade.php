@@ -33,31 +33,33 @@
                             <th>#</th>
                             <th>Nama User</th>
                             <th>Email</th>
-                            <th>Password</th>
                             <th>Alamat</th>
                             <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 4.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td> 4</td>
-                                    <td>X</td>
-                                </tr>
+                                    @forelse ($customers as $no=>$c)
+                                    <tr>
+                                        <td>{{ $no + 1 }}</td>
+                                        <td>{{ $c->nama_user }}</td>
+                                        <td>{{ $c->email }}</td>
+                                        <td>{{ $c->alamat }}</td>
+                                        <td>{{ $c->status }}</td>
+                                    </tr>
+                                @empty
+                                    <tr colspan="4">
+                                        <td>Data Kosong</td>
+                                    </tr>
+                                @endforelse
+                                
                             </tbody>
                             <tfoot>
                             <tr>
-                            <th></th>
-                            <th>Rendering engine</th>
-                            <th>Browser</th>
-                            <th>Platform(s)</th>
-                            <th>Engine version</th>
-                            <th>CSS grade</th>
+                            <th>No</th>
+                            <th>Nama User</th>
+                            <th>Email</th>
+                            <th>Alamat</th>
+                            <th>Status</th>
                             </tr>
                             </tfoot>
                         </table>
