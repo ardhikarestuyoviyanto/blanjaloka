@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class Admin extends Controller
 {
@@ -18,6 +19,12 @@ class Admin extends Controller
 
         return view('admin/pasar/index')->with(['title' => 'Data Pasar', 'sidebar' => 'Data Pasar']);
 
+    }
+
+    public function customers()
+    {
+        $customers = DB::table('users')->get();
+        return view('admin/customers/index', compact('customers'))->with(['title' => 'Data Customers', 'sidebar' => 'Data Customers']);
     }
 
     

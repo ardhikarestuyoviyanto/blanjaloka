@@ -53,6 +53,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [Admin::class, 'index'])->middleware('sessionadmin');
     # Pasar
     Route::get('pasar', [Admin::class, 'pasar'])->middleware('sessionadmin');
+    # Customer
+    Route::get('customers', [Admin::class, 'customers'])->middleware('sessionadmin');
 });
 
 //---------------------------------------------------------------------
