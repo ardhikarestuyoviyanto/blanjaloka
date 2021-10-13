@@ -8,8 +8,10 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Mews\Captcha\Captcha;
 
 use App\Models\Users;
+use App\Models\Admin;
 use App\Mail\EmailVerification;
 use Exception;
 
@@ -123,7 +125,7 @@ class Auth extends Controller
         # if else validator salah atau benar
         if($validator->fails()){
 
-            # jika validasi error kembali ke laman admin dengan pesan error
+            # jika validasi error kembali ke laman users login dengan pesan error
             return redirect('login')->withErrors($validator);
 
         }
@@ -349,6 +351,73 @@ class Auth extends Controller
     public function adminlogin(){
 
         return view('admin/auth/login');
+
+    }
+
+    # handler login admin
+    public function adminlogin_handler(Request $request){
+
+        # Set pesan error captcha salah
+        $messages = [
+            'captcha.captcha' => 'Captcha Wrong',
+        ];
+
+        # Validator
+        $validator = Validator::make($request->all(),[
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+            'captcha' => ['required', 'captcha']
+        ], $messages);
+
+        # if else validator salah atau benar
+        if($validator->fails()){
+
+            # jika validasi error kembali ke laman login admin dengan pesan error
+            return redirect('auth/admin')->withErrors($validator);
+
+        }
+
+        # cek data admin
+        $admin = Admin::where('email', $request->post('email'))->get();
+
+        # cek apakah email admin ada atau tidak
+        if(empty(count($admin))){
+
+            # Email tidak ada
+            # Redirect ke halaman login admin dengan pesan error
+            return redirect('auth/admin')->with('error', 'Email atau Password Salah');
+
+
+        }else{
+
+            # Email ditemukan, cek password benar atau salah
+            foreach ($admin as $x){
+
+                if(password_verify($request->post('password'), $x->password)){
+
+                    # password ditemukan
+                    # set session
+                    $session = array(
+                        'isAdmin' => true,
+                        'id_admin' => $x->id_admin,
+                        'nama' => $x->nama_admin
+                    );
+                    
+                    # simpan session
+                    $request->session()->put($session);
+
+                    # redirect ke laman dashboard pembeli
+                    return redirect('admin');
+
+                }
+
+                # Password Salah
+                # Redirect ke halaman login admin dengan pesan error
+                return redirect('auth/admin')->with('error', 'Email atau Password Salah');
+
+            }
+
+        }
 
     }
 

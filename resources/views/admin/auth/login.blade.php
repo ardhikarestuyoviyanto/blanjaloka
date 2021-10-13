@@ -25,14 +25,43 @@
                 <img src="{{asset('assets/blanjaloka/img/blanjaloka.png')}}" alt="logo" class="logo">
               </div>
               <p class="login-card-description">Login Administrator</p>
-              <form action="{{url('admin')}}">
+              <form action="{{url('auth/adminlogin')}}" method="POST">
+                  @csrf
                   <div class="form-group">
                     <label for="email" class="sr-only">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Email address">
+                    <input type="text" name="email" id="email" class="form-control" placeholder="Email address" value="{{old('email')}}">
+                    @if($errors->has('email'))
+                      <div class="text-danger text-small">
+                          @foreach($errors->get('email') as $err)
+                              {{$err}}
+                          @endforeach
+                      </div>
+                    @endif
+                  </div>
+                  <div class="form-group">
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="***********" >
+                    @if($errors->has('password'))
+                      <div class="text-danger text-small">
+                          @foreach($errors->get('password') as $err)
+                              {{$err}}
+                          @endforeach
+                      </div>
+                    @endif
+                  </div>
+                  <div class="form-group">
+                    <span id="captcha">{!! captcha_img() !!}</span>
                   </div>
                   <div class="form-group mb-4">
-                    <label for="password" class="sr-only">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="***********">
+                    <label for="password" class="sr-only">Captcha</label>
+                    <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Captcha">
+                    @if($errors->has('captcha'))
+                      <div class="text-danger text-small">
+                          @foreach($errors->get('captcha') as $err)
+                              {{$err}}
+                          @endforeach
+                      </div>
+                    @endif
                   </div>
                   <button type="submit" class="btn btn-block login-btn mb-4">Login</button>
                 </form>
@@ -45,8 +74,21 @@
       </div>
     </div>
   </main>
+
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {{-- Notif Jika Gagal Login --}}
+    @if($status = Session::get('error'))
+    <script>
+      swal({
+        title: "Error",
+        text: "Email atau Password Salah",
+        icon: "error",
+        button: "OK",
+      });
+    </script>
+  @endif
 </body>
 </html>
