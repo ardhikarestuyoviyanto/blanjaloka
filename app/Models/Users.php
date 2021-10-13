@@ -42,5 +42,6 @@ class Users extends Authenticatable
     protected $primaryKey = 'id_users';
     # Insert dan Update otomatis kolom created_at dan update_at
     public $timestamps = true;
+    protected $table = 'users';
 
 }

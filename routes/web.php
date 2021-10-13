@@ -44,15 +44,17 @@ Route::get('logout', [Auth::class, 'logout']);
 
 # login admin
 Route::get('auth/admin', [Auth::class, 'adminlogin']);
+# admin login handler
+Route::post('auth/adminlogin', [Auth::class, 'adminlogin_handler']);
 //---------------------------------------------------------------------------------------
 # Halaman admin
 Route::prefix('admin')->group(function () {
     # Homepage Admin
-    Route::get('/', [Admin::class, 'index']);
+    Route::get('/', [Admin::class, 'index'])->middleware('sessionadmin');
     # Pasar
-    Route::get('pasar', [Admin::class, 'pasar']);
+    Route::get('pasar', [Admin::class, 'pasar'])->middleware('sessionadmin');
     # Customer
-    Route::get('customers', [Admin::class, 'customers']);
+    Route::get('customers', [Admin::class, 'customers'])->middleware('sessionadmin');
 });
 
 //---------------------------------------------------------------------
