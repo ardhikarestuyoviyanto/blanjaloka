@@ -12,7 +12,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
-        "mews/captcha": "^3.2"
+        "mews/captcha": "^3.2",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
