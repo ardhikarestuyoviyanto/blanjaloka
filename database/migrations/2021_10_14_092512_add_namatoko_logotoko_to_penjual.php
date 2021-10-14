@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddNamatokoLogotokoToPenjual extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('penjual', function (Blueprint $table) {
+            //
+            $table->string('logo_toko', 200)->nullable();
+            $table->string('nama_toko', 200)->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('penjual', function (Blueprint $table) {
+            //
+            $table->dropColumn(['logo_toko', 'nama_toko']);
+        });
+    }
+}
