@@ -5,6 +5,7 @@ use App\Http\Controllers\Homepage;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Customers;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,7 @@ Route::get('logout', [Auth::class, 'logout']);
 Route::get('auth/admin', [Auth::class, 'adminlogin']);
 # admin login handler
 Route::post('auth/adminlogin', [Auth::class, 'adminlogin_handler']);
+
 //---------------------------------------------------------------------------------------
 # Halaman admin
 Route::prefix('admin')->group(function () {
@@ -53,8 +55,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [Admin::class, 'index'])->middleware('sessionadmin');
     # Pasar
     Route::get('pasar', [Admin::class, 'pasar'])->middleware('sessionadmin');
-    # Customer
-    Route::get('customers', [Admin::class, 'customers'])->middleware('sessionadmin');
+    # Users Data
+    Route::prefix('users')->group(function () {
+        #Customers Data
+        Route::get('customers', [Admin::class, 'customers'])->middleware('sessionadmin');
+        Route::get('customers/add', [Admin::class, 'addcustomers'])->middleware('sessionadmin');
+        Route::post('customers/addhandler', [Customers::class, 'insertcustomers'])->middleware('sessionadmin');
+        Route::get('customers/edit/{id}', [Admin::class, 'editcustomers'])->middleware('sessionadmin');
+        Route::post('customers/edithandler', [Customers::class, 'updatecustomers'])->middleware('sessionadmin');
+        Route::post('customers/makesellers', [Customers::class, 'makesellers'])->middleware('sessionadmin');
+        Route::post('customers/delete', [Customers::class, 'deletecustomers'])->middleware('sessionadmin');
+    });
 });
 
 //---------------------------------------------------------------------

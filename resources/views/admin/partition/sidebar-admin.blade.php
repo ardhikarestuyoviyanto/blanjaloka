@@ -139,12 +139,13 @@
                 </a>
             </li>
 
-        @if ($sidebar == 'Data Customers')
-            <li class="nav-item menu-open">
-        @else
-            <li class="nav-item">
-        @endif
-                <a href="#" class="nav-link">
+            @if ($sidebar == 'Data Customers')
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+            @else
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+            @endif
                     <i class="fas fa-users nav-icon"></i>                    
                     <p>
                         Master Users
@@ -154,9 +155,9 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         @if ($sidebar == 'Data Customers')
-                            <a href="{{url('admin/customers')}}" class="nav-link active">
+                            <a href="{{url('admin/users/customers')}}" class="nav-link active">
                         @else
-                            <a href="{{url('admin/customers')}}" class="nav-link">
+                            <a href="{{url('admin/users/customers')}}" class="nav-link">
                         @endif
                         <i class="far fa-circle nav-icon"></i>
                         <p>Customers</p>
@@ -165,7 +166,7 @@
                     <li class="nav-item">
                         <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Pedagang</p>
+                        <p>Sellers</p>
                         </a>
                     </li>
                 </ul>
