@@ -53,7 +53,7 @@ class Admin extends Controller
 
     //--------------------------------------------------------------------------------------------------------------
 
-    # menampilkan kaman data seller
+    # menampilkan laman data seller
     public function sellers(){
 
         # join 3 tabel (users, penjual, pasar)
@@ -63,6 +63,13 @@ class Admin extends Controller
         return view('admin/sellers/index', $data)->with(['title'=> 'Data Sellers', 'sidebar' => 'Data Sellers']);
 
     }
+
+    # menampilkan laman detail seller / toko
+    public function showtoko(){
+
+        return view('admin/toko/index')->with(['title'=> 'Lihat Toko', 'sidebar' => 'Data Sellers']);
+
+    } 
 
 
 }

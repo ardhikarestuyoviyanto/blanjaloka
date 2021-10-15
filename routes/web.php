@@ -72,6 +72,7 @@ Route::prefix('admin')->group(function () {
         #Sellers Data
         Route::get('sellers', [Admin::class, 'sellers'])->middleware('sessionadmin');
         Route::post('sellers/delete', [Sellers::class, 'deleteakunsellers'])->middleware('sessionadmin');
+        Route::get('sellers/toko/{id}', [Admin::class, 'showtoko'])->middleware('sessionadmin');
     });
 });
 

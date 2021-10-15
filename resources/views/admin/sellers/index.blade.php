@@ -78,7 +78,7 @@
                                         <td class="text-danger"><i>Not Active</i></td>
                                     @endif
                                     <td class="text-center">
-                                        <a href="#" data-toggle="tooltip" title="Lihat Toko" data-placement="top"><span class="badge badge-info"><i class="fas fa-store"></i></span></a>
+                                        <a href="{{url('admin/users/sellers/toko/'.$s->id_penjual)}}" data-toggle="tooltip" title="Lihat Toko" data-placement="top"><span class="badge badge-info"><i class="fas fa-store"></i></span></a>
                                         <a href="#" data-id="<?= $s->id_penjual; ?>" class="hapus_sellers" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
                                     </td>
                                     <td>
