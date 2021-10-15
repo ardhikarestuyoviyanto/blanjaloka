@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Customers;
+use App\Http\Controllers\PasarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,8 @@ Route::prefix('admin')->group(function () {
     # Homepage Admin
     Route::get('/', [Admin::class, 'index'])->middleware('sessionadmin');
     # Pasar
-    Route::get('pasar', [Admin::class, 'pasar'])->middleware('sessionadmin');
+    // Route::get('pasar', [Admin::class, 'pasar'])->middleware('sessionadmin');
+    Route::resource('pasar', PasarController::class)->middleware('sessionadmin');
     # Users Data
     Route::prefix('users')->group(function () {
         #Customers Data
@@ -71,4 +73,3 @@ Route::prefix('admin')->group(function () {
 //---------------------------------------------------------------------
 # Login Berhasil Penjual & Pembeli
 Route::get('/index', [Users::class, 'index'])->middleware('sessionusers');
-
