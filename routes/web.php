@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Customers;
+use App\Http\Controllers\Sellers;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,10 @@ Route::prefix('admin')->group(function () {
         Route::post('customers/edithandler', [Customers::class, 'updatecustomers'])->middleware('sessionadmin');
         Route::post('customers/makesellers', [Customers::class, 'makesellers'])->middleware('sessionadmin');
         Route::post('customers/delete', [Customers::class, 'deletecustomers'])->middleware('sessionadmin');
+
+        #Sellers Data
+        Route::get('sellers', [Admin::class, 'sellers'])->middleware('sessionadmin');
+        Route::post('sellers/delete', [Sellers::class, 'deleteakunsellers'])->middleware('sessionadmin');
     });
 });
 

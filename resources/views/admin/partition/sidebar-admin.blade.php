@@ -139,7 +139,7 @@
                 </a>
             </li>
 
-            @if ($sidebar == 'Data Customers')
+            @if ($sidebar == 'Data Customers' || $sidebar == 'Data Sellers')
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link active">
             @else
@@ -164,7 +164,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                        @if ($sidebar == 'Data Sellers')
+                            <a href="{{url('admin/users/sellers')}}" class="nav-link active">
+                        @else
+                            <a href="{{url('admin/users/sellers')}}" class="nav-link">
+                        @endif
                         <i class="far fa-circle nav-icon"></i>
                         <p>Sellers</p>
                         </a>

@@ -53,5 +53,16 @@ class Admin extends Controller
 
     //--------------------------------------------------------------------------------------------------------------
 
+    # menampilkan kaman data seller
+    public function sellers(){
+
+        # join 3 tabel (users, penjual, pasar)
+        $data = [
+            'sellers' => DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'pasar.id_pasar', '=', 'penjual.id_pasar')->orderBy('penjual.id_penjual', "DESC")->get()
+        ];
+        return view('admin/sellers/index', $data)->with(['title'=> 'Data Sellers', 'sidebar' => 'Data Sellers']);
+
+    }
+
 
 }
