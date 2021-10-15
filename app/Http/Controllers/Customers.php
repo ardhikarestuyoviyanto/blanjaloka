@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Users;
+use App\Models\Seller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\DB;
-use Yajra\Datatables\Datatables;
 
 class Customers extends Controller
 {
@@ -110,7 +110,7 @@ class Customers extends Controller
             'nama_toko' => $request->post('nama_toko')
         ];
 
-        DB::table('penjual')->insert($data);
+        Seller::create($data);
 
         return redirect('admin/users/customers/edit/'.$request->post('id_users'))->with('success', 'Akun Sellers Berhasil Dibuat');
 

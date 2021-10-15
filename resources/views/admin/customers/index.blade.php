@@ -24,8 +24,31 @@
                     <div class="card">
                         <div class="card-header">
                             Data Customers
-
                             <a href="{{url('admin/users/customers/add')}}" class="btn btn-primary btn-sm" type="button" style="float: right;">Tambah</a>
+                        </div>
+                        <div class="card-header">
+                            <form action="#" method="get">
+                                <div class="mb-3 row">
+                                    <label for="nis" class="col-sm-2 col-form-label">Filtering tanggal akun dibuat</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                              </span>
+                                            </div>
+                                            <input type="text" class="form-control float-right" id="reservation">
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="mt-3 mb-3 row">
+                                    <label for="nis" class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary btn-sm">Terapkan</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div class="card-body">
                         <table id="customerstable" class="table table-bordered table-hover">
@@ -78,6 +101,7 @@
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
+        $('#reservation').daterangepicker()
 
         $('#customerstable').DataTable({
             "responsive":true,
@@ -86,7 +110,7 @@
                 {
                     extend: 'excel',
                     text: 'Excel',
-                    className: 'btn btn-success active',
+                    className: 'btn btn-success btn-sm active',
                     exportOptions: {
                         columns: ':not(.notexport)'
                     }
@@ -95,10 +119,19 @@
                 {
                     extend: 'pdf',
                     text: 'PDF',
-                    className: 'btn btn-success',
+                    className: 'btn btn-sm btn-success',
                     exportOptions: {
                         columns: ':not(.notexport)'
                     }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    className: 'btn btn-success btn-sm active',
+                    exportOptions: {
+                        columns: ':not(.notexport)'
+                    }
+
                 },
 
             ],
