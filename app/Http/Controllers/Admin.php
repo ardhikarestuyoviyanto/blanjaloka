@@ -99,10 +99,36 @@ class Admin extends Controller
 
     }
 
-    # menampilkan laman detail seller / toko
-    public function showtoko(){
+    # menampilkan laman edit seller
+    public function editsellers(Request $request){
 
-        return view('admin/toko/index')->with(['title'=> 'Lihat Toko', 'sidebar' => 'Data Sellers']);
+        $data = [
+            'sellers' => DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'penjual.id_pasar', '=', 'pasar.id_pasar')->where('penjual.id_penjual', $request->segment(5))->get(),
+            'pasar' => DB::table('pasar')->get(),
+        ];
+
+        return view('admin/sellers/edit', $data)->with(['title'=> 'Edit Sellers', 'sidebar' => 'Data Sellers']);
+
+    }
+
+    //-----------------------------------------------------------------------------------------------------------
+
+    # Menampilkan data sellers di laman produk
+    public function product(){
+
+        # join 3 tabel (users, penjual, pasar)
+        $data = [
+            'sellers' => DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'pasar.id_pasar', '=', 'penjual.id_pasar')->orderBy('penjual.id_penjual', "DESC")->get(),
+            'pasar' => DB::table('pasar')->get(),
+        ];
+        return view('admin/produk/index', $data)->with(['title'=> 'Data Produk', 'sidebar' => 'Data Produk']);
+
+    }
+
+    # menampilkan laman detail seller / toko
+    public function listproduk(){
+
+        return view('admin/produk/list')->with(['title'=> 'List Produk', 'sidebar' => 'Data Produk']);
 
     } 
 

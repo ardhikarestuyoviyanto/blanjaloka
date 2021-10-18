@@ -15,7 +15,7 @@ class AddDeskripsitokoToPenjual extends Migration
     {
         Schema::table('penjual', function (Blueprint $table) {
             //
-            $table->string('deskripsi_toko', 500)->nullable();
+            $table->text('deskripsi_toko')->nullable();
         });
     }
 

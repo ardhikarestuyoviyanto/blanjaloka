@@ -22,7 +22,7 @@
         <div class="container-fluid">
             {{-- Notif Jika Akun Berhasil Diedit --}}
             @if ($status = Session::get('success'))
-            <div class="alert alert-light alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <b>{{$status}}</b>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -39,7 +39,7 @@
                 </div>
             @else
                 <div class="alert alert-light" role="alert">
-                    <b>Akun ini belum terdaftar sebagai akun seller</b>
+                    <b>Akun ini <u>belum terdaftar</u> sebagai akun seller</b>
                 </div>
             @endif
 

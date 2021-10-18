@@ -87,7 +87,15 @@ Route::prefix('admin')->group(function () {
         #Sellers Data
         Route::get('sellers', [Admin::class, 'sellers'])->middleware('sessionadmin');
         Route::post('sellers/delete', [Sellers::class, 'deleteakunsellers'])->middleware('sessionadmin');
-        Route::get('sellers/toko/{id}', [Admin::class, 'showtoko'])->middleware('sessionadmin');
+        Route::get('sellers/edit/{id}', [Admin::class, 'editsellers'])->middleware('sessionadmin');
+        Route::post('sellers/edithandler', [Sellers::class, 'updatesellers'])->middleware('sessionadmin');
+
+    });
+    # Master Produk
+    Route::prefix('produk')->group(function () {
+        # List Produk
+        Route::get('/', [Admin::class, 'product'])->middleware('sessionadmin');
+        Route::get('listproduk/{id}', [Admin::class, 'listproduk'])->middleware('sessionadmin');
     });
 });
 

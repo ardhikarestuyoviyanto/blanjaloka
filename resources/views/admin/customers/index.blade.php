@@ -26,7 +26,7 @@
                             Data Customers
                             <a href="{{url('admin/users/customers/add')}}" class="btn btn-primary btn-sm" type="button" style="float: right;">Tambah</a>
                         </div>
-                        <div class="card-header">
+                        <div class="card-header bg-light">
                             <form action="#" method="get">
                                 <div class="mb-3 row">
                                     <label for="nis" class="col-sm-2 col-form-label">Filtering tanggal akun dibuat</label>

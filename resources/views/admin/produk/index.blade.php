@@ -6,11 +6,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Sellers</h1>
+                    <h1>Lihat Produk Berdasarkan Sellers</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Data Sellers</li>
+                        <li class="breadcrumb-item active">Lihat Produk</li>
                     </ol>
                 </div>
             </div>
@@ -21,21 +21,19 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    Data Sellers
+                    Lihat Produk Berdasarkan Sellers    
                 </div>
                 <div class="card-header bg-light">
                     <form action="#" method="get">
                         <div class="mb-3 row">
-                            <label for="nis" class="col-sm-2 col-form-label">Filtering tanggal akun dibuat</label>
+                            <label for="nis" class="col-sm-2 col-form-label">Pilih Pasar</label>
                             <div class="col-sm-10">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text">
-                                        <i class="far fa-calendar-alt"></i>
-                                      </span>
-                                    </div>
-                                    <input type="text" class="form-control float-right" id="reservation">
-                                </div>
+                                <select class="custom-select" required name="id_pasar" required>
+                                    <option selected value="">Pilih Lokasi Pasar</option>
+                                    @foreach ($pasar as $p)
+                                        <option value="{{$p->id_pasar}}">{{$p->nama_pasar}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -58,7 +56,7 @@
                             <th>Created at</th>
                             <th>Updated at</th>
                             <th>Status</th>
-                            <th style="width:10px;" class='notexport'>Aksi</th>
+                            <th>Aksi</th>
                             <th class="none">Deskripsi Toko</th>
                         </tr>
                         </thead>
@@ -76,9 +74,8 @@
                                     @else
                                         <td class="text-danger"><i>Not Active</i></td>
                                     @endif
-                                    <td class="text-center">
-                                        <a href="{{url('admin/users/sellers/edit/'.$s->id_penjual)}}" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
-                                        <a href="#" data-id="<?= $s->id_penjual; ?>" class="hapus_sellers" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
+                                    <td >
+                                        <a href="{{url('admin/produk/listproduk/'.$s->id_penjual)}}" data-toggle="tooltip" class="btn btn-primary btn-xs" title="Lihat Produk" data-placement="top">Lihat Produk</a>
                                     </td>
                                     <td>
                                         <br>
@@ -98,68 +95,11 @@
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
-        $('#reservation').daterangepicker()
         $('#sellerstable').DataTable({
             "responsive":true,
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'excel',
-                    text: 'Excel',
-                    className: 'btn btn-success btn-sm active',
-                    exportOptions: {
-                        columns: ':not(.notexport)'
-                    }
-
-                },
-                {
-                    extend: 'pdf',
-                    text: 'PDF',
-                    className: 'btn btn-sm btn-success',
-                    exportOptions: {
-                        columns: ':not(.notexport)'
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: 'Print',
-                    className: 'btn btn-success btn-sm active',
-                    exportOptions: {
-                        columns: ':not(.notexport)'
-                    }
-
-                },
-
-            ],
 
         });
 
-        //hapus sellers
-        $('.hapus_sellers').click(function(e){
-            e.preventDefault();
-
-            var confirmed = confirm('Hapus sellers ini ?');
-
-            if(confirmed) {
-
-                $.ajax({
-                    data: {'id_penjual': $(this).data('id'), '_token': "{{csrf_token()}}"},
-                    type: 'POST',
-                    url:"{{url('admin/users/sellers/delete')}}",
-                    success : function(data){
-                        swal(data.pesan)
-                        .then((result) => {
-                            location.reload();
-                        });
-                    },
-                    error : function(err){
-                        alert(err);
-                        console.log(err);
-                    }
-                });
-
-            }
-        });
     }); 
 </script>
 @endsection

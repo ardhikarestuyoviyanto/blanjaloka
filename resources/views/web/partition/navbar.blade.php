@@ -42,7 +42,7 @@
                 </button>
                 <ul class="dropdown-menu p-3 mt-0 mt-xl-4" aria-labelledby="dropdownUser">
                     <li><span class="dropdown-item-text fw-bold">Halo, {{session()->get('nama_user')}}</span></li>
-                  <li><a class="dropdown-item" href="#">Pesan</a></li>
+                    <li><a class="dropdown-item" href="#">Toko Saya</a></li>
                   <li><a class="dropdown-item" href="#">Favorit</a></li>
                   <li><a class="dropdown-item" href="#">Daftar Belanja</a></li>
                   <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>

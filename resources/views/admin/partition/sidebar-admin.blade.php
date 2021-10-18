@@ -176,8 +176,13 @@
                 </ul>
             </li>
 
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+            @if ($sidebar == 'Data Produk')
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+            @else
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+            @endif
                     <i class="nav-icon fas fa-copy"></i>
                     <p>
                         Master Produk
@@ -186,13 +191,17 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="pages/layout/top-nav.html" class="nav-link">
+                        <a href="#" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Kategori Produk</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                        @if ($sidebar == 'Data Produk')
+                            <a href="{{url('admin/produk')}}" class="nav-link active">
+                        @else
+                            <a href="{{url('admin/produk')}}" class="nav-link">
+                        @endif                        
                         <i class="far fa-circle nav-icon"></i>
                         <p>Data Produk</p>
                         </a>
