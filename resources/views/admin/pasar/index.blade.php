@@ -1,5 +1,6 @@
 @extends('admin/master-admin')
 @section('content')
+@php use Illuminate\Support\Facades\DB; @endphp
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
@@ -23,53 +24,61 @@
                         Data Pasar
 
                         <div class="float-right d-none d-sm-inline-block">
-                            <a href="{{ url('admin/pasar/create') }}" class="btn btn-primary">Tambah</a>
+                            <a href="{{ url('admin/pasar/add') }}" class="btn btn-primary btn-sm">Tambah</a>
                         </div>
 
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="97%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Pasar</th>
-                                        <th>Alamat</th>
-                                        <th>Jam Operasional</th>
-                                        <th>Maps</th>
-                                        <th>Foto</th>
-                                        <th>Aksi</th>
-                                    </tr>
+                        <table class="table table-bordered table-hover" id="pasartable">
+                            <thead>
+                                <tr>
+                                    <th style="width:10px;">No</th>
+                                    <th>Nama Pasar</th>
+                                    <th>Alamat</th>
+                                    <th style="width:60px;" class='notexport'>Aksi</th>
+                                    <th class="notexport none">Jam Operasional Pasar</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    {{ !($i = 1) }}
-                                    @foreach ($pasar as $p)
+                                    @foreach ($pasar as $no=>$p)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $no + 1 }}</td>
                                             <td>{{ $p->nama_pasar }}</td>
                                             <td>{{ $p->alamat }}</td>
-                                            <td>{{ $p->operasional_pasar }}</td>
-                                            <td>{{ $p->embbed_maps }}</td>
-                                            <td>
-                                                <img src="{{ url('assets/admin/foto_pasar/' . $p->foto_pasar) }}"
-                                                    alt="foto pasar" width="200px">
+                                            <td class="text-center">
+                                                <a href="{{url('admin/pasar/edit/'.$p->id_pasar)}}" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
+                                                <a href="{{url('admin/pasar/jam/'.$p->id_pasar)}}" data-toggle="tooltip" title="Jam Pasar" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
+                                                <a href="#" data-id="<?= $p->id_pasar; ?>" class="delete_pasar" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
                                             </td>
                                             <td>
-                                                <a href="{{ url('admin/pasar/' . $p->id_pasar . '/edit') }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ url('admin/pasar/' . $p->id_pasar) }}" method="POST"
-                                                    class="d-inline">
-                                                    @csrf
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirm('Apakah anda yakin ?')">Delete</button>
-                                                </form>
+                                                <br><br>
+                                                <table class="table">
+                                                    <thead>
+                                                      <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Hari</th>
+                                                        <th scope="col">Jam Buka</th>
+                                                        <th scope="col">Jam Tutup</th>
+                                                        <th scope="col">Catatan</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach(DB::table('jampasar')->where('id_pasar', $p->id_pasar)->get() as $i=>$jam)
+                                                      <tr>
+                                                        <th scope="row">{{$i+1}}</th>
+                                                        <td>{{ucfirst($jam->hari)}}</td>
+                                                        <td>{{ $jam->buka }}</td>
+                                                        <td>{{ $jam->tutup }}</td>
+                                                        <td>{{ $jam->catatan }}</td>
+                                                      </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-                            </table>
-                        </div>
+                        </table>
                     </div>
                 </div>
 
@@ -79,9 +88,67 @@
 
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable({});
+            $('[data-toggle="tooltip"]').tooltip();
+            $('#pasartable').DataTable({
+                "responsive":true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        className: 'btn btn-success btn-sm active',
+                        exportOptions: {
+                            columns: ':not(.notexport)'
+                        }
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        className: 'btn btn-sm btn-success',
+                        exportOptions: {
+                            columns: ':not(.notexport)'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        className: 'btn btn-success btn-sm active',
+                        exportOptions: {
+                            columns: ':not(.notexport)'
+                        }
+
+                    },
+
+                ],
+            });
         });
-        ss
+
+        //delete data pasar
+        $('.delete_pasar').click(function(e){
+            e.preventDefault();
+            var confirmed = confirm('Hapus jam ini ?');
+
+            if(confirmed) {
+
+                $.ajax({
+                    data: {'id_pasar':$(this).data('id'), '_token': "{{csrf_token()}}"},
+                    type: 'POST',
+                    url:"{{url('admin/pasar/deletehandler')}}",
+                    success : function(data){
+                        swal(data.pesan)
+                        .then((result) => {
+                            location.reload();
+                        });
+                    },
+                    error : function(err){
+                        alert(err);
+                        console.log(err);
+                    }
+                });
+            }
+        });
+        
     </script>
 
 @endsection

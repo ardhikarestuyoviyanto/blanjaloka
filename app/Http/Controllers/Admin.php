@@ -18,7 +18,42 @@ class Admin extends Controller
     # Menampilkan laman pasar
     public function pasar(){
 
-        return view('admin/pasar/index')->with(['title' => 'Data Pasar', 'sidebar' => 'Data Pasar']);
+        $data = [
+            'pasar' => DB::table('pasar')->orderBy('id_pasar', 'DESC')->get()
+        ];
+
+        return view('admin/pasar/index', $data)->with(['title' => 'Data Pasar', 'sidebar' => 'Data Pasar']);
+
+    }
+
+    # Menampilkan laman tambah pasar
+    public function addpasar(){
+
+        return view('admin/pasar/add')->with(['title' => 'Tambah Pasar', 'sidebar' => 'Data Pasar']);
+
+    }
+
+    # Menampilkan laman edit pasar
+    public function editpasar(Request $request){
+
+        $data = [
+            'pasar' => DB::table('pasar')->where('id_pasar', $request->segment(4))->get()
+        ];
+
+        return view('admin/pasar/edit', $data)->with(['title' => 'Edit Pasar', 'sidebar' => 'Data Pasar']);
+
+    }
+
+    # Menampilkan laman edit jam operasional
+    public function jamoperasionalpasar(Request $request){
+
+        $data = [
+            'jampasar' => DB::table('jampasar')->where('id_pasar', $request->segment(4))->get(),
+            'pasar' => DB::table('pasar')->where('id_pasar', $request->segment(4))->get(),
+            'id_pasar' => $request->segment(4)
+        ];
+
+        return view('admin/pasar/jampasar', $data)->with(['title' => 'Jam Operasional', 'sidebar' => 'Data Pasar']);
 
     }
 

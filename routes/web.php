@@ -6,8 +6,8 @@ use App\Http\Controllers\Auth;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Customers;
-use App\Http\Controllers\PasarController;
 use App\Http\Controllers\Sellers;
+use App\Http\Controllers\Pasar;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,8 +56,23 @@ Route::prefix('admin')->group(function () {
     # Homepage Admin
     Route::get('/', [Admin::class, 'index'])->middleware('sessionadmin');
     # Pasar
-    // Route::get('pasar', [Admin::class, 'pasar'])->middleware('sessionadmin');
-    Route::resource('pasar', PasarController::class)->middleware('sessionadmin');
+    Route::prefix('pasar')->group(function () {
+        Route::get('/', [Admin::class, 'pasar'])->middleware('sessionadmin');
+        Route::get('add', [Admin::class, 'addpasar'])->middleware('sessionadmin');
+        Route::post('addhandler', [Pasar::class, 'insertdatapasar'])->middleware('sessionadmin');
+        Route::get('edit/{id}', [Admin::class, 'editpasar'])->middleware('sessionadmin');
+        Route::post('edithandler', [Pasar::class, 'updatedatapasar'])->middleware('sessionadmin');
+        Route::post('hapusfoto', [Pasar::class, 'deletefotopasar'])->middleware('sessionadmin');
+        Route::post('deletehandler', [Pasar::class, 'deletepasar'])->middleware('sessionadmin');
+
+        # jam operasional
+        Route::get('jam/{id}', [Admin::class, 'jamoperasionalpasar'])->middleware('sessionadmin');
+        Route::post('jam/insert', [Pasar::class, 'insertjamoperasionalpasar'])->middleware('sessionadmin');
+        Route::post('jam/get', [Pasar::class, 'getjamoperasionalpasarbyid'])->middleware('sessionadmin');
+        Route::post('jam/update', [Pasar::class, 'updatejamoperasionalpasar'])->middleware('sessionadmin');
+        Route::post('jam/delete', [Pasar::class, 'deletejamoperasionalpasar'])->middleware('sessionadmin');
+
+    });
     # Users Data
     Route::prefix('users')->group(function () {
         #Customers Data
