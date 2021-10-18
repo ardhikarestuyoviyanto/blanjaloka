@@ -15,7 +15,7 @@ class CreateJampasar extends Migration
     {
         Schema::create('jampasar', function (Blueprint $table) {
             $table->id('id_jampasar');
-            $table->string('catatan', 200);
+            $table->string('catatan', 200)->nullable();
             $table->string('hari', 100);
             $table->time('buka');
             $table->time('tutup');

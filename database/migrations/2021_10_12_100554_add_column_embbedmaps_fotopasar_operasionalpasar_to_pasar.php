@@ -14,8 +14,8 @@ class AddColumnEmbbedmapsFotopasarOperasionalpasarToPasar extends Migration
     public function up()
     {
         Schema::table('pasar', function (Blueprint $table) {
-            $table->string('embbed_maps', 300)->nullable();
-            $table->string('foto_pasar', 300)->nullable();
+            $table->text('embbed_maps')->nullable();
+            $table->text('foto_pasar')->nullable();
             $table->mediumText('deskripsi')->nullable();
         });
     }
