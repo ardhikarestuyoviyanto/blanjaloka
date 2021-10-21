@@ -52,9 +52,11 @@
                         <thead>
                         <tr>
                             <th style="width:10px;">No</th>
-                            <th>Sellers</th>
+                            <th>Nama Sellers</th>
+                            <th>Email</th>
                             <th>Lokasi Pasar</th>
                             <th>Nama Toko</th>
+                            <th>Kategori Toko</th>
                             <th>Created at</th>
                             <th>Updated at</th>
                             <th>Status</th>
@@ -67,8 +69,10 @@
                                 <tr>
                                     <td>{{ $no + 1 }}</td>
                                     <td>{{ $s->nama_user }}</td>
+                                    <td>{{ $s->email }}</td>
                                     <td>{{ $s->nama_pasar }}</td>
                                     <td>{{ $s->nama_toko }}</td>
+                                    <td>{{ $s->nama_kategoritoko }}</td>
                                     <td>{{ date('d-M-Y', strtotime($s->created_at))}}</td>
                                     <td>{{ date('d-M-Y', strtotime($s->updated_at))}}</td>
                                     @if($s->status == 'on')

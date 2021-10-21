@@ -47,7 +47,9 @@
                 <div class="card-header">
                     Edit Data Customers
                     @if(count($sellers) !=0)
-                        <a href="#" class="btn btn-success btn-sm" style="float: right"><i class="fas fa-store-alt"></i> Lihat Toko</a>
+                        @foreach($sellers as $s)
+                            <a href="{{url('admin/users/sellers/edit/'.$s->id_penjual)}}" class="btn btn-success btn-sm" style="float: right"><i class="fas fa-store-alt"></i> Lihat Akun Sellers</a>
+                        @endforeach
                     @else
                         <a href="#" data-toggle="modal" data-target="#addsellers" type="button" class="btn btn-info btn-sm" style="float: right"><i class="fas fa-store-alt"></i> Jadikan Akun Seller</a>
                     @endif
@@ -177,8 +179,21 @@
             <input type="hidden" name="id_users" value="{{$id_users}}">
             <div class="modal-body">
                 <div class="mb-3">
+                    <label>No Toko</label>
+                    <input type="text" name="no_toko" id="no_toko" class="form-control" required placeholder="Nomor Toko">
+                </div>
+                <div class="mb-3">
                     <label>Nama Toko</label>
                     <input type="text" name="nama_toko" id="nama_toko" class="form-control" required placeholder="Masukkan nama toko">
+                </div>
+                <div class="mb-3">
+                    <label>Kategori Toko</label>
+                    <select class="custom-select" required name="id_kategoritoko">
+                        <option selected value="">Pilih Kategori Toko</option>
+                        @foreach ($kategoritoko as $k)
+                            <option value="{{$k->id_kategoritoko}}">{{$k->nama_kategoritoko}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label>Status Akun Toko</label>

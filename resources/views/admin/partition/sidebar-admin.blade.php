@@ -126,20 +126,44 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                @if($sidebar == 'Data Pasar')
-                    <a href="{{url('admin/pasar')}}" class="nav-link active">
-                @else
-                    <a href="{{url('admin/pasar')}}" class="nav-link">
-                @endif
-                    <i class="nav-icon fas fa-th"></i>
+            @if ($sidebar == 'Pengelola Pasar' || $sidebar == 'Data Pasar')
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+            @else
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+            @endif
+                <i class="fas fa-house-user nav-icon"></i>                 
                     <p>
-                        Data Pasar
+                        Modul Pasar
+                        <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        @if ($sidebar == 'Pengelola Pasar')
+                            <a href="{{url('admin/pasar/pengelola')}}" class="nav-link active">
+                        @else
+                            <a href="{{url('admin/pasar/pengelola')}}" class="nav-link">
+                        @endif
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Pengelola Pasar</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @if ($sidebar == 'Data Pasar')
+                            <a href="{{url('admin/pasar')}}" class="nav-link active">
+                        @else
+                            <a href="{{url('admin/pasar')}}" class="nav-link">
+                        @endif
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Data Pasar</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
-            @if ($sidebar == 'Data Customers' || $sidebar == 'Data Sellers')
+            @if ($sidebar == 'Data Customers' || $sidebar == 'Data Sellers' || $sidebar == 'Data Driver' || $sidebar == 'Data Pemda')
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link active">
             @else
@@ -148,7 +172,7 @@
             @endif
                     <i class="fas fa-users nav-icon"></i>                    
                     <p>
-                        Master Users
+                        Modul Users
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
@@ -173,10 +197,30 @@
                         <p>Sellers</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        @if ($sidebar == 'Data Pemda')
+                            <a href="{{url('admin/users/pemda')}}" class="nav-link active">
+                        @else
+                            <a href="{{url('admin/users/pemda')}}" class="nav-link">
+                        @endif
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Pemda</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @if ($sidebar == 'Data Driver')
+                            <a href="{{url('admin/users/driver')}}" class="nav-link active">
+                        @else
+                            <a href="{{url('admin/users/driver')}}" class="nav-link">
+                        @endif
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Driver</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
-            @if ($sidebar == 'Data Produk')
+            @if ($sidebar == 'Data Toko' || $sidebar == 'Kategori Toko')
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link active">
             @else
@@ -185,29 +229,60 @@
             @endif
                     <i class="nav-icon fas fa-copy"></i>
                     <p>
-                        Master Produk
+                        Modul Toko
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        @if ($sidebar == 'Kategori Toko')
+                            <a href="{{url('admin/toko/kategori')}}" class="nav-link active">
+                        @else
+                            <a href="{{url('admin/toko/kategori')}}" class="nav-link">
+                        @endif        
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Kategori Produk</p>
+                        <p>Kategori Toko</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        @if ($sidebar == 'Data Produk')
-                            <a href="{{url('admin/produk')}}" class="nav-link active">
+                        @if ($sidebar == 'Data Toko')
+                            <a href="{{url('admin/toko')}}" class="nav-link active">
                         @else
-                            <a href="{{url('admin/produk')}}" class="nav-link">
+                            <a href="{{url('admin/toko')}}" class="nav-link">
                         @endif                        
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Data Produk</p>
+                        <p>Data Toko</p>
                         </a>
                     </li>
                 </ul>
             </li>
+
+            @if ($sidebar == 'Kategori Produk')
+            <li class="nav-item menu-open">
+                <a href="#" class="nav-link active">
+        @else
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+        @endif
+        <i class="fas fa-shopping-bag nav-icon"></i>
+                <p>
+                    Modul Produk
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    @if ($sidebar == 'Kategori Produk')
+                        <a href="" class="nav-link active">
+                    @else
+                        <a href="" class="nav-link">
+                    @endif        
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Kategori Produk</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
  
             <li class="nav-item">
                 <a href="{{url('logout')}}" class="nav-link">

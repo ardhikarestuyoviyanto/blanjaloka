@@ -6,11 +6,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Lihat Produk Berdasarkan Sellers</h1>
+                    <h1>Data Toko</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Lihat Produk</li>
+                        <li class="breadcrumb-item active">Data Toko</li>
                     </ol>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    Lihat Produk Berdasarkan Sellers    
+                    Data Toko 
                 </div>
                 <div class="card-header bg-light">
                     <form action="#" method="get">
@@ -46,17 +46,18 @@
                     </form>
                 </div>
                 <div class="card-body">
-                    <table id="sellerstable" class="table table-bordered table-hover">
+                    <table id="tokotable" class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th style="width:10px;">No</th>
-                            <th>Sellers</th>
+                            <th>Nama Sellers</th>
                             <th>Lokasi Pasar</th>
                             <th>Nama Toko</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
+                            <th>Kategori Toko</th>
+                            <th>Total Produk</th>
+                            <th>Produk Terjual</th>
                             <th>Status</th>
-                            <th>Aksi</th>
+                            <th style="width: 10px">Aksi</th>
                             <th class="none">Deskripsi Toko</th>
                         </tr>
                         </thead>
@@ -67,15 +68,17 @@
                                     <td>{{ $s->nama_user }}</td>
                                     <td>{{ $s->nama_pasar }}</td>
                                     <td>{{ $s->nama_toko }}</td>
-                                    <td>{{ date('d-M-Y', strtotime($s->created_at))}}</td>
-                                    <td>{{ date('d-M-Y', strtotime($s->updated_at))}}</td>
+                                    <td>{{$s->nama_kategoritoko}}</td>
+                                    <td>23 Produk</td>
+                                    <td>12 Produk</td>
                                     @if($s->status == 'on')
                                         <td class="text-primary"><i>Active</i></td>
                                     @else
                                         <td class="text-danger"><i>Not Active</i></td>
                                     @endif
                                     <td >
-                                        <a href="{{url('admin/produk/listproduk/'.$s->id_penjual)}}" data-toggle="tooltip" class="btn btn-primary btn-xs" title="Lihat Produk" data-placement="top">Lihat Produk</a>
+                                        <a href="" data-toggle="tooltip" title="Lihat Toko" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
+                                        <a href="" data-toggle="tooltip" title="Jam Toko" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
                                     </td>
                                     <td>
                                         <br>
@@ -95,7 +98,7 @@
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
-        $('#sellerstable').DataTable({
+        $('#tokotable').DataTable({
             "responsive":true,
 
         });

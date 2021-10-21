@@ -33,9 +33,14 @@
                             <thead>
                                 <tr>
                                     <th style="width:10px;">No</th>
+                                    <th>Nomor Pasar</th>
                                     <th>Nama Pasar</th>
-                                    <th>Alamat</th>
+                                    <th>Pengelola Pasar</th>
+                                    <th>Max Toko</th>
+                                    <th>Toko Terisi</th>
+                                    <th>Sisa Toko</th>
                                     <th style="width:60px;" class='notexport'>Aksi</th>
+                                    <th class="none">Alamat</th>
                                     <th class="notexport none">Jam Operasional Pasar</th>
                                 </tr>
                                 </thead>
@@ -43,15 +48,23 @@
                                     @foreach ($pasar as $no=>$p)
                                         <tr>
                                             <td>{{ $no + 1 }}</td>
+                                            <td>{{$p->no_pasar}}</td>
                                             <td>{{ $p->nama_pasar }}</td>
-                                            <td>{{ $p->alamat }}</td>
+                                            <td>{{ $p->nama }}</td>
+                                            <td>{{ $p->max_lapak.' Toko' }}</td>
+                                            <td>{{ count(DB::table('penjual')->where('id_pasar', $p->id_pasar)->get()).' Toko' }}</td>
+                                            <td>{{ $p->max_lapak - count(DB::table('penjual')->where('id_pasar', $p->id_pasar)->get()).' Toko' }}</td>
                                             <td class="text-center">
                                                 <a href="{{url('admin/pasar/edit/'.$p->id_pasar)}}" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
                                                 <a href="{{url('admin/pasar/jam/'.$p->id_pasar)}}" data-toggle="tooltip" title="Jam Pasar" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
                                                 <a href="#" data-id="<?= $p->id_pasar; ?>" class="delete_pasar" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
                                             </td>
                                             <td>
-                                                <br><br>
+                                                <br>
+                                                {{ $p->alamat }}
+                                            </td>
+                                            <td>
+                                                <br>
                                                 <table class="table">
                                                     <thead>
                                                       <tr>

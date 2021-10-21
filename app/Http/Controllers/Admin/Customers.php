@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use App\Models\Seller;
@@ -11,6 +12,35 @@ use Illuminate\Support\Facades\DB;
 
 class Customers extends Controller
 {
+    
+    # Menampilkan laman data customers
+    public function customers()
+    {
+        $customers = Users::orderByDesc('id_users')->get();
+        return view('admin/customers/index', compact('customers'))->with(['title' => 'Data Customers', 'sidebar' => 'Data Customers']);
+    }
+
+    # Menampilkan laman tambah customers
+    public function addcustomers(){
+        
+        return view('admin/customers/add')->with(['title' => 'Tambah Customers', 'sidebar' => 'Data Customers']);
+    }
+
+    # Menampilkan laman edit customers
+    public function editcustomers(Request $request){
+        
+        $data = [
+            'customers' => Users::where('id_users', $request->segment('5'))->get(),
+            'pasar' => DB::table('pasar')->get(),
+            'sellers' => DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'penjual.id_pasar', '=', 'pasar.id_pasar')->where('users.id_users', $request->segment(5))->get(),
+            'id_users' => $request->segment(5),
+            'kategoritoko' => DB::table('kategoritoko')->get()
+        ];
+        
+        return view('admin/customers/edit', $data)->with(['title' => 'Edit Customers', 'sidebar' => 'Data Customers']);
+
+    }
+
     # tambah customers
     public function insertcustomers(Request $request){
 
@@ -107,7 +137,9 @@ class Customers extends Controller
             'status' => $request->post('status'),
             'id_users' => $request->post('id_users'),
             'id_pasar' => $request->post('id_pasar'),
-            'nama_toko' => $request->post('nama_toko')
+            'nama_toko' => $request->post('nama_toko'),
+            'no_toko' => $request->post('no_toko'),
+            'id_kategoritoko' => $request->post('id_kategoritoko')
         ];
 
         Seller::create($data);

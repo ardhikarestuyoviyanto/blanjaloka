@@ -1,14 +1,74 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Models\Pengelolapasar;
 
 class Pasar extends Controller
 {
-    //
+    
+    # Menampilkan laman pasar
+    public function pasar(){
+
+        $data = [
+            'pasar' => DB::table('pasar')->join('pengelolapasar', 'pengelolapasar.id_pengelolapasar', '=', 'pasar.id_pengelolapasar')->orderBy('pasar.id_pasar', 'DESC')->get()
+        ];
+
+        return view('admin/pasar/data_pasar/index', $data)->with(['title' => 'Data Pasar', 'sidebar' => 'Data Pasar']);
+
+    }
+
+    # Menampilkan laman tambah pasar
+    public function addpasar(){
+
+        $data = [
+            'pengelola' => Pengelolapasar::orderByDesc('id_pengelolapasar')->get()
+        ];
+
+        return view('admin/pasar/data_pasar/add', $data)->with(['title' => 'Tambah Pasar', 'sidebar' => 'Data Pasar']);
+
+    }
+
+    # Menampilkan laman edit pasar
+    public function editpasar(Request $request){
+
+        $data = [
+            'pasar' => DB::table('pasar')->where('id_pasar', $request->segment(4))->get(),
+            'pengelola' => Pengelolapasar::orderByDesc('id_pengelolapasar')->get()
+        ];
+
+        return view('admin/pasar/data_pasar/edit', $data)->with(['title' => 'Edit Pasar', 'sidebar' => 'Data Pasar']);
+
+    }
+
+    # Menampilkan laman edit jam operasional
+    public function jamoperasionalpasar(Request $request){
+
+        $data = [
+            'jampasar' => DB::table('jampasar')->where('id_pasar', $request->segment(4))->get(),
+            'pasar' => DB::table('pasar')->join('pengelolapasar', 'pengelolapasar.id_pengelolapasar', '=', 'pasar.id_pengelolapasar')->where('pasar.id_pasar', $request->segment(4))->get(),
+            'id_pasar' => $request->segment(4)
+        ];
+
+        return view('admin/pasar/data_pasar/jampasar', $data)->with(['title' => 'Jam Operasional', 'sidebar' => 'Data Pasar']);
+
+    }
+
+    # Menampilkan laman Pengelola Pasar
+    public function pengelolapasar(){
+
+        $data = [
+            'pengelola' => Pengelolapasar::orderByDesc('id_pengelolapasar')->get()
+        ];
+
+        return view('admin/pasar/pengelola/index', $data)->with(['title' => 'Pengelola Pasar', 'sidebar' => 'Pengelola Pasar']);
+
+    }
+
     # insert data pasar
     public function insertdatapasar(Request $request){
 
@@ -40,7 +100,11 @@ class Pasar extends Controller
                     'alamat' => $request->post('alamat'),
                     'embbed_maps' => $request->post('embbed_maps'),
                     'foto_pasar' => implode(',', $namaFile),
-                    'deskripsi' => $request->post('deskripsi')
+                    'deskripsi' => $request->post('deskripsi'),
+                    'no_pasar' => $request->post('no_pasar'),
+                    'max_lapak' => $request->post('max_lapak'),
+                    'max_pengunjung' => $request->post('max_pengunjung'),
+                    'id_pengelolapasar' => $request->post('id_pengelolapasar')
                 ];
 
                 DB::table('pasar')->insert($data);
@@ -89,7 +153,11 @@ class Pasar extends Controller
                 'nama_pasar' => $request->post('nama_pasar'),
                 'alamat' => $request->post('alamat'),
                 'embbed_maps' => $request->post('embbed_maps'),
-                'deskripsi' => $request->post('deskripsi')
+                'deskripsi' => $request->post('deskripsi'),
+                'no_pasar' => $request->post('no_pasar'),
+                'max_lapak' => $request->post('max_lapak'),
+                'max_pengunjung' => $request->post('max_pengunjung'),
+                'id_pengelolapasar' => $request->post('id_pengelolapasar')
             ];
 
             DB::table('pasar')->where('id_pasar', $request->post('id_pasar'))->update($data);
@@ -182,5 +250,75 @@ class Pasar extends Controller
         ]);
     }
 
+
+    //----------------------------------------------------------------------------------------------
+
+    # insert data pengelola pasar
+    public function insertpengelolapasar(Request $request){
+
+        $data = [
+            'nip' => $request->post('nip'),
+            'email' => $request->post('email'),
+            'nama' => $request->post('nama'),
+            'password' => password_hash($request->post('password'), PASSWORD_DEFAULT),
+            'jabatan' => $request->post('jabatan'),
+            'role' => $request->post('role')
+        ];
+
+        Pengelolapasar::create($data);
+
+        return response()->json([
+            'pesan' => 'Berhasil Menambahkan Pengelola Pasar'
+        ]);
+
+    }
+
+    # mendapatkan data pengelola pasar berdasarkan id
+    public function getpengelolapasar(Request $request){
+        return response()->json(
+            Pengelolapasar::where('id_pengelolapasar', $request->post('id_pengelolapasar'))->get()
+        );
+        
+    }
+
+    # edit data pengelola pasar
+    public function editpengelolapasar(Request $request){
+
+        if(!empty($request->post('password'))){
+
+            $data = [
+                'password' => password_hash($request->post('password'), PASSWORD_DEFAULT),
+            ];
+
+            Pengelolapasar::where('id_pengelolapasar', $request->post('id_pengelolapasar'))->update($data);
+
+        }
+
+        $data = [
+            'nip' => $request->post('nip'),
+            'email' => $request->post('email'),
+            'nama' => $request->post('nama'),
+            'jabatan' => $request->post('jabatan'),
+            'role' => $request->post('role')
+        ];
+
+        Pengelolapasar::where('id_pengelolapasar', $request->post('id_pengelolapasar'))->update($data);
+
+        return response()->json([
+            'pesan' => 'Berhasil Mengedit Data Pengelola Pasar'
+        ]);
+
+    }
+
+    #hapus pengelola pasar
+    public function deletepengelolapasar(Request $request){
+
+        Pengelolapasar::where('id_pengelolapasar', $request->post('id_pengelolapasar'))->delete();
+
+        return response()->json([
+            'pesan' => 'Berhasil Menghapus Data Pengelola Pasar'
+        ]);
+        
+    }
 
 }

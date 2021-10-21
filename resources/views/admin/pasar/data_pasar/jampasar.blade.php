@@ -34,9 +34,19 @@
                         <table width="100%">
                             <tbody>
                                 <tr class="text-bold">
+                                    <td width="150px">No Pasar</td>
+                                    <td width="10px">:</td>
+                                    <td>{{$p->no_pasar}}</td>
+                                </tr>
+                                <tr class="text-bold">
                                     <td width="150px">Nama Pasar</td>
                                     <td width="10px">:</td>
                                     <td>{{$p->nama_pasar}}</td>
+                                </tr>
+                                <tr class="text-bold">
+                                    <td width="150px">Pengelola Pasar</td>
+                                    <td width="10px">:</td>
+                                    <td>{{$p->nama}}</td>
                                 </tr>
                                 <tr class="text-bold">
                                     <td width="150px">Alamat</td>

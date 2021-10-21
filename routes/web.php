@@ -4,10 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Homepage;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\Users;
-use App\Http\Controllers\Admin;
-use App\Http\Controllers\Customers;
-use App\Http\Controllers\Sellers;
-use App\Http\Controllers\Pasar;
+
+use App\Http\Controllers\Admin\Dashboard as DashboardAdmin;
+use App\Http\Controllers\Admin\Customers as CustomersAdmin;
+use App\Http\Controllers\Admin\Sellers as SellersAdmin;
+use App\Http\Controllers\Admin\Pasar as PasarAdmin;
+use App\Http\Controllers\Admin\Toko as TokoAdmin;
+use App\Http\Controllers\Admin\Driver as DriverAdmin;
+use App\Http\Controllers\Admin\Pemda as PemdaAdmin;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,52 +54,75 @@ Route::get('auth/admin', [Auth::class, 'adminlogin']);
 # admin login handler
 Route::post('auth/adminlogin', [Auth::class, 'adminlogin_handler']);
 
+//--------------------------------------------------------------------------------------
+// *************************************************************************************
 //---------------------------------------------------------------------------------------
 # Halaman admin
 Route::prefix('admin')->group(function () {
     # Homepage Admin
-    Route::get('/', [Admin::class, 'index'])->middleware('sessionadmin');
+    Route::get('/', [DashboardAdmin::class, 'index'])->middleware('sessionadmin');
     # Pasar
     Route::prefix('pasar')->group(function () {
-        Route::get('/', [Admin::class, 'pasar'])->middleware('sessionadmin');
-        Route::get('add', [Admin::class, 'addpasar'])->middleware('sessionadmin');
-        Route::post('addhandler', [Pasar::class, 'insertdatapasar'])->middleware('sessionadmin');
-        Route::get('edit/{id}', [Admin::class, 'editpasar'])->middleware('sessionadmin');
-        Route::post('edithandler', [Pasar::class, 'updatedatapasar'])->middleware('sessionadmin');
-        Route::post('hapusfoto', [Pasar::class, 'deletefotopasar'])->middleware('sessionadmin');
-        Route::post('deletehandler', [Pasar::class, 'deletepasar'])->middleware('sessionadmin');
+        Route::get('/', [PasarAdmin::class, 'pasar'])->middleware('sessionadmin');
+        Route::get('add', [PasarAdmin::class, 'addpasar'])->middleware('sessionadmin');
+        Route::post('addhandler', [PasarAdmin::class, 'insertdatapasar'])->middleware('sessionadmin');
+        Route::get('edit/{id}', [PasarAdmin::class, 'editpasar'])->middleware('sessionadmin');
+        Route::post('edithandler', [PasarAdmin::class, 'updatedatapasar'])->middleware('sessionadmin');
+        Route::post('hapusfoto', [PasarAdmin::class, 'deletefotopasar'])->middleware('sessionadmin');
+        Route::post('deletehandler', [PasarAdmin::class, 'deletepasar'])->middleware('sessionadmin');
 
         # jam operasional
-        Route::get('jam/{id}', [Admin::class, 'jamoperasionalpasar'])->middleware('sessionadmin');
-        Route::post('jam/insert', [Pasar::class, 'insertjamoperasionalpasar'])->middleware('sessionadmin');
-        Route::post('jam/get', [Pasar::class, 'getjamoperasionalpasarbyid'])->middleware('sessionadmin');
-        Route::post('jam/update', [Pasar::class, 'updatejamoperasionalpasar'])->middleware('sessionadmin');
-        Route::post('jam/delete', [Pasar::class, 'deletejamoperasionalpasar'])->middleware('sessionadmin');
+        Route::get('jam/{id}', [PasarAdmin::class, 'jamoperasionalpasar'])->middleware('sessionadmin');
+        Route::post('jam/insert', [PasarAdmin::class, 'insertjamoperasionalpasar'])->middleware('sessionadmin');
+        Route::post('jam/get', [PasarAdmin::class, 'getjamoperasionalpasarbyid'])->middleware('sessionadmin');
+        Route::post('jam/update', [PasarAdmin::class, 'updatejamoperasionalpasar'])->middleware('sessionadmin');
+        Route::post('jam/delete', [PasarAdmin::class, 'deletejamoperasionalpasar'])->middleware('sessionadmin');
+
+        # pengelola pasar
+        Route::get('pengelola', [PasarAdmin::class, 'pengelolapasar'])->middleware('sessionadmin');
+        Route::post('pengelola/insert', [PasarAdmin::class, 'insertpengelolapasar'])->middleware('sessionadmin');
+        Route::post('pengelola/get', [PasarAdmin::class, 'getpengelolapasar'])->middleware('sessionadmin');
+        Route::post('pengelola/update', [PasarAdmin::class, 'editpengelolapasar'])->middleware('sessionadmin');
+        Route::post('pengelola/delete', [PasarAdmin::class, 'deletepengelolapasar'])->middleware('sessionadmin');
+
 
     });
     # Users Data
     Route::prefix('users')->group(function () {
         #Customers Data
-        Route::get('customers', [Admin::class, 'customers'])->middleware('sessionadmin');
-        Route::get('customers/add', [Admin::class, 'addcustomers'])->middleware('sessionadmin');
-        Route::post('customers/addhandler', [Customers::class, 'insertcustomers'])->middleware('sessionadmin');
-        Route::get('customers/edit/{id}', [Admin::class, 'editcustomers'])->middleware('sessionadmin');
-        Route::post('customers/edithandler', [Customers::class, 'updatecustomers'])->middleware('sessionadmin');
-        Route::post('customers/makesellers', [Customers::class, 'makesellers'])->middleware('sessionadmin');
-        Route::post('customers/delete', [Customers::class, 'deletecustomers'])->middleware('sessionadmin');
+        Route::get('customers', [CustomersAdmin::class, 'customers'])->middleware('sessionadmin');
+        Route::get('customers/add', [CustomersAdmin::class, 'addcustomers'])->middleware('sessionadmin');
+        Route::post('customers/addhandler', [CustomersAdmin::class, 'insertcustomers'])->middleware('sessionadmin');
+        Route::get('customers/edit/{id}', [CustomersAdmin::class, 'editcustomers'])->middleware('sessionadmin');
+        Route::post('customers/edithandler', [CustomersAdmin::class, 'updatecustomers'])->middleware('sessionadmin');
+        Route::post('customers/makesellers', [CustomersAdmin::class, 'makesellers'])->middleware('sessionadmin');
+        Route::post('customers/delete', [CustomersAdmin::class, 'deletecustomers'])->middleware('sessionadmin');
 
         #Sellers Data
-        Route::get('sellers', [Admin::class, 'sellers'])->middleware('sessionadmin');
-        Route::post('sellers/delete', [Sellers::class, 'deleteakunsellers'])->middleware('sessionadmin');
-        Route::get('sellers/edit/{id}', [Admin::class, 'editsellers'])->middleware('sessionadmin');
-        Route::post('sellers/edithandler', [Sellers::class, 'updatesellers'])->middleware('sessionadmin');
+        Route::get('sellers', [SellersAdmin::class, 'sellers'])->middleware('sessionadmin');
+        Route::post('sellers/delete', [SellersAdmin::class, 'deleteakunsellers'])->middleware('sessionadmin');
+        Route::get('sellers/edit/{id}', [SellersAdmin::class, 'editsellers'])->middleware('sessionadmin');
+        Route::post('sellers/edithandler', [SellersAdmin::class, 'updatesellers'])->middleware('sessionadmin');
+        Route::post('sellers/deletefototoko', [SellersAdmin::class, 'deletefototoko'])->middleware('sessionadmin');
+        Route::get('sellers/datasensitive/{id}', [SellersAdmin::class, 'datasensitivesellers'])->middleware('sessionadmin');
+
+        # Driver Data
+        Route::get('driver', [DriverAdmin::class, 'driver'])->middleware('sessionadmin');
+
+        # Pemda Data
+        Route::get('pemda', [PemdaAdmin::class, 'pemda'])->middleware('sessionadmin');
 
     });
-    # Master Produk
-    Route::prefix('produk')->group(function () {
-        # List Produk
-        Route::get('/', [Admin::class, 'product'])->middleware('sessionadmin');
-        Route::get('listproduk/{id}', [Admin::class, 'listproduk'])->middleware('sessionadmin');
+    # Master Toko
+    Route::prefix('toko')->group(function () {
+        # List Kategori Toko
+        Route::get('kategori', [TokoAdmin::class, 'kategoritoko'])->middleware('sessionadmin');
+        Route::post('kategori/add', [TokoAdmin::class, 'insertkategoritoko'])->middleware('sessionadmin');
+        Route::post('kategori/get', [TokoAdmin::class, 'getkategoritoko'])->middleware('sessionadmin');
+        Route::post('kategori/update', [TokoAdmin::class, 'updatekategoritoko'])->middleware('sessionadmin');
+        Route::post('kategori/delete', [TokoAdmin::class, 'deletekategoritoko'])->middleware('sessionadmin');
+
+        Route::get('/', [TokoAdmin::class, 'datatoko'])->middleware('sessionadmin');
     });
 });
 

@@ -1,5 +1,6 @@
 @extends('admin/master-admin')
 @section('content')
+@php use Illuminate\Support\Facades\DB; @endphp
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
@@ -29,12 +30,51 @@
                                 @csrf
                                 <input type="hidden" name="id_pasar" value="{{$p->id_pasar}}">
                                 <div class="card-body">
+                                    
+                                    <div class="mb-3 row">
+                                        <label for="nis" class="col-sm-2 col-form-label">No Pasar</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="no_pasar" placeholder="Nomor Pasar" required value="{{$p->no_pasar}}">
+                                        </div>
+                                    </div>
+
                                     <div class="mb-3 row">
                                         <label for="nis" class="col-sm-2 col-form-label">Nama Pasar</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="nama_pasar" placeholder="Nama Pasar" required value="{{$p->nama_pasar}}">
                                         </div>
                                     </div>
+
+                                    <div class="mb-3 row">
+                                        <label for="nis" class="col-sm-2 col-form-label">Pengelola Pasar</label>
+                                        <div class="col-sm-10">
+                                            <select class="custom-select" required name="id_pengelolapasar" id="id_pengelolapasar">
+                                                <option selected value="">- PILIH PENGELOLA PASAR -</option>
+                                                @foreach($pengelola as $s)
+                                                    @if ($s->id_pengelolapasar == $p->id_pengelolapasar) 
+                                                        <option selected value="{{$s->id_pengelolapasar}}">- {{$s->nama}} / {{$s->jabatan}}</option>
+                                                    @elseif(count(DB::table('pasar')->where('id_pengelolapasar', $s->id_pengelolapasar)->get()) == 0)
+                                                        <option value="{{$s->id_pengelolapasar}}">- {{$s->nama}} / {{$s->jabatan}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="mb-3 row">
+                                        <label for="nis" class="col-sm-2 col-form-label">Maksimal Lapak</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" name="max_lapak" placeholder="Maksimal Lapak" required value="{{$p->max_lapak}}">
+                                        </div>
+                                    </div>
+    
+                                    <div class="mb-3 row">
+                                        <label for="nis" class="col-sm-2 col-form-label">Maksimal Pengunjung</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" name="max_pengunjung" placeholder="Maksimal Pengunjung" required value="{{$p->max_pengunjung}}">
+                                        </div>
+                                    </div>
+
                                     <div class="mb-3 row">
                                         <label for="nis" class="col-sm-2 col-form-label">Alamat Pasar</label>
                                         <div class="col-sm-10">
