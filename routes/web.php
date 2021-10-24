@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\Sellers as SellersAdmin;
 use App\Http\Controllers\Admin\Pasar as PasarAdmin;
 use App\Http\Controllers\Admin\Toko as TokoAdmin;
 use App\Http\Controllers\Admin\Driver as DriverAdmin;
-use App\Http\Controllers\Admin\Pemda as PemdaAdmin;
+use App\Http\Controllers\Admin\PemdaController as PemdaAdmin;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +111,10 @@ Route::prefix('admin')->group(function () {
 
         # Pemda Data
         Route::get('pemda', [PemdaAdmin::class, 'pemda'])->middleware('sessionadmin');
+        Route::post('pemda/insert', [PemdaAdmin::class, 'insertpemda'])->middleware('sessionadmin');
+        Route::post('pemda/get', [PemdaAdmin::class, 'getpemda'])->middleware('sessionadmin');
+        Route::post('pemda/update', [PemdaAdmin::class, 'editpemda'])->middleware('sessionadmin');
+        Route::post('pemda/delete', [PemdaAdmin::class, 'deletepemda'])->middleware('sessionadmin');
 
     });
     # Master Toko
