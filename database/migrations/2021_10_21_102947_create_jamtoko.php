@@ -17,8 +17,8 @@ class CreateJamtoko extends Migration
             $table->id('id_jamtoko');
             $table->string('catatan', 500)->nullable();
             $table->string('hari', 100)->nullable();
-            $table->string('mulai', 100)->nullable();
-            $table->string('selesai', 100)->nullable();
+            $table->string('buka', 100)->nullable();
+            $table->string('tutup', 100)->nullable();
         });
     }
 
