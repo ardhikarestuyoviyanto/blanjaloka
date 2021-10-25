@@ -9,11 +9,14 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Mews\Captcha\Captcha;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Users;
 use App\Models\Admin;
 use App\Mail\EmailVerification;
+use App\Models\Seller;
 use Exception;
+use Illuminate\Support\Facades\Session;
 
 class Auth extends Controller
 {
@@ -415,6 +418,110 @@ class Auth extends Controller
                 # Redirect ke halaman login admin dengan pesan error
                 return redirect('auth/admin')->with('error', 'Email atau Password Salah');
 
+            }
+
+        }
+
+    }
+
+    # Menampilkan laman register penjual
+    public function sellers(Request $request){
+
+        # Cek customers terdaftar sebagai sellers / belum
+        if(count(DB::table('penjual')->where('id_users', $request->session()->get('id_users'))->get()) == 1){
+
+            # Sudah Terdaftar
+            # Redirect Ke Laman Dashboard Sellers
+            # Add Variabel New Sessions
+            $sellers = DB::table('penjual')->where('id_users', $request->session()->get('id_users'))->get();
+            foreach ($sellers as $s){
+
+                $request->session()->push('id_penjual', $s->id_penjual);
+
+            }
+
+            # Redirect laman dashboard sellers
+
+            if(Session::get('success')){
+
+                return redirect('sellers')->with('success', "Pendaftaran Anda Sebagai Sellers Berhasil, Selamat Berjualan :)");
+
+            }else{
+
+                return redirect('sellers');
+
+            }
+
+
+        }else{
+
+            # Belum Terdaftar
+            # Redirect Ke Laman Pendaftaran Sellers
+            $data = [
+                'id_users' => $request->segment(3),
+                'customers' => DB::table('users')->where('id_users', $request->session()->get('id_users'))->get(),
+                'kategoritoko' => DB::table('kategoritoko')->get(),
+                'pasar' => DB::table('pasar')->get()
+            ];
+
+            return view('sellers/auth/register', $data)->with(['title' => 'Daftar Akun Sellers']);;
+
+        }
+
+    }
+
+    # Register Sellers Handler
+    public function sellersregister_handler(Request $request){
+
+        # Validator
+        $validator = Validator::make($request->all(), [
+            'no_ktp' => ['required', 'digits:16'],
+            'foto_ktp' => 'mimes:jpeg,jpg,png,PNG,JPEG,JPG',
+            'foto_penjual_ktp' => 'mimes:jpeg,jpg,png,PNG,JPEG,JPG',
+        ]);
+
+        if($validator->fails()){
+
+            return redirect('sellers/daftar')->withErrors($validator)->withInput();
+
+        }else{
+
+            try{
+
+                if($request->hasFile('foto_ktp') && $request->hasFile('foto_penjual_ktp')){
+
+                    $foto_ktp = $request->file('foto_ktp');
+                    $foto_penjual_ktp = $request->file('foto_penjual_ktp');
+
+                    $namafile_foto_ktp = time().'_'.$foto_ktp->getClientOriginalName();
+                    $namafile_foto_penjual_ktp = time().'_'.$foto_penjual_ktp->getClientOriginalName();
+
+                    $foto_ktp->move('assets/admin/foto_ktp', $namafile_foto_ktp);
+                    $foto_penjual_ktp->move('assets/admin/foto_penjual_ktp', $namafile_foto_penjual_ktp);
+
+                    $data = [
+                        'status' => 'on',
+                        'id_users' => $request->session()->get('id_users'),
+                        'id_pasar' => $request->post('id_pasar'),
+                        'nama_toko' => $request->post('nama_toko'),
+                        'alamat_toko' => $request->post('alamat_toko'),
+                        'no_ktp' => $request->post('no_ktp'),
+                        'foto_ktp' => $namafile_foto_ktp,
+                        'foto_penjual_ktp' => $namafile_foto_penjual_ktp,
+                        'id_kategoritoko' => $request->post('id_kategoritoko')
+                    ];
+
+                    Seller::create($data);
+
+                    return redirect('sellers/daftar')->with('success', "Pendaftaran Anda Sebagai Sellers Berhasil, Selamat Berjualan :)");
+
+                }
+
+            }catch(Exception $e){
+
+                # Tampilkan pesan error
+                dd($e->getMessage());
+    
             }
 
         }

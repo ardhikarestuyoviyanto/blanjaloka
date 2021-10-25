@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\Toko as TokoAdmin;
 use App\Http\Controllers\Admin\Driver as DriverAdmin;
 use App\Http\Controllers\Admin\PemdaController as PemdaAdmin;
 
+//------------------------------------------------------------------
+use App\Http\Controllers\Sellers\Dashboard as DashboardSellers;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -126,10 +129,32 @@ Route::prefix('admin')->group(function () {
         Route::post('kategori/update', [TokoAdmin::class, 'updatekategoritoko'])->middleware('sessionadmin');
         Route::post('kategori/delete', [TokoAdmin::class, 'deletekategoritoko'])->middleware('sessionadmin');
 
+        # Jam Operasional Toko
+        Route::get('jam/{id}', [TokoAdmin::class, 'jamoperasionaltoko'])->middleware('sessionadmin');
+        Route::post('jam/insert', [TokoAdmin::class, 'insertjamtoko'])->middleware('sessionadmin');
+        Route::post('jam/get', [TokoAdmin::class, 'getjamtoko'])->middleware('sessionadmin');
+        Route::post('jam/update', [TokoAdmin::class, 'updatejamtoko'])->middleware('sessionadmin');
+        Route::post('jam/delete', [TokoAdmin::class, 'deletejamtoko'])->middleware('sessionadmin');
+
+        # Update status toko
+        Route::post('status', [TokoAdmin::class, 'updatestatustoko'])->middleware('sessionadmin');
+
+        # List Data Toko
         Route::get('/', [TokoAdmin::class, 'datatoko'])->middleware('sessionadmin');
     });
 });
 
-//---------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+// *************************************************************************************
+//---------------------------------------------------------------------------------------
+# Ke Laman Login Sellers
+Route::get('sellers/daftar', [Auth::class, 'sellers'])->middleware('sessionusers');
+Route::post('sellers/daftar_handler', [Auth::class, 'sellersregister_handler'])->middleware('sessionusers');
+# Halaman Sellers
+Route::prefix('sellers')->group(function () {
+    # Homepage Sellers
+    Route::get('/', [DashboardSellers::class, 'index'])->middleware('sessionusers');
+});
+
 # Login Berhasil Penjual & Pembeli
 Route::get('/index', [Users::class, 'index'])->middleware('sessionusers');
