@@ -82,14 +82,18 @@
                                 <div class="mb-3 row">
                                     <label for="nis" class="col-sm-2 col-form-label">Foto KTP</label>
                                     <div class="col-sm-10">
-                                        <a href="{{url('assets/admin/foto_ktp/'.$s->foto_ktp)}}" target="_blank">{{$s->foto_ktp}}</a>
+                                        <a href="{{url('assets/admin/foto_ktp/'.$s->foto_ktp)}}" data-toggle="lightbox" data-title="Foto KTP" data-gallery="gallery">
+                                            {{$s->foto_ktp}}
+                                        </a>
                                     </div>
                                 </div>
 
                                 <div class="mb-3 row">
                                     <label for="nis" class="col-sm-2 col-form-label">Foto Penjual dan KTP</label>
                                     <div class="col-sm-10">
-                                        <a href="{{url('assets/admin/foto_penjual_ktp/'.$s->foto_penjual_ktp)}}" target="_blank">{{$s->foto_penjual_ktp}}</a>
+                                       <a href="{{url('assets/admin/foto_penjual_ktp/'.$s->foto_penjual_ktp)}}" data-toggle="lightbox" data-title="Foto Penjual dengan KTP" data-gallery="gallery">
+                                            {{$s->foto_penjual_ktp}}                                        
+                                        </a>  
                                     </div>
                                 </div>
 
@@ -129,6 +133,13 @@
                     }
                 });
 
+            });
+
+            $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox({
+                    alwaysShowClose: true
+                });
             });
 
         });

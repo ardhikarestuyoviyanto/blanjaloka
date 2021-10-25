@@ -11,7 +11,7 @@ class PemdaController extends Controller{
     public function pemda(){
 
         $data = [
-            'pemda' =>Pemda::all()
+            'pemda' =>Pemda::orderByDesc('id_pemda')->get()
         ];
         return view('admin/pemda/index',$data)->with(['title' => 'Data Pemda', 'sidebar' => 'Data Pemda']);
 

@@ -196,7 +196,13 @@
                                             $arr_fototoko = explode(',', $s->foto_toko);
                                         @endphp
                                         @for($i=0; $i<count($arr_fototoko); $i++)
-                                            <li class="list-group-item"><a title="Hapus" class="hapusfototoko" data-id="{{$s->id_penjual}}" data-index="{{$i}}" data-foto_toko="{{$s->foto_toko}}" data-toggle="tooltip" href="#" style="color: red"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;<a target="_blank" href="{{url('assets/admin/foto_toko/'.$arr_fototoko[$i])}}">{{$arr_fototoko[$i]}}</a></li>
+                                            <li class="list-group-item">
+                                                <a title="Hapus" class="hapusfototoko" data-id="{{$s->id_penjual}}" data-index="{{$i}}" data-foto_toko="{{$s->foto_toko}}" data-toggle="tooltip" href="#" style="color: red"><i class="fas fa-trash"></i></a>
+                                                &nbsp;&nbsp;
+                                                <a href="{{url('assets/admin/foto_toko/'.$arr_fototoko[$i])}}" data-toggle="lightbox" data-title="{{$s->nama_toko}}" data-gallery="gallery">
+                                                    {{$arr_fototoko[$i]}}
+                                                </a>
+                                            </li>
                                         @endfor
                                     @endif
 
@@ -261,6 +267,13 @@
 
             }
 
+        });
+
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            });
         });
 
     });

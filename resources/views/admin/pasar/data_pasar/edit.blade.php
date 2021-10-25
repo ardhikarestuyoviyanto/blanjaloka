@@ -126,7 +126,13 @@
                                                         $arr_fotopasar = explode(',', $p->foto_pasar);
                                                     @endphp
                                                     @for($i=0; $i<count($arr_fotopasar); $i++)
-                                                        <li class="list-group-item"><a title="Hapus" class="hapusfotopasar" data-id="{{$p->id_pasar}}" data-index="{{$i}}" data-foto_pasar="{{$p->foto_pasar}}" data-toggle="tooltip" href="#" style="color: red"><i class="fas fa-trash"></i></a>&nbsp;&nbsp;<a target="_blank" href="{{url('assets/admin/foto_pasar/'.$arr_fotopasar[$i])}}">{{$arr_fotopasar[$i]}}</a></li>
+                                                        <li class="list-group-item">
+                                                            <a title="Hapus" class="hapusfotopasar" data-id="{{$p->id_pasar}}" data-index="{{$i}}" data-foto_pasar="{{$p->foto_pasar}}" data-toggle="tooltip" href="#" style="color: red"><i class="fas fa-trash"></i></a>
+                                                            &nbsp;&nbsp;
+                                                            <a href="{{url('assets/admin/foto_pasar/'.$arr_fotopasar[$i])}}" data-toggle="lightbox" data-title="{{$p->nama_pasar}}" data-gallery="gallery">
+                                                                {{$arr_fotopasar[$i]}}
+                                                            </a>
+                                                        </li>
                                                     @endfor
                                                 @endif
 
@@ -201,6 +207,13 @@
 
             }
 
+        });
+
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            });
         });
 
     });

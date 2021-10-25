@@ -50,39 +50,65 @@
                         <thead>
                         <tr>
                             <th style="width:10px;">No</th>
+                            <th>No Toko</th>
                             <th>Nama Sellers</th>
                             <th>Lokasi Pasar</th>
                             <th>Nama Toko</th>
                             <th>Kategori Toko</th>
                             <th>Total Produk</th>
-                            <th>Produk Terjual</th>
                             <th>Status</th>
-                            <th style="width: 10px">Aksi</th>
-                            <th class="none">Deskripsi Toko</th>
+                            <th style="width: 60px">Aksi</th>
+                            <th class="none">Jam Operasional</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach ($sellers as $no=>$s)
                                 <tr>
                                     <td>{{ $no + 1 }}</td>
+                                    <td>{{ $s->no_toko }}</td>
                                     <td>{{ $s->nama_user }}</td>
                                     <td>{{ $s->nama_pasar }}</td>
                                     <td>{{ $s->nama_toko }}</td>
                                     <td>{{$s->nama_kategoritoko}}</td>
                                     <td>23 Produk</td>
-                                    <td>12 Produk</td>
                                     @if($s->status == 'on')
                                         <td class="text-primary"><i>Active</i></td>
                                     @else
                                         <td class="text-danger"><i>Not Active</i></td>
                                     @endif
                                     <td >
-                                        <a href="" data-toggle="tooltip" title="Lihat Toko" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
-                                        <a href="" data-toggle="tooltip" title="Jam Toko" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
+                                        <a href="" data-toggle="tooltip" title="Lihat Toko" data-placement="top"><span class="badge badge-success"><i class="fas fa-store-alt"></i></span></a>
+                                        <a href="{{url('admin/toko/jam/'.$s->id_penjual)}}" data-toggle="tooltip" title="Jam Toko" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
+                                        @if($s->status == 'on')
+                                            <a href="#" class="status" data-id="{{$s->id_penjual}}" data-status="off" data-pesan="Ubah Status Toko Menjadi Non Aktif ?" data-toggle="tooltip" title="Not Active" data-placement="top"><span class="badge badge-danger"><i class="fas fa-times"></i></span></a>
+                                        @else
+                                            <a href="#" class="status" data-id="{{$s->id_penjual}}" data-status="on" data-pesan="Ubah Status Toko Menjadi Aktif ?" data-toggle="tooltip" title="Active" data-placement="top"><span class="badge badge-primary"><i class="fas fa-check-double"></i></span></a>
+                                        @endif
                                     </td>
                                     <td>
-                                        <br>
-                                        {{$s->deskripsi_toko}}
+                                        <br><br>
+                                        <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Hari</th>
+                                                <th scope="col">Jam Buka</th>
+                                                <th scope="col">Jam Tutup</th>
+                                                <th scope="col">Catatan</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach(DB::table('jamtoko')->where('id_penjual', $s->id_penjual)->get() as $i=>$jam)
+                                              <tr>
+                                                <th scope="row">{{$i+1}}</th>
+                                                <td>{{ucfirst($jam->hari)}}</td>
+                                                <td>{{ $jam->buka }}</td>
+                                                <td>{{ $jam->tutup }}</td>
+                                                <td>{{ $jam->catatan }}</td>
+                                              </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
                             @endforeach
@@ -101,6 +127,31 @@
         $('#tokotable').DataTable({
             "responsive":true,
 
+        });
+
+        //update status toko
+        $('.status').click(function(e){
+            e.preventDefault();
+            var confirmed = confirm($(this).data('pesan'));
+
+            if(confirmed) {
+
+                $.ajax({
+                    data: {'id_penjual':$(this).data('id'), '_token': "{{csrf_token()}}", 'status':$(this).data('status')},
+                    type: 'POST',
+                    url:"{{url('admin/toko/status')}}",
+                    success : function(data){
+                        swal(data.pesan)
+                        .then((result) => {
+                            location.reload();
+                        });
+                    },
+                    error : function(err){
+                        alert(err);
+                        console.log(err);
+                    }
+                });
+            }
         });
 
     }); 

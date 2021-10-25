@@ -30,6 +30,9 @@
   <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="{{ asset('template/admin/plugins/ekko-lightbox/ekko-lightbox.css') }}">
+
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -69,7 +72,10 @@
   <script src="{{ asset('template/admin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="{{asset('template/admin/plugins/daterangepicker/daterangepicker.js')}}"></script>
-</head>
+
+  <!-- Ekko Lightbox -->
+  <script src="{{asset('template/admin/plugins/ekko-lightbox/ekko-lightbox.min.js')}}"></script>
+
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
       @include('admin/partition/sidebar-admin')

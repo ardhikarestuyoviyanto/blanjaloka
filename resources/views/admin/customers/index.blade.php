@@ -19,6 +19,9 @@
 
     <section class="content">
         <div class="container-fluid">
+            <div class="alert alert-light text-bold" role="alert">
+                Kolom tabel yang aktif menandakan akun customers tersebut terdaftar juga sebagai akun sellers
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -67,7 +70,11 @@
                             </thead>
                             <tbody>
                                 @foreach ($customers as $no=>$c)
-                                    <tr>
+                                    @if(count(DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'penjual.id_pasar', '=', 'pasar.id_pasar')->where('users.id_users', $c->id_users)->get()) == 1)
+                                        <tr class="table-secondary">
+                                    @else
+                                        <tr>
+                                    @endif
                                         <td>{{ $no + 1 }}</td>
                                         <td>{{ $c->nama_user }}</td>
                                         <td>{{ $c->email }}</td>
