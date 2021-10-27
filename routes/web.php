@@ -111,6 +111,11 @@ Route::prefix('admin')->group(function () {
 
         # Driver Data
         Route::get('driver', [DriverAdmin::class, 'driver'])->middleware('sessionadmin');
+        Route::get('driver/add', [DriverAdmin::class, 'tambahform'])->middleware('sessionadmin');
+        Route::post('driver/insert', [DriverAdmin::class, 'insertdriver'])->middleware('sessionadmin');
+        Route::get('driver/edit/{id}', [DriverAdmin::class, 'editdriver'])->middleware('sessionadmin');
+        Route::post('driver/update', [DriverAdmin::class, 'updatedriver'])->middleware('sessionadmin');
+        Route::post('driver/delete', [DriverAdmin::class, 'deletedriver'])->middleware('sessionadmin');
 
         # Pemda Data
         Route::get('pemda', [PemdaAdmin::class, 'pemda'])->middleware('sessionadmin');
