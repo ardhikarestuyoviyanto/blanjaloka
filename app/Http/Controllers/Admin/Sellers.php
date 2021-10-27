@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Seller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class Sellers extends Controller
 {
@@ -14,12 +15,33 @@ class Sellers extends Controller
     # menampilkan laman data seller
     public function sellers(){
 
-        # join 4 tabel (users, penjual, pasar, kategori toko)
-        $data = [
-            'sellers' => DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'pasar.id_pasar', '=', 'penjual.id_pasar')->join('kategoritoko', 'kategoritoko.id_kategoritoko', '=', 'penjual.id_kategoritoko')->orderBy('penjual.id_penjual', "DESC")->get()
-        ];
-        return view('admin/sellers/index', $data)->with(['title'=> 'Data Sellers', 'sidebar' => 'Data Sellers']);
+        return view('admin/sellers/index')->with(['title'=> 'Data Sellers', 'sidebar' => 'Data Sellers']);
 
+    }
+
+    # get datatables seller
+    public function sellersjson(){
+
+        $query = DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'pasar.id_pasar', '=', 'penjual.id_pasar')->join('kategoritoko', 'kategoritoko.id_kategoritoko', '=', 'penjual.id_kategoritoko')->orderBy('penjual.id_penjual', "DESC")->get();
+        return DataTables::of($query)
+        ->addIndexColumn()
+        ->editColumn('created_at', function($query){
+            return date('d-M-Y', strtotime($query->created_at));
+        })
+        ->editColumn('updated_at', function($query){
+            return date('d-M-Y', strtotime($query->updated_at));
+        })
+        ->addColumn('status', function($query){
+            return $query->status == 'on' ? "<i class='text-primary'>Active</i>" : "<i class='text-danger'>Not-active</i>";
+        })
+        ->addColumn('action', function($query){
+            return '
+                <a href="'.url('admin/users/sellers/edit/'.$query->id_penjual).'" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
+                <a href="#" data-id="'.$query->id_penjual.'" class="hapus_sellers" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
+            ';
+        })
+        ->rawColumns(['status', 'action'])
+        ->make(true);
     }
 
     # menampilkan laman edit seller

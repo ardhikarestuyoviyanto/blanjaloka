@@ -58,60 +58,9 @@
                             <th>Total Produk</th>
                             <th>Status</th>
                             <th style="width: 60px">Aksi</th>
-                            <th class="none">Jam Operasional</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ($sellers as $no=>$s)
-                                <tr>
-                                    <td>{{ $no + 1 }}</td>
-                                    <td>{{ $s->no_toko }}</td>
-                                    <td>{{ $s->nama_user }}</td>
-                                    <td>{{ $s->nama_pasar }}</td>
-                                    <td>{{ $s->nama_toko }}</td>
-                                    <td>{{$s->nama_kategoritoko}}</td>
-                                    <td>23 Produk</td>
-                                    @if($s->status == 'on')
-                                        <td class="text-primary"><i>Active</i></td>
-                                    @else
-                                        <td class="text-danger"><i>Not Active</i></td>
-                                    @endif
-                                    <td >
-                                        <a href="" data-toggle="tooltip" title="Lihat Toko" data-placement="top"><span class="badge badge-success"><i class="fas fa-store-alt"></i></span></a>
-                                        <a href="{{url('admin/toko/jam/'.$s->id_penjual)}}" data-toggle="tooltip" title="Jam Toko" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
-                                        @if($s->status == 'on')
-                                            <a href="#" class="status" data-id="{{$s->id_penjual}}" data-status="off" data-pesan="Ubah Status Toko Menjadi Non Aktif ?" data-toggle="tooltip" title="Not Active" data-placement="top"><span class="badge badge-danger"><i class="fas fa-times"></i></span></a>
-                                        @else
-                                            <a href="#" class="status" data-id="{{$s->id_penjual}}" data-status="on" data-pesan="Ubah Status Toko Menjadi Aktif ?" data-toggle="tooltip" title="Active" data-placement="top"><span class="badge badge-primary"><i class="fas fa-check-double"></i></span></a>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <br><br>
-                                        <table class="table">
-                                            <thead>
-                                              <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Hari</th>
-                                                <th scope="col">Jam Buka</th>
-                                                <th scope="col">Jam Tutup</th>
-                                                <th scope="col">Catatan</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach(DB::table('jamtoko')->where('id_penjual', $s->id_penjual)->get() as $i=>$jam)
-                                              <tr>
-                                                <th scope="row">{{$i+1}}</th>
-                                                <td>{{ucfirst($jam->hari)}}</td>
-                                                <td>{{ $jam->buka }}</td>
-                                                <td>{{ $jam->tutup }}</td>
-                                                <td>{{ $jam->catatan }}</td>
-                                              </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -123,15 +72,30 @@
 
 <script>
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
+        $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+
         $('#tokotable').DataTable({
             "responsive":true,
+            processing: true,
+            serverSide: true,
+            ajax: "{{url('admin/toko/json')}}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'no_toko', name: 'no_toko' },
+                { data: 'nama_user', name: 'nama_user' },
+                { data: 'nama_pasar', name: 'nama_pasar' },
+                { data: 'nama_toko', name: 'nama_toko' },
+                { data: 'nama_kategoritoko', name: 'nama_kategoritoko' },
+                { data: 'total_produk', name: 'total_produk' },
+                { data: 'status', name: 'status' },
+                { data: 'action', name: 'action' },
 
+            ],
         });
 
-        //update status toko
-        $('.status').click(function(e){
+        $('#tokotable').on('click', '.status[data-id]', function(e){
             e.preventDefault();
+
             var confirmed = confirm($(this).data('pesan'));
 
             if(confirmed) {

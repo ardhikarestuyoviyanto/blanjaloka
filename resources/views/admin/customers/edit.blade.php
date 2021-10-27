@@ -74,6 +74,47 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
+                            <label for="nis" class="col-sm-2 col-form-label">Provinsi</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" required name="provinsi" id="provinsi">
+                                    <option value=""> - PILIH PROVINSI - </option>
+                                    @foreach ($provinsi as $id => $name)
+                                        @if($id == $c->provinsi)
+                                            <option selected value="{{ $id }}">{{ $name }}</option>
+                                        @else
+                                            <option value="{{ $id }}">{{ $name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="nis" class="col-sm-2 col-form-label">Kabupaten</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" required name="kabupaten" id="kabupaten">
+                                    <option value=""> - PILIH KABUPATEN - </option>
+                                    @foreach ($kabupaten as $id => $name)
+                                        @if($id == $c->kabupaten)
+                                            <option selected value="{{ $id }}">{{ $name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="nis" class="col-sm-2 col-form-label">Kecamatan</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" required name="kecamatan" id="kecamatan">
+                                    <option value=""> - PILIH KECAMATAN - </option>
+                                    @foreach ($kecamatan as $id => $name)
+                                        @if($id == $c->kecamatan)
+                                            <option selected value="{{ $id }}">{{ $name }}</option>
+                                        @endif                                 
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="nis" class="col-sm-2 col-form-label">Alamat Lengkap</label>
                             <div class="col-sm-10">
                                 <textarea name="alamat" class="form-control" cols="6" rows="6" placeholder="Alamat Lengkap, Meliputi RT RW">{{$c->alamat}}</textarea>
@@ -180,7 +221,8 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label>No Toko</label>
-                    <input type="text" name="no_toko" id="no_toko" class="form-control" required placeholder="Nomor Toko">
+                    <input type="text" name="no_toko" id="no_toko" class="form-control" required placeholder="Nomor Toko" value="{{$id_users.'.'.date('Y').''.date('m').''.date('d').'.'.rand(10,99).'.'.$id_users}}">
+                    <small id="emailHelp" class="form-text text-muted">No Toko Hasil Generate Sistem</small>
                 </div>
                 <div class="mb-3">
                     <label>Nama Toko</label>
@@ -230,4 +272,39 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        
+        $('#provinsi').on('change', function(){
+            $.ajax({
+                url : "{{url('location/getkabupaten')}}",
+                method : 'POST',
+                data : {'id':$(this).val(), '_token': "{{csrf_token()}}"},
+                success: function(res){
+                    $('#kabupaten').empty();
+                    $('#kecamatan').empty();
+                    $.each(res, function(id, name){
+                        $('#kabupaten').append(new Option(name, id));
+                    });
+                }   
+            });
+        });
+
+        $('#kabupaten').on('change', function(){
+            $.ajax({
+                url : "{{url('location/getkecamatan')}}",
+                method : 'POST',
+                data : {'id':$(this).val(), '_token': "{{csrf_token()}}"},
+                success: function(res){
+                    $('#kecamatan').empty();
+                    $.each(res, function(id, name){
+                        $('#kecamatan').append(new Option(name, id));
+                    });
+                }   
+            });
+        });
+
+
+    });
+</script> 
 @endsection

@@ -26,7 +26,10 @@ class Users extends Authenticatable
         'alamat',
         'status',
         'google_id',
-        'facebook_id'
+        'facebook_id',
+        'provinsi',
+        'kabupaten',
+        'kecamatan'
     ];
 
     /**

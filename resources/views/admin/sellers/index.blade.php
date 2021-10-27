@@ -23,30 +23,6 @@
                 <div class="card-header">
                     Data Sellers
                 </div>
-                <div class="card-header bg-light">
-                    <form action="#" method="get">
-                        <div class="mb-3 row">
-                            <label for="nis" class="col-sm-2 col-form-label">Filtering tanggal akun dibuat</label>
-                            <div class="col-sm-10">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text">
-                                        <i class="far fa-calendar-alt"></i>
-                                      </span>
-                                    </div>
-                                    <input type="text" class="form-control float-right" id="reservation">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-3 mb-3 row">
-                            <label for="nis" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary btn-sm">Terapkan</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 <div class="card-body">
                     <table id="sellerstable" class="table table-bordered table-hover">
                         <thead>
@@ -61,35 +37,9 @@
                             <th>Updated at</th>
                             <th>Status</th>
                             <th style="width:10px;" class='notexport'>Aksi</th>
-                            <th class="none">Deskripsi Toko</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ($sellers as $no=>$s)
-                                <tr>
-                                    <td>{{ $no + 1 }}</td>
-                                    <td>{{ $s->nama_user }}</td>
-                                    <td>{{ $s->email }}</td>
-                                    <td>{{ $s->nama_pasar }}</td>
-                                    <td>{{ $s->nama_toko }}</td>
-                                    <td>{{ $s->nama_kategoritoko }}</td>
-                                    <td>{{ date('d-M-Y', strtotime($s->created_at))}}</td>
-                                    <td>{{ date('d-M-Y', strtotime($s->updated_at))}}</td>
-                                    @if($s->status == 'on')
-                                        <td class="text-primary"><i>Active</i></td>
-                                    @else
-                                        <td class="text-danger"><i>Not Active</i></td>
-                                    @endif
-                                    <td class="text-center">
-                                        <a href="{{url('admin/users/sellers/edit/'.$s->id_penjual)}}" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
-                                        <a href="#" data-id="<?= $s->id_penjual; ?>" class="hapus_sellers" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
-                                    </td>
-                                    <td>
-                                        <br>
-                                        {{$s->deskripsi_toko}}
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -101,10 +51,25 @@
 
 <script>
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-        $('#reservation').daterangepicker()
+        $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+        
         $('#sellerstable').DataTable({
             "responsive":true,
+            processing: true,
+            serverSide: true,
+            ajax: "{{url('admin/users/sellers/json')}}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'nama_user', name: 'nama_user' },
+                { data: 'email', name: 'email' },
+                { data: 'nama_pasar', name: 'nama_pasar' },
+                { data: 'nama_toko', name: 'nama_toko' },
+                { data: 'nama_kategoritoko', name: 'nama_kategoritoko' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'updated_at', name: 'updated_at' },
+                { data: 'status', name: 'status' },
+                { data: 'action', name: 'action' },
+            ],
             dom: 'Bfrtip',
             buttons: [
                 {
@@ -138,8 +103,8 @@
 
         });
 
-        //hapus sellers
-        $('.hapus_sellers').click(function(e){
+
+        $('#sellerstable').on('click', '.hapus_sellers[data-id]', function(e){
             e.preventDefault();
 
             var confirmed = confirm('Hapus sellers ini ?');

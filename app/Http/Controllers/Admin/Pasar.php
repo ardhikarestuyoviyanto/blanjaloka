@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pengelolapasar;
+use Laravolt\Indonesia\Models\Province;
+use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\District;
 
 class Pasar extends Controller
 {
@@ -26,7 +29,8 @@ class Pasar extends Controller
     public function addpasar(){
 
         $data = [
-            'pengelola' => Pengelolapasar::orderByDesc('id_pengelolapasar')->get()
+            'pengelola' => Pengelolapasar::orderByDesc('id_pengelolapasar')->get(),
+            'provinsi' => Province::pluck('name', 'code')
         ];
 
         return view('admin/pasar/data_pasar/add', $data)->with(['title' => 'Tambah Pasar', 'sidebar' => 'Data Pasar']);
@@ -38,7 +42,10 @@ class Pasar extends Controller
 
         $data = [
             'pasar' => DB::table('pasar')->where('id_pasar', $request->segment(4))->get(),
-            'pengelola' => Pengelolapasar::orderByDesc('id_pengelolapasar')->get()
+            'pengelola' => Pengelolapasar::orderByDesc('id_pengelolapasar')->get(),
+            'provinsi' => Province::pluck('name', 'code'),
+            'kabupaten' => City::pluck('name', 'code'),
+            'kecamatan' => District::pluck('name', 'code')
         ];
 
         return view('admin/pasar/data_pasar/edit', $data)->with(['title' => 'Edit Pasar', 'sidebar' => 'Data Pasar']);
@@ -104,7 +111,10 @@ class Pasar extends Controller
                     'no_pasar' => $request->post('no_pasar'),
                     'max_lapak' => $request->post('max_lapak'),
                     'max_pengunjung' => $request->post('max_pengunjung'),
-                    'id_pengelolapasar' => $request->post('id_pengelolapasar')
+                    'id_pengelolapasar' => $request->post('id_pengelolapasar'),
+                    'provinsi' => $request->post('provinsi'),
+                    'kabupaten' => $request->post('kabupaten'),
+                    'kecamatan' => $request->post('kecamatan')
                 ];
 
                 DB::table('pasar')->insert($data);
@@ -157,7 +167,10 @@ class Pasar extends Controller
                 'no_pasar' => $request->post('no_pasar'),
                 'max_lapak' => $request->post('max_lapak'),
                 'max_pengunjung' => $request->post('max_pengunjung'),
-                'id_pengelolapasar' => $request->post('id_pengelolapasar')
+                'id_pengelolapasar' => $request->post('id_pengelolapasar'),
+                'provinsi' => $request->post('provinsi'),
+                'kabupaten' => $request->post('kabupaten'),
+                'kecamatan' => $request->post('kecamatan')
             ];
 
             DB::table('pasar')->where('id_pasar', $request->post('id_pasar'))->update($data);

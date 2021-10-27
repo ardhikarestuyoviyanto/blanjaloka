@@ -57,6 +57,34 @@
                                 </div>
 
                                 <div class="mb-3 row">
+                                    <label for="nis" class="col-sm-2 col-form-label">Provinsi</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" required name="provinsi" id="provinsi">
+                                            <option value=""> - PILIH PROVINSI - </option>
+                                            @foreach ($provinsi as $id => $name)
+                                                <option value="{{ $id }}">{{ $name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="nis" class="col-sm-2 col-form-label">Kabupaten</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" required name="kabupaten" id="kabupaten">
+                                            <option value=""> - PILIH KABUPATEN - </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="nis" class="col-sm-2 col-form-label">Kecamatan</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" required name="kecamatan" id="kecamatan">
+                                            <option value=""> - PILIH KECAMATAN - </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
                                     <label for="nis" class="col-sm-2 col-form-label">Maksimal Lapak</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="max_lapak" placeholder="Maksimal Lapak" required value="{{old('max_lapak')}}">
@@ -147,6 +175,35 @@
 
         $("body").on("click",".deletefile",function(){ 
             $(this).closest('#removefile').remove();
+        });
+
+        $('#provinsi').on('change', function(){
+            $.ajax({
+                url : "{{url('location/getkabupaten')}}",
+                method : 'POST',
+                data : {'id':$(this).val(), '_token': "{{csrf_token()}}"},
+                success: function(res){
+                    $('#kabupaten').empty();
+                    $('#kecamatan').empty();
+                    $.each(res, function(id, name){
+                        $('#kabupaten').append(new Option(name, id));
+                    });
+                }   
+            });
+        });
+
+        $('#kabupaten').on('change', function(){
+            $.ajax({
+                url : "{{url('location/getkecamatan')}}",
+                method : 'POST',
+                data : {'id':$(this).val(), '_token': "{{csrf_token()}}"},
+                success: function(res){
+                    $('#kecamatan').empty();
+                    $.each(res, function(id, name){
+                        $('#kecamatan').append(new Option(name, id));
+                    });
+                }   
+            });
         });
 
     });

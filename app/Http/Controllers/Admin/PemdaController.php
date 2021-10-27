@@ -5,15 +5,34 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Pemda;
+use Yajra\DataTables\Facades\DataTables;
 
 class PemdaController extends Controller{
 
+    # menampilkan laman data pemda
     public function pemda(){
 
-        $data = [
-            'pemda' =>Pemda::orderByDesc('id_pemda')->get()
-        ];
-        return view('admin/pemda/index',$data)->with(['title' => 'Data Pemda', 'sidebar' => 'Data Pemda']);
+        return view('admin/pemda/index')->with(['title' => 'Data Pemda', 'sidebar' => 'Data Pemda']);
+
+    }
+
+    public function pemdajson(){
+        return DataTables::of(Pemda::orderByDesc('id_pemda')->get())
+        ->addIndexColumn()
+        ->editColumn('created_at', function(Pemda $pemda){
+            return date('d-M-Y', strtotime($pemda->created_at));
+        })
+        ->editColumn('updated_at', function(Pemda $pemda){
+            return date('d-M-Y', strtotime($pemda->updated_at));
+        })
+        ->addColumn('action', function(Pemda $pemda){
+            return '
+                <a href="#" data-id="'.$pemda->id_pemda.'" class="edit" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
+                <a href="#" data-id="'.$pemda->id_pemda.'" class="delete" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
+            ';
+        })
+        ->rawColumns(['action'])
+        ->make(true);
 
     }
 
