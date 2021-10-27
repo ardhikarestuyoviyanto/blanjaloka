@@ -65,7 +65,7 @@
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                 { data: 'nama_user', name: 'nama_user' },
                 { data: 'email', name: 'email' },
-                { data: 'no_telp', name: 'nop_telp' },
+                { data: 'no_telp', name: 'no_telp' },
                 { data: 'created_at', name: 'created_at' },
                 { data: 'updated_at', name: 'updated_at' },
                 { data: 'status', name: 'status' },

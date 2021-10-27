@@ -33,33 +33,17 @@
                             <thead>
                                 <tr>
                                     <th style="width:10px;">No</th>
+                                    <th>No KTP</th>
                                     <th>Nama Driver</th>
                                     <th>No. Telp</th>
-                                    <th>Alamat</th>
                                     <th>Kendaraan</th>
-                                    <th>Lahir</th>
+                                    <th>Tgl Lahir</th>
                                     <th class='notexport'>Created At</th>
                                     <th class='notexport'>Update At</th>
-                                    <th style="width:60px;" class='notexport'>Aksi</th>
+                                    <th style="width:9px;" class='notexport'>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($driver as $no=>$d)
-                                        <tr>
-                                            <td>{{ $no + 1 }}</td>
-                                            <td>{{ $d->nama_driver}}</td>
-                                            <td>{{ $d->no_telp }}</td>
-                                            <td>{{ $d->alamat }}</td>
-                                            <td>{{ $d->kendaraan }}</td>
-                                            <td>{{ $d->tgl_lahir }}</td>
-                                            <td>{{ date('d-M-Y', strtotime($d->created_at))}}</td>
-                                            <td>{{ date('d-M-Y', strtotime($d->updated_at))}}</td>
-                                            <td class="text-center">
-                                                <a href="{{url('admin/users/driver/edit/'.$d->id_driver)}}" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
-                                                <a href="#" data-id="<?= $d->id_driver; ?>" class="delete_driver" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
                                 </tbody>
                         </table>
                     </div>
@@ -72,9 +56,23 @@
 
     <script>
         $(document).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('body').tooltip({selector: '[data-toggle="tooltip"]'});
             $('#drivertable').DataTable({
                 "responsive":true,
+                processing: true,
+                serverSide: true,
+                ajax: "{{url('admin/users/driver/json')}}",
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                    { data: 'no_ktp', name: 'no_ktp' },
+                    { data: 'nama_driver', name: 'nama_driver' },
+                    { data: 'no_telp', name: 'no_telp' },
+                    { data: 'kendaraan', name: 'kendaraan' },
+                    { data: 'tgl_lahir', name: 'tgl_lahir' },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'updated_at', name: 'updated_at' },
+                    { data: 'action', name: 'action' }
+                ],
                 dom: 'Bfrtip',
                 buttons: [
                     {
@@ -108,8 +106,8 @@
             });
         });
 
-        //delete data pasar
-        $('.delete_driver').click(function(e){
+        //delete data driver
+        $('#drivertable').on('click', '.delete_driver[data-id]', function(e){
             e.preventDefault();
             var confirmed = confirm('Hapus Data ini ?');
 

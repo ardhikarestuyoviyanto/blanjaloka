@@ -12,7 +12,6 @@ use App\Http\Controllers\Admin\Pasar as PasarAdmin;
 use App\Http\Controllers\Admin\Toko as TokoAdmin;
 use App\Http\Controllers\Admin\Driver as DriverAdmin;
 use App\Http\Controllers\Admin\PemdaController as PemdaAdmin;
-use App\Http\Controllers\Location;
 //------------------------------------------------------------------
 use App\Http\Controllers\Sellers\Dashboard as DashboardSellers;
 
@@ -122,6 +121,7 @@ Route::prefix('admin')->group(function () {
         Route::get('driver/edit/{id}', [DriverAdmin::class, 'editdriver'])->middleware('sessionadmin');
         Route::post('driver/update', [DriverAdmin::class, 'updatedriver'])->middleware('sessionadmin');
         Route::post('driver/delete', [DriverAdmin::class, 'deletedriver'])->middleware('sessionadmin');
+        Route::get('driver/json', [DriverAdmin::class, 'driverjson'])->middleware('sessionadmin');
 
         # Pemda Data
         Route::get('pemda', [PemdaAdmin::class, 'pemda'])->middleware('sessionadmin');

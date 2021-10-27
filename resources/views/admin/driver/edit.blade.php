@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{url('admin/driver')}}">Data Driver</a></li>
+                            <li class="breadcrumb-item"><a href="{{url('admin/users/driver')}}">Data Driver</a></li>
                             <li class="breadcrumb-item active">Edit Data Driver</li>
                         </ol>
                     </div>
@@ -74,24 +74,21 @@
                                     <div class="mb-3 row control-group">
                                         <label for="nis" class="col-sm-2 col-form-label">Foto STNK</label>
                                         <div class="col-sm-10">
-                                            <div class="input-group">
-                                                <input type="file" name="foto_stnk[]" class="form-control filefoto" required accept=".png,.jpg">
-                                                <div class="input-group-prepend"> 
-                                                <button class="btn btn-success addfile" type="button"><i class="fas fa-plus"></i> Add</button>
-                                                </div>     
-    
-                                            </div>
-                                            @if ($errors->has('foto_stnk.*'))
-                                            <div class="text-danger text-small text-muted">
-                                                @foreach ($errors->get('foto_stnk.*') as $err)
-                                                    <span class="text-danger">@php print_r($err[0]) @endphp</span>
-                                                @endforeach
-                                            </div>
+                                            <input type="file" name="foto_stnk" class="form-control" accept=".png,.jpg"> 
+                                            <small id="emailHelp" class="form-text text-muted">
+                                                <a href="{{url('assets/admin/foto_stnk/'.$d->foto_stnk)}}" data-toggle="lightbox" data-title="Foto STNK" data-gallery="gallery">
+                                                    <i>Foto Terpsang : {{$d->foto_stnk}}</i>                                        
+                                                </a>  
+                                            </small>  
+                                            @if ($errors->has('foto_stnk'))
+                                                <div class="text-danger text-small text-muted">
+                                                    @foreach ($errors->get('foto_stnk') as $err)
+                                                        <span class="text-danger">{{ $err }}</span>
+                                                    @endforeach
+                                                </div>
                                             @endif  
                                         </div>
                                     </div>
-
-                                    <div class="fileadd"></div>
 
 
                                 </div>
@@ -107,33 +104,18 @@
         </section>
     </div>
 
-{{-- Notif Jika Data Pasar Berhasil Dibuat --}}
+{{-- Notif Jika Data Driver Berhasil Diedit --}}
 @if ($status = Session::get('success'))
 <script>
     swal("{{$status}}")
 </script>
 @endif
-
 <script>
-    $(document).ready(function(){
-        $('.addfile').click(function(){
-            var html = '';
-            html += '<div class="mb-3 row control-group" id="removefile">';
-            html += '<label for="nis" class="col-sm-2 col-form-label"></label>';
-            html += '<div class="col-sm-10 input-group">';
-            html += '<input type="file" name="fotopasar[]" accept=".png,.jpg" class="form-control filefoto" required>';
-            html += '<div class="input-group-prepend">';
-            html += '<button class="btn btn-danger deletefile" type="button"><i class="fas fa-times"></i> Remove</button>';
-            html += '</div></div></div>';
-
-            $('.fileadd').append(html);
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox({
+            alwaysShowClose: true
         });
-
-        $("body").on("click",".deletefile",function(){ 
-            $(this).closest('#removefile').remove();
-        });
-
     });
 </script>
-
 @endsection
