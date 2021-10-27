@@ -19,9 +19,6 @@
 
     <section class="content">
         <div class="container-fluid">
-            <div class="alert alert-light text-bold" role="alert">
-                Kolom tabel yang aktif menandakan akun customers tersebut terdaftar juga sebagai akun sellers
-            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -29,30 +26,7 @@
                             Data Customers
                             <a href="{{url('admin/users/customers/add')}}" class="btn btn-primary btn-sm" type="button" style="float: right;">Tambah</a>
                         </div>
-                        <div class="card-header bg-light">
-                            <form action="#" method="get">
-                                <div class="mb-3 row">
-                                    <label for="nis" class="col-sm-2 col-form-label">Filtering tanggal akun dibuat</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                              <span class="input-group-text">
-                                                <i class="far fa-calendar-alt"></i>
-                                              </span>
-                                            </div>
-                                            <input type="text" class="form-control float-right" id="reservation">
-                                        </div>
-                                    </div>
-                                </div>
-        
-                                <div class="mt-3 mb-3 row">
-                                    <label for="nis" class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary btn-sm">Terapkan</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+
                         <div class="card-body">
                         <table id="customerstable" class="table table-bordered table-hover">
                             <thead>
@@ -65,37 +39,10 @@
                                 <th class='notexport'>Update At</th>
                                 <th>Status</th>
                                 <th style="width:10px;" class='notexport'>Aksi</th>
-                                <th class="none">Alamat</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach ($customers as $no=>$c)
-                                    @if(count(DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'penjual.id_pasar', '=', 'pasar.id_pasar')->where('users.id_users', $c->id_users)->get()) == 1)
-                                        <tr class="table-secondary">
-                                    @else
-                                        <tr>
-                                    @endif
-                                        <td>{{ $no + 1 }}</td>
-                                        <td>{{ $c->nama_user }}</td>
-                                        <td>{{ $c->email }}</td>
-                                        <td>{{ $c->no_telp }}</td>
-                                        <td>{{ date('d-M-Y', strtotime($c->created_at))}}</td>
-                                        <td>{{ date('d-M-Y', strtotime($c->updated_at))}}</td>
-                                        @if($c->status == 'on')
-                                            <td class="text-primary"><i>Active</i></td>
-                                        @else
-                                            <td class="text-danger"><i>Not Active</i></td>
-                                        @endif
-                                        <td class="text-center">
-                                            <a href="{{url('admin/users/customers/edit/'.$c->id_users)}}" class="edit" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
-                                            <a href="#" data-id="<?= $c->id_users; ?>" class="hapus_customers" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
-                                        </td>
-                                        <td>
-                                            <br>
-                                            {{$c->alamat}}
-                                        </td>
-                                    </tr>
-                                @endforeach
+
                             </tbody>
                         </table>
                         </div>
@@ -107,11 +54,23 @@
 </div>
 <script>
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-        $('#reservation').daterangepicker()
+        $('body').tooltip({selector: '[data-toggle="tooltip"]'});
 
         $('#customerstable').DataTable({
             "responsive":true,
+            processing: true,
+            serverSide: true,
+            ajax: "{{url('admin/users/customers/json')}}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'nama_user', name: 'nama_user' },
+                { data: 'email', name: 'email' },
+                { data: 'no_telp', name: 'nop_telp' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'updated_at', name: 'updated_at' },
+                { data: 'status', name: 'status' },
+                { data: 'action', name: 'action' }
+            ],
             dom: 'Bfrtip',
             buttons: [
                 {
@@ -143,9 +102,11 @@
 
             ],
 
+
+
         });
 
-        $('.hapus_customers').click(function(e){
+        $('#customerstable').on('click', '.hapus_customers[data-id]', function(e){
             e.preventDefault();
 
             var confirmed = confirm('Hapus customers ini ?');

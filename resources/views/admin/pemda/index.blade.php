@@ -38,36 +38,13 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>No Telp</th>
+                                    <th>Alamat</th>
                                     <th>Created at</th>
                                     <th>Update at</th>
                                     <th style="width:10px;" class='notexport'>Aksi</th>
-                                    <th class="none">Alamat</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pemda as $no => $p)
-                                    <tr>
-                                        <td>{{ $no + 1 }}</td>
-                                        <td>{{ $p->noktp }}</td>
-                                        <td>{{ $p->nama_pemda }}</td>
-                                        <td>{{ $p->email }}</td>
-                                        <td>{{ $p->no_telp }}</td>
-                                        <td>{{ date('d-M-Y', strtotime($p->created_at)) }}</td>
-                                        <td>{{ date('d-M-Y', strtotime($p->updated_at)) }}</td>
-                                        <td class="text-center">
-                                            <a href="#" data-id="<?= $p->id_pemda ?>" class="edit"
-                                                data-toggle="tooltip" title="Edit" data-placement="top"><span
-                                                    class="badge badge-success"><i class="fas fa-edit"></i></span></a>
-                                            <a href="#" data-id="<?= $p->id_pemda ?>" class="delete"
-                                                data-toggle="tooltip" title="Hapus" data-placement="top"><span
-                                                    class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
-                                        </td>
-                                        <td>
-                                            <br>
-                                            {{ $p->alamat_pemda }}
-                                        </td>
-                                    </tr>
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -227,10 +204,24 @@
         $(document).ready(function() {
             $('.spinner').hide();
 
-            $('[data-toggle="tooltip"]').tooltip();
+            $('body').tooltip({selector: '[data-toggle="tooltip"]'});
 
             $('#pemdatable').DataTable({
-                "responsive": true,
+                "responsive":true,
+                processing: true,
+                serverSide: true,
+                ajax: "{{url('admin/users/pemda/json')}}",
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                    { data: 'noktp', name: 'noktp' },
+                    { data: 'nama_pemda', name: 'nama_pemda' },
+                    { data: 'email', name: 'email' },
+                    { data: 'no_telp', name: 'no_telp' },
+                    { data: 'alamat_pemda', name: 'alamat_pemda' },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'updated_at', name: 'updated_at' },
+                    { data: 'action', name: 'action' }
+                ],
                 dom: 'Bfrtip',
                 buttons: [{
                         extend: 'excel',
@@ -293,7 +284,8 @@
             //-------------------------------------
 
             //show modal update form 
-            $('.edit').click(function(e) {
+
+            $('#pemdatable').on('click', '.edit[data-id]', function(e){
                 e.preventDefault();
                 $.ajax({
                     data: {
@@ -349,7 +341,7 @@
 
             //----------------------------------------------
             // hapus form
-            $('.delete').click(function(e) {
+            $('#pemdatable').on('click', '.delete[data-id]', function(e){
                 e.preventDefault();
                 var confirmed = confirm('Hapus Akun Pemda Ini ?');
 

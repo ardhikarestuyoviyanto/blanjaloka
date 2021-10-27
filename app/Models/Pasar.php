@@ -20,7 +20,10 @@ class Pasar extends Model
         'alamat',
         'embbed_maps',
         'foto_pasar',
-        'operasional_pasar'
+        'operasional_pasar',
+        'provinsi',
+        'kabupaten',
+        'kecamatan'
     ];
 
     /**

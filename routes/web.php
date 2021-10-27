@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\Pasar as PasarAdmin;
 use App\Http\Controllers\Admin\Toko as TokoAdmin;
 use App\Http\Controllers\Admin\Driver as DriverAdmin;
 use App\Http\Controllers\Admin\PemdaController as PemdaAdmin;
-
+use App\Http\Controllers\Location;
 //------------------------------------------------------------------
 use App\Http\Controllers\Sellers\Dashboard as DashboardSellers;
 
@@ -57,6 +57,10 @@ Route::get('auth/admin', [Auth::class, 'adminlogin']);
 # admin login handler
 Route::post('auth/adminlogin', [Auth::class, 'adminlogin_handler']);
 
+# Lokasi get
+Route::post('location/getkabupaten', [\App\Http\Controllers\Location::class, 'kabupaten']);
+Route::post('location/getkecamatan', [\App\Http\Controllers\Location::class, 'kecamatan']);
+
 //--------------------------------------------------------------------------------------
 // *************************************************************************************
 //---------------------------------------------------------------------------------------
@@ -100,6 +104,7 @@ Route::prefix('admin')->group(function () {
         Route::post('customers/edithandler', [CustomersAdmin::class, 'updatecustomers'])->middleware('sessionadmin');
         Route::post('customers/makesellers', [CustomersAdmin::class, 'makesellers'])->middleware('sessionadmin');
         Route::post('customers/delete', [CustomersAdmin::class, 'deletecustomers'])->middleware('sessionadmin');
+        Route::get('customers/json', [CustomersAdmin::class, 'customersjson'])->middleware('sessionadmin');
 
         #Sellers Data
         Route::get('sellers', [SellersAdmin::class, 'sellers'])->middleware('sessionadmin');
@@ -108,6 +113,7 @@ Route::prefix('admin')->group(function () {
         Route::post('sellers/edithandler', [SellersAdmin::class, 'updatesellers'])->middleware('sessionadmin');
         Route::post('sellers/deletefototoko', [SellersAdmin::class, 'deletefototoko'])->middleware('sessionadmin');
         Route::get('sellers/datasensitive/{id}', [SellersAdmin::class, 'datasensitivesellers'])->middleware('sessionadmin');
+        Route::get('sellers/json', [SellersAdmin::class, 'sellersjson'])->middleware('sessionadmin');
 
         # Driver Data
         Route::get('driver', [DriverAdmin::class, 'driver'])->middleware('sessionadmin');
@@ -118,6 +124,7 @@ Route::prefix('admin')->group(function () {
         Route::post('pemda/get', [PemdaAdmin::class, 'getpemda'])->middleware('sessionadmin');
         Route::post('pemda/update', [PemdaAdmin::class, 'editpemda'])->middleware('sessionadmin');
         Route::post('pemda/delete', [PemdaAdmin::class, 'deletepemda'])->middleware('sessionadmin');
+        Route::get('pemda/json', [PemdaAdmin::class, 'pemdajson'])->middleware('sessionadmin');
 
     });
     # Master Toko
@@ -141,6 +148,7 @@ Route::prefix('admin')->group(function () {
 
         # List Data Toko
         Route::get('/', [TokoAdmin::class, 'datatoko'])->middleware('sessionadmin');
+        Route::get('json', [TokoAdmin::class, 'datatokojson'])->middleware('sessionadmin');
     });
 });
 
