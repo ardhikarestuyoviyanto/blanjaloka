@@ -6,11 +6,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Data Driver</h1>
+                        <h1 class="m-0">Data Pasar</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item active">Data Driver</li>
+                            <li class="breadcrumb-item active">Data Pasar</li>
                         </ol>
                     </div>
                 </div>
@@ -21,42 +21,59 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        Data Driver
+                        Data Pasar
 
                         <div class="float-right d-none d-sm-inline-block">
-                            <a href="{{ url('admin/users/driver/add') }}" class="btn btn-primary btn-sm">Tambah</a>
+                            <a href="{{ url('admin/pasar/add') }}" class="btn btn-primary btn-sm">Tambah</a>
                         </div>
 
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered table-hover" id="drivertable">
+                        <table class="table table-bordered table-hover" id="pasartable">
                             <thead>
                                 <tr>
                                     <th style="width:10px;">No</th>
-                                    <th>Nama Driver</th>
-                                    <th>No. Telp</th>
+                                    <th>Nama Pasar</th>
                                     <th>Alamat</th>
-                                    <th>Kendaraan</th>
-                                    <th>Lahir</th>
-                                    <th class='notexport'>Created At</th>
-                                    <th class='notexport'>Update At</th>
                                     <th style="width:60px;" class='notexport'>Aksi</th>
+                                    <th class="notexport none">Jam Operasional Pasar</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($driver as $no=>$d)
+                                    @foreach ($pasar as $no=>$p)
                                         <tr>
                                             <td>{{ $no + 1 }}</td>
-                                            <td>{{ $d->nama_driver}}</td>
-                                            <td>{{ $d->no_telp }}</td>
-                                            <td>{{ $d->alamat }}</td>
-                                            <td>{{ $d->kendaraan }}</td>
-                                            <td>{{ $d->tgl_lahir }}</td>
-                                            <td>{{ date('d-M-Y', strtotime($d->created_at))}}</td>
-                                            <td>{{ date('d-M-Y', strtotime($d->updated_at))}}</td>
+                                            <td>{{ $p->nama_pasar }}</td>
+                                            <td>{{ $p->alamat }}</td>
                                             <td class="text-center">
-                                                <a href="{{url('admin/users/driver/edit/'.$d->id_driver)}}" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
-                                                <a href="#" data-id="<?= $d->id_driver; ?>" class="delete_driver" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
+                                                <a href="{{url('admin/pasar/edit/'.$p->id_pasar)}}" data-toggle="tooltip" title="Edit" data-placement="top"><span class="badge badge-success"><i class="fas fa-edit"></i></span></a>
+                                                <a href="{{url('admin/pasar/jam/'.$p->id_pasar)}}" data-toggle="tooltip" title="Jam Pasar" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
+                                                <a href="#" data-id="<?= $p->id_pasar; ?>" class="delete_pasar" data-toggle="tooltip" title="Hapus" data-placement="top"><span class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
+                                            </td>
+                                            <td>
+                                                <br><br>
+                                                <table class="table">
+                                                    <thead>
+                                                      <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Hari</th>
+                                                        <th scope="col">Jam Buka</th>
+                                                        <th scope="col">Jam Tutup</th>
+                                                        <th scope="col">Catatan</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach(DB::table('jampasar')->where('id_pasar', $p->id_pasar)->get() as $i=>$jam)
+                                                      <tr>
+                                                        <th scope="row">{{$i+1}}</th>
+                                                        <td>{{ucfirst($jam->hari)}}</td>
+                                                        <td>{{ $jam->buka }}</td>
+                                                        <td>{{ $jam->tutup }}</td>
+                                                        <td>{{ $jam->catatan }}</td>
+                                                      </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -69,11 +86,10 @@
         </section>
     </div>
 
-
     <script>
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
-            $('#drivertable').DataTable({
+            $('#pasartable').DataTable({
                 "responsive":true,
                 dom: 'Bfrtip',
                 buttons: [
@@ -109,16 +125,16 @@
         });
 
         //delete data pasar
-        $('.delete_driver').click(function(e){
+        $('.delete_pasar').click(function(e){
             e.preventDefault();
-            var confirmed = confirm('Hapus Data ini ?');
+            var confirmed = confirm('Hapus jam ini ?');
 
             if(confirmed) {
 
                 $.ajax({
-                    data: {'id_driver':$(this).data('id'), '_token': "{{csrf_token()}}"},
+                    data: {'id_pasar':$(this).data('id'), '_token': "{{csrf_token()}}"},
                     type: 'POST',
-                    url:"{{url('admin/users/driver/delete')}}",
+                    url:"{{url('admin/pasar/deletehandler')}}",
                     success : function(data){
                         swal(data.pesan)
                         .then((result) => {

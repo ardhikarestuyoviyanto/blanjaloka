@@ -184,11 +184,11 @@
 
                                 </div>
 
-                            <div class="card-footer">
-                                <button class="btn btn-primary" style="float: right">Update</button>
-                            </div>
-                        </form>
-                    @endforeach
+                                <div class="card-footer">
+                                    <button class="btn btn-primary" style="float: right">Update</button>
+                                </div>
+                            </form>
+                        @endforeach
                 </div>
 
             </div>
