@@ -35,7 +35,8 @@
                                 <tr>
                                     <th style="width:10px;">No</th>
                                     <th>Kategori</th>
-                                    <th>Icon</th>
+                                    <th class='notexport'>Icon</th>
+                                    <th style="width: 120px">Total Produk</th>
                                     <th style="width:10px;" class='notexport'>Aksi</th>
                                 </tr>
                             </thead>
@@ -44,15 +45,15 @@
                                     <tr>
                                         <td>{{ $no + 1 }}</td>
                                         <td>{{ $k->nama_kategori }}</td>
-                                        <td><img src="{{ asset('assets/admin/icon_kategoriproduk/' . $k->icon_kategori) }}"
-                                                alt="" width="200px"></td>
+                                        <td><img src="{{ asset('assets/admin/icon_kategoriproduk/' . $k->icon_kategori) }}" alt="" width="30px"></td>
+                                        <td>{{count(DB::table('produk')->where('id_kategoriproduk', $k->id_kategoriproduk)->get()).' Produk'}}</td>
                                         <td class="text-center">
-                                            <a href="#" data-id="<?= $k->id_kategori ?>" class="edit"
-                                                data-toggle="tooltip" title="Edit" data-placement="top"><span
-                                                    class="badge badge-success"><i class="fas fa-edit"></i></span></a>
-                                            <a href="#" data-id="<?= $k->id_kategori ?>" class="delete"
-                                                data-toggle="tooltip" title="Hapus" data-placement="top"><span
-                                                    class="badge badge-danger"><i class="fas fa-trash"></i></span></a>
+                                            <a href="#" data-id="<?= $k->id_kategori ?>" class="edit" data-toggle="tooltip" title="Edit" data-placement="top">
+                                                <span class="badge badge-success"><i class="fas fa-edit"></i></span>
+                                            </a>
+                                            <a href="#" data-id="<?= $k->id_kategori ?>" class="delete" data-toggle="tooltip" title="Hapus" data-placement="top">
+                                                <span class="badge badge-danger"><i class="fas fa-trash"></i></span>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

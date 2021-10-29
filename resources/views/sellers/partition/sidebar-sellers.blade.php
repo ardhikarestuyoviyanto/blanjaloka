@@ -143,30 +143,23 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
+                            <a href="{{ url('sellers/produk/add') }}"
+                                class="nav-link {{ $sidebar === 'Tambah Produk' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tambah Produk</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ url('sellers/produk') }}"
                                 class="nav-link {{ $sidebar === 'Produk Saya' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Produk Saya</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ url('sellers/produk/add') }}"
-                                class="nav-link {{ $sidebar === 'Data Pasar' ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tambah Produk</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('sellers') }}"
-                                class="nav-link {{ $sidebar === 'Data Pasar' ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Produk Habis</p>
-                            </a>
-                        </li>
                     </ul>
                     </li>
 
-                @if ($sidebar == 'Data Diri')
+                @if ($sidebar == 'Akun Saya' || $sidebar == 'Toko Saya')
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link active">
                     @else
@@ -180,19 +173,36 @@
                 </p>
                 </a>
                 <ul class="nav nav-treeview">
+
                     <li class="nav-item">
-                        <a href="{{ url('/') }}"
-                            class="nav-link {{ $sidebar === 'Data Diri' ? 'active' : '' }}">
+                        <a href="{{ url('sellers/setting/akun') }}"
+                            class="nav-link {{ $sidebar === 'Akun Saya' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Data Diri</p>
+                            <p>Akun Saya</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ url('/') }}"
+                        <a href="{{ url('sellers/setting/toko') }}"
+                            class="nav-link {{ $sidebar === 'Toko Saya' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Toko Saya</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ url('sellers/setting/alamat') }}"
                             class="nav-link {{ $sidebar === 'Data Diri' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Dekorasi Toko</p>
+                            <p>Alamat Toko</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ url('sellers/setting/rekening') }}"
+                            class="nav-link {{ $sidebar === 'Data Diri' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Rekening Bank</p>
                         </a>
                     </li>
                 </ul>

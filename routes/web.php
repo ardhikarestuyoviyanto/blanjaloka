@@ -14,8 +14,11 @@ use App\Http\Controllers\Admin\Pasar as PasarAdmin;
 use App\Http\Controllers\Admin\Toko as TokoAdmin;
 use App\Http\Controllers\Admin\Driver as DriverAdmin;
 use App\Http\Controllers\Admin\PemdaController as PemdaAdmin;
+use App\Http\Controllers\Admin\Produk as ProdukAdmin;
 //------------------------------------------------------------------
 use App\Http\Controllers\Sellers\Dashboard as DashboardSellers;
+use App\Http\Controllers\Sellers\Produk as ProdukSellers;
+use App\Http\Controllers\Sellers\Setting as SettingSellers;
 
 /*
 |--------------------------------------------------------------------------
@@ -178,6 +181,29 @@ Route::post('sellers/daftar_handler', [Auth::class, 'sellersregister_handler'])-
 Route::prefix('sellers')->group(function () {
     # Homepage Sellers
     Route::get('/', [DashboardSellers::class, 'index'])->middleware('sessionusers');
+
+    # Modul Produk
+    Route::prefix('produk')->group(function () {
+        
+        # Data Produk
+        Route::get('/', [ProdukSellers::class, 'index'])->middleware('sessionusers');
+        # Tambah Produk
+        Route::get('add', [ProdukSellers::class, 'addproduk'])->middleware('sessionusers');
+
+    });
+
+    # Modul Setting
+    Route::prefix('setting')->group(function () {
+        
+        # Akun Saya
+        Route::get('akun', [SettingSellers::class, 'akun'])->middleware('sessionusers');
+
+        # Toko Saya
+        Route::get('toko', [SettingSellers::class, 'toko'])->middleware('sessionusers');
+
+
+    });
+
 });
 
 # Login Berhasil Penjual & Pembeli

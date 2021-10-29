@@ -236,7 +236,7 @@
                     </ul>
                     </li>
 
-                    @if ($sidebar == 'Data Produk' || 'Kategori Produk')
+                    @if ($sidebar == 'Data Produk' || $sidebar == 'Kategori Produk')
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link active">
                             @else
