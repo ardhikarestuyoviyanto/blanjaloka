@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Pasar as PasarAdmin;
 use App\Http\Controllers\Admin\Toko as TokoAdmin;
 use App\Http\Controllers\Admin\Driver as DriverAdmin;
 use App\Http\Controllers\Admin\PemdaController as PemdaAdmin;
+use App\Http\Controllers\Admin\Produk as ProdukAdmin;
 
 //------------------------------------------------------------------
 use App\Http\Controllers\Sellers\Dashboard as DashboardSellers;
@@ -141,6 +142,15 @@ Route::prefix('admin')->group(function () {
 
         # List Data Toko
         Route::get('/', [TokoAdmin::class, 'datatoko'])->middleware('sessionadmin');
+    });
+    #Master Produk
+    Route::prefix('produk')->group(function () {
+        # List Kategori Produk
+        Route::get('kategori', [ProdukAdmin::class, 'kategoriproduk'])->middleware('sessionadmin');
+        Route::post('kategori/insert', [ProdukAdmin::class, 'insertkategoriproduk'])->middleware('sessionadmin');
+        Route::post('kategori/get', [ProdukAdmin::class, 'getkategoriproduk'])->middleware('sessionadmin');
+        Route::post('kategori/update', [ProdukAdmin::class, 'updatekategoriproduk'])->middleware('sessionadmin');
+        Route::post('kategori/delete', [ProdukAdmin::class, 'deletekategoriproduk'])->middleware('sessionadmin');
     });
 });
 

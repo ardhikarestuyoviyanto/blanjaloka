@@ -236,11 +236,10 @@
                     </ul>
                     </li>
 
-                    @if ($sidebar == 'Kategori Produk')
+                    @if ($sidebar == 'Data Produk' || 'Kategori Produk')
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link active">
-                                <a href="#" class="nav-link active">
-                                @else
+                            @else
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                     @endif
@@ -252,7 +251,8 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link {{ $sidebar === 'Kategori Produk' ? 'active' : '' }}">
+                            <a href="{{ url('admin/produk/kategori') }}"
+                                class="nav-link {{ $sidebar === 'Kategori Produk' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Kategori Produk</p>
                             </a>
