@@ -41,9 +41,73 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
+                            <label for="nis" class="col-sm-2 col-form-label">Tanggal Lahir</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="tgl_lahir" value="{{old('tgl_lahir')}}">
+                                @if ($errors->has('tgl_lahir'))
+                                <div class="text-danger text-small text-muted">
+                                    @foreach ($errors->get('tgl_lahir') as $err)
+                                        <span class="text-danger">{{ $err }}</span>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="nama_alumni" class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                            <div class="col-sm-10">
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input role" type="radio" name="jeniskelamin" id="flexRadioDefault99" value="Laki - Laki">
+                                    <label class="custom-control-label" for="flexRadioDefault99" style="font-weight: normal;">
+                                        Laki - Laki
+                                    </label>
+                                    </div>
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input role" type="radio" name="jeniskelamin" id="flexRadioDefault88" value="Perempuan">
+                                    <label class="custom-control-label" for="flexRadioDefault88" style="font-weight: normal;">
+                                        Perempuan
+                                    </label>
+                                </div>
+                                @if ($errors->has('jeniskelamin'))
+                                <div class="text-danger text-small text-muted">
+                                    @foreach ($errors->get('jeniskelamin') as $err)
+                                        <span class="text-danger">{{ $err }}</span>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="nis" class="col-sm-2 col-form-label">Provinsi</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" required name="provinsi" id="provinsi">
+                                    <option value=""> - PILIH PROVINSI - </option>
+                                    @foreach ($provinsi as $id => $name)
+                                        <option value="{{ $id }}">{{ $name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="nis" class="col-sm-2 col-form-label">Kabupaten</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" required name="kabupaten" id="kabupaten">
+                                    <option value=""> - PILIH KABUPATEN - </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="nis" class="col-sm-2 col-form-label">Kecamatan</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" required name="kecamatan" id="kecamatan">
+                                    <option value=""> - PILIH KECAMATAN - </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="nis" class="col-sm-2 col-form-label">Alamat Lengkap</label>
                             <div class="col-sm-10">
-                                <textarea name="alamat" class="form-control" cols="6" rows="6" placeholder="Alamat Lngkap, Meliputi RT RW">{{old('alamat')}}</textarea>
+                                <textarea name="alamat" class="form-control" cols="6" rows="6" placeholder="Alamat Lengkap, Meliputi RT RW">{{old('alamat')}}</textarea>
                                 @if ($errors->has('alamat'))
                                 <div class="text-danger text-small text-muted">
                                     @foreach ($errors->get('alamat') as $err)
@@ -134,5 +198,41 @@
     swal("{{$status}}")
 </script>
 @endif
+
+<script>
+    $(document).ready(function(){
+
+        $('#provinsi').on('change', function(){
+            $.ajax({
+                url : "{{url('location/getkabupaten')}}",
+                method : 'POST',
+                data : {'id':$(this).val(), '_token': "{{csrf_token()}}"},
+                success: function(res){
+                    $('#kabupaten').empty();
+                    $('#kecamatan').empty();
+                    $.each(res, function(id, name){
+                        $('#kabupaten').append(new Option(name, id));
+                    });
+                }   
+            });
+        });
+
+        $('#kabupaten').on('change', function(){
+            $.ajax({
+                url : "{{url('location/getkecamatan')}}",
+                method : 'POST',
+                data : {'id':$(this).val(), '_token': "{{csrf_token()}}"},
+                success: function(res){
+                    $('#kecamatan').empty();
+                    $.each(res, function(id, name){
+                        $('#kecamatan').append(new Option(name, id));
+                    });
+                }   
+            });
+        });
+
+
+    });
+</script>   
 
 @endsection

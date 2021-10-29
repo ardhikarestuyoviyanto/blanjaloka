@@ -7,7 +7,7 @@
     <div class="container">
         <nav id="breadcrumb" style="--bs-breadcrumb-divider: '&rarr;'" aria-label="breadcrumb">
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a class="text-decoration-none cai-color-text" href="#">Home</a></li>
+            <li class="breadcrumb-item"><a class="text-decoration-none cai-color-text" href="{{url('index')}}">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Daftar Sebagai Sellers</li>
             </ol>
         </nav>

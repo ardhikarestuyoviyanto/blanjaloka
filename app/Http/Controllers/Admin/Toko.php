@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class Toko extends Controller
 {
@@ -23,12 +24,51 @@ class Toko extends Controller
     # Menampilkan views list toko
     public function datatoko(){
 
-        # join 3 tabel (users, penjual, pasar)
         $data = [
-            'sellers' => DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'pasar.id_pasar', '=', 'penjual.id_pasar')->join('kategoritoko', 'kategoritoko.id_kategoritoko', '=', 'penjual.id_kategoritoko')->orderBy('penjual.id_penjual', "DESC")->get(),
             'pasar' => DB::table('pasar')->get(),
         ];
         return view('admin/toko/data_toko/index', $data)->with(['title'=> 'Data Toko', 'sidebar' => 'Data Toko']);
+
+    }
+
+    # get datatables toko
+    public function datatokojson(){
+
+        $query = DB::table('users')->join('penjual', 'users.id_users', '=', 'penjual.id_users')->join('pasar', 'pasar.id_pasar', '=', 'penjual.id_pasar')->join('kategoritoko', 'kategoritoko.id_kategoritoko', '=', 'penjual.id_kategoritoko')->orderBy('penjual.id_penjual', "DESC")->get();
+        return DataTables::of($query)
+        ->addIndexColumn()
+        ->addColumn('status', function($query){
+            return $query->status == 'on' ? "<i class='text-primary'>Active</i>" : "<i class='text-danger'>Not-active</i>";
+        })
+        ->addColumn('total_produk', function($query){
+
+            # Belum Berfungsi
+            return '23 Produk';
+
+        })
+        ->addColumn('action', function($query){
+            
+            if($query->status == 'on'){
+
+                return '
+                <a href="" data-toggle="tooltip" title="Lihat Toko" data-placement="top"><span class="badge badge-success"><i class="fas fa-store-alt"></i></span></a>
+                <a href="'.url('admin/toko/jam/'.$query->id_penjual).'" data-toggle="tooltip" title="Jam Toko" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
+                <a href="#" class="status" data-id="'.$query->id_penjual.'" data-status="off" data-pesan="Ubah Status Toko Menjadi Non Aktif ?" data-toggle="tooltip" title="Not Active" data-placement="top"><span class="badge badge-danger"><i class="fas fa-times"></i></span></a>
+                ';
+
+            }else{
+
+                return '
+                <a href="" data-toggle="tooltip" title="Lihat Toko" data-placement="top"><span class="badge badge-success"><i class="fas fa-store-alt"></i></span></a>
+                <a href="'.url('admin/toko/jam/'.$query->id_penjual).'" data-toggle="tooltip" title="Jam Toko" data-placement="top"><span class="badge badge-info"><i class="fas fa-cog"></i></span></a>
+                <a href="#" class="status" data-id="'.$query->id_penjual.'" data-status="on" data-pesan="Ubah Status Toko Menjadi Aktif ?" data-toggle="tooltip" title="Active" data-placement="top"><span class="badge badge-primary"><i class="fas fa-check-double"></i></span></a>
+                ';
+
+            }
+
+        })
+        ->rawColumns(['status', 'total_produk', 'action'])
+        ->make(true);
 
     }
 

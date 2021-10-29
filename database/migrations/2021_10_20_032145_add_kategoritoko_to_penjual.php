@@ -39,6 +39,8 @@ class AddKategoritokoToPenjual extends Migration
     {
         Schema::table('penjual', function (Blueprint $table) {
             //
+            $table->dropForeign('id_kategoritoko');
+            $table->dropColumn(['foto_toko', 'no_toko', 'embbed_maps_toko', 'alamat_toko', 'no_ktp', 'no_rekening', 'nama_ktp', 'no_rekening', 'nama_bank', 'foto_ktp', 'foto_penjual_ktp', 'id_kategoritoko']);
         });
     }
 }

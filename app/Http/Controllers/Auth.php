@@ -8,7 +8,6 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
-use Mews\Captcha\Captcha;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Users;
@@ -57,7 +56,8 @@ class Auth extends Controller
                 'nama_user' => $request->post('nama_user'),
                 'email' => $request->post('email'),
                 'password' => password_hash($request->post('password'), PASSWORD_DEFAULT),
-                'status' => 'off'
+                'status' => 'off',
+                'fotoprofil' => 'no_image.png'
             ];
 
             # Insert Data Tabel Users
@@ -223,7 +223,8 @@ class Auth extends Controller
                             'email' => $user->getEmail(),
                             'password' => password_hash(rand(0, 1000), PASSWORD_DEFAULT),
                             'status' => 'on',
-                            'google_id' => $user->getId()
+                            'google_id' => $user->getId(),
+                            'fotoprofil' => 'no_image.png'
                         );
 
                         # Tambah Akun Users Baru
@@ -314,7 +315,8 @@ class Auth extends Controller
                             'email' => $user->getEmail(),
                             'password' => password_hash(rand(0, 1000), PASSWORD_DEFAULT),
                             'status' => 'on',
-                            'facebook_id' => $user->getId()
+                            'facebook_id' => $user->getId(),
+                            'fotoprofil' => 'no_image.png'
                         );
 
                         # Tambah Akun Users Baru
