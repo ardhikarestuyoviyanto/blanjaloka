@@ -83,7 +83,9 @@ class Customers extends Controller
             'password' => ['required', Password::min(6)->mixedCase()->numbers()->letters()],
             'no_telp' => ['required', 'unique:users'],
             'alamat' => ['required'],
-            'status' => ['required']
+            'status' => ['required'],
+            'jeniskelamin' => ['required'],
+            'tgl_lahir' => ['required']
         ]);
 
         if($validator->fails()){
@@ -101,7 +103,10 @@ class Customers extends Controller
                 'no_telp' => $request->post('no_telp'),
                 'provinsi' => $request->post('provinsi'),
                 'kabupaten' => $request->post('kabupaten'),
-                'kecamatan' => $request->post('kecamatan')
+                'kecamatan' => $request->post('kecamatan'),
+                'jeniskelamin' => $request->post('jeniskelamin'),
+                'tgl_lahir' => $request->post('tgl_lahir'),
+                'fotoprofil' => 'no_image.png'
             ];
 
             Users::create($data);
@@ -120,7 +125,9 @@ class Customers extends Controller
             'email' => 'required|email',
             'no_telp' => 'required',
             'alamat' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'jeniskelamin' => ['required'],
+            'tgl_lahir' => ['required']
         ]);
 
         if($validator->fails()){
@@ -158,7 +165,9 @@ class Customers extends Controller
                 'no_telp' => $request->post('no_telp'),
                 'provinsi' => $request->post('provinsi'),
                 'kabupaten' => $request->post('kabupaten'),
-                'kecamatan' => $request->post('kecamatan')
+                'kecamatan' => $request->post('kecamatan'),
+                'jeniskelamin' => $request->post('jeniskelamin'),
+                'tgl_lahir' => $request->post('tgl_lahir'),
             ];
 
             Users::where('id_users',$request->post('id_users'))->update($data);

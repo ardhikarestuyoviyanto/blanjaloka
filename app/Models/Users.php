@@ -29,7 +29,10 @@ class Users extends Authenticatable
         'facebook_id',
         'provinsi',
         'kabupaten',
-        'kecamatan'
+        'kecamatan',
+        'jeniskelamin',
+        'tgl_lahir',
+        'fotoprofil'
     ];
 
     /**

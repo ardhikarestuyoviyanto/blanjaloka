@@ -46,7 +46,7 @@
                   <li><a class="dropdown-item" href="#">Favorit</a></li>
                   <li><a class="dropdown-item" href="#">Daftar Belanja</a></li>
                   <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
-                  <li><a class="dropdown-item" href="#">Pengaturan</a></li>
+                  <li><a class="dropdown-item" href="{{url('setting/profil')}}">Pengaturan</a></li>
                   <li><a class="dropdown-item" href="{{url('logout')}}">Keluar</a></li>
                 </ul>
               </div>

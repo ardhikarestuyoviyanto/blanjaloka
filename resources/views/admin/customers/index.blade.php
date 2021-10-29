@@ -24,7 +24,7 @@
                     <div class="card">
                         <div class="card-header">
                             Data Customers
-                            <a href="{{url('admin/users/customers/')}}" class="btn btn-primary btn-sm" type="button" style="float: right;">Tambah</a>
+                            <a href="{{url('admin/users/customers/add')}}" class="btn btn-primary btn-sm" type="button" style="float: right;">Tambah</a>
                         </div>
 
                         <div class="card-body">

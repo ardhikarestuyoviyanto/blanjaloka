@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Homepage;
 use App\Http\Controllers\Auth;
-use App\Http\Controllers\Users;
+use App\Http\Controllers\Customers\Dashboard as DashboardCustomers;
+use App\Http\Controllers\Customers\Setting as SettingCustomers;
 
+//---------------------------------------------------------------------
 use App\Http\Controllers\Admin\Dashboard as DashboardAdmin;
 use App\Http\Controllers\Admin\Customers as CustomersAdmin;
 use App\Http\Controllers\Admin\Sellers as SellersAdmin;
@@ -170,4 +172,20 @@ Route::prefix('sellers')->group(function () {
 });
 
 # Login Berhasil Penjual & Pembeli
-Route::get('/index', [Users::class, 'index'])->middleware('sessionusers');
+Route::get('/index', [DashboardCustomers::class, 'index'])->middleware('sessionusers');
+# Setting Customers
+Route::prefix('setting')->group(function () {
+    # Laman Profil
+    Route::get('profil', [SettingCustomers::class, 'profil'])->middleware('sessionusers');
+    Route::post('profil/update', [SettingCustomers::class, 'updateprofil'])->middleware('sessionusers');
+    Route::post('profil/updatefoto', [SettingCustomers::class, 'updatefotoprofil'])->middleware('sessionusers');
+
+    # Laman Alamat
+    Route::get('alamat', [SettingCustomers::class, 'alamat'])->middleware('sessionusers');
+    Route::post('alamat/update', [SettingCustomers::class, 'updatealamat'])->middleware('sessionusers');
+
+    # Laman Password
+    Route::get('ubahpassword', [SettingCustomers::class, 'ubahpassword'])->middleware('sessionusers');
+    Route::post('ubahpassword/update', [SettingCustomers::class, 'ubahpassword_handler'])->middleware('sessionusers');
+
+});
