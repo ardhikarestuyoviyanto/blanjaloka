@@ -54,8 +54,8 @@
                             </div>
                         @endif
                     </div>
-                    <button type="submit"
-                        class="btn cai-color text-white fs-5 fw-bold p-2 w-100 mb-3 border-r-sip">Login</button>
+                    <button type="submit" class="btn cai-color text-white fs-5 fw-bold p-2 w-100 mb-3 border-r-sip">Login</button>
+                    <small><a href="{{url('forgetpassword')}}" class="text-black" style="float: right; text-decoration:none; color:black;">Lupa Password</a></small><br><br>
                     <div class="mb-4 d-flex align-items-center justify-content-center ">
                         <span class="line-masuk-dengan"></span>
                         <span class="text-center text-wrap mx-3 text-secondary text-kecil">atau login dengan</span>
