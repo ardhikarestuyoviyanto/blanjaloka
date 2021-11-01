@@ -6,7 +6,7 @@ https://blanjaloka.dikatest.xyz/
 ## Level Admin
 https://blanjaloka.dikatest.xyz/auth/admin <br><br>
 Email    : admin@gmail.com
-Password : admin123 
+Password : 123 
 
 # Instalasi
 1. git clone https://github.com/ardhikarestuyoviyanto/blanjaloka.git
