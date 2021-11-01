@@ -4,7 +4,7 @@
 ## Landing Page
 https://blanjaloka.dikatest.xyz/
 ## Level Admin
-https://blanjaloka.dikatest.xyz/auth/admin
+https://blanjaloka.dikatest.xyz/auth/admin <br><br>
 Email    : admin@gmail.com
 Password : admin123 
 
