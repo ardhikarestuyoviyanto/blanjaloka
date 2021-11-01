@@ -1,5 +1,13 @@
 # ![blanjaloka](https://user-images.githubusercontent.com/61740978/136319435-ace8163d-8fbd-4dc8-9b4f-b9ec2bd170ca.png)
 
+# Demo Aplikasi
+## Landing Page
+https://blanjaloka.dikatest.xyz/
+## Level Admin
+https://blanjaloka.dikatest.xyz/auth/admin
+Email    : admin@gmail.com
+Password : admin123 
+
 # Instalasi
 1. git clone https://github.com/ardhikarestuyoviyanto/blanjaloka.git
 2. composer update
