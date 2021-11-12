@@ -33,6 +33,6 @@ class EmailVerification extends Mailable
     public function build()
     {
         # Load Views ini Sebagai Templeate Email
-        return $this->from('restuyoviardhika@gmail.com')->subject('Email From Blanjaloka Company')->view('web/auth/verifikasiemail', $this->details);
+        return $this->from('dianapungki379@gmail.com')->subject('Email From Blanjaloka Company')->view('web/auth/verifikasiemail', $this->details);
     }
 }
