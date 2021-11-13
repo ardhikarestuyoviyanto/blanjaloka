@@ -46,7 +46,7 @@
                                             <label for="pin" class="col-sm-2 col-form-label">PIN Penjual</label>
                                             <div class="col-sm-10">
                                                 <input type="password" class="form-control" name="pin"
-                                                    placeholder="PIN max 6 Digit" required>
+                                                    placeholder="PIN max 6 Digit" value="{{ $p->pin }}">
                                                 @if ($errors->has('pin'))
                                                     <div class="text-danger text-small">
                                                         @foreach ($errors->get('pin') as $err)
@@ -75,8 +75,8 @@
                                         <div class="mb-3 row">
                                             <label for="foto_ktp" class="col-sm-2 col-form-label">Foto KTP</label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="foto_ktp" required
-                                                    name="foto_ktp" accept=".png,.jpg,.jpeg">
+                                                <input type="file" class="form-control" name="foto_ktp" name="foto_ktp"
+                                                    accept=".png,.jpg,.jpeg" value="{{ $p->foto_ktp }}">
                                                 @if ($errors->has('foto_ktp'))
                                                     <div class="text-danger text-small">
                                                         @foreach ($errors->get('foto_ktp') as $err)
@@ -91,8 +91,9 @@
                                             <label for="foto_penjual_ktp" class="col-sm-2 col-form-label">Foto Seller dengan
                                                 KTP</label>
                                             <div class="col-sm-10">
-                                                <input type="file" class="form-control" name="foto_penjual_ktp" required
-                                                    name="foto_penjual_ktp" accept=".png,.jpg,.jpeg">
+                                                <input type="file" class="form-control" name="foto_penjual_ktp"
+                                                    name="foto_penjual_ktp" accept=".png,.jpg,.jpeg"
+                                                    value="{{ $p->foto_penjual_ktp }}">
                                                 @if ($errors->has('foto_penjual_ktp'))
                                                     <div class="text-danger text-small">
                                                         @foreach ($errors->get('foto_penjual_ktp') as $err)

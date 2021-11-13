@@ -202,6 +202,9 @@ Route::prefix('sellers')->group(function () {
         # Toko Saya
         Route::get('toko', [SettingSellers::class, 'toko'])->middleware('sessionusers');
         Route::post('tokosaya', [SettingSellers::class, 'settingtoko'])->middleware('sessionusers');
+        Route::post('logotoko', [SettingSellers::class, 'settinglogotoko'])->middleware('sessionusers');
+        Route::post('logotokoedit', [SettingSellers::class, 'settinglogotokoedit'])->middleware('sessionusers');
+        Route::post('fototoko', [SettingSellers::class, 'settingfototoko'])->middleware('sessionusers');
 
 
     });
