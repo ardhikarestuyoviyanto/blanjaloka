@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Users;
 use App\Models\Admin;
 use App\Mail\EmailVerification;
+use App\Mail\EmailResetPassword;
 use App\Models\Seller;
 use Exception;
 use Illuminate\Support\Facades\Session;
@@ -66,7 +67,7 @@ class Auth extends Controller
             try{
 
                 # Buat Token Aktifasi Email
-                $token = Str::random(15);
+                $token = Str::random(180);
                 $request->session()->put(['token' => $token]);
 
                 # Kirim Link Aktifasi Akun, Lewat Email
@@ -525,6 +526,109 @@ class Auth extends Controller
                 dd($e->getMessage());
     
             }
+
+        }
+
+    }
+
+    # Lupa Password
+    public function forgetpassword(){
+
+        return view('web/auth/lupapassword')->with(['title'=>'Lupa Password']);
+
+    }
+
+    # Forget Password Handler
+    public function forgetpassword_handler(Request $request){
+
+        try{
+
+            $users = Users::where('email', $request->post('email'))->get();
+
+            if(count($users) > 0){
+    
+                $request->session()->flush();
+    
+                # Buat Token Reset Email
+                $token = Str::random(180);
+                $request->session()->put(['token' => $token, 'email' => $request->post('email')]);
+    
+                # Kirim Link Reset Password Lewat Email
+                Mail::to($request->post('email'))->send(new EmailResetPassword(['token'=>$token]));
+    
+                return response()->json([
+                    'pesan' => 'Kami Telah Mengirimkan Link Reset Password Ke Email '.$request->post('email').'. Silahkan Dicek, Terimakasih.',
+                    'disabled' => true
+                ]);
+    
+    
+            }else{
+    
+                return response()->json([
+                    'pesan' => 'Email yang anda masukkan tidak terdaftar di Blanjaloka, Silahkan dicek lagi. Terimakasih',
+                    'disabled' => false
+                ]);
+    
+            }
+
+
+        }catch(Exception $e){
+
+            dd($e->getMessage());
+
+        }
+
+    }
+
+    public function resetpassword_view(Request $request){
+
+        if($request->session()->get('token') == $request->segment(2)){
+
+            $data = [
+                'email' => $request->session()->get('email'),
+                'token' => $request->segment(2)
+            ];
+
+            return view('web/auth/lupapasswordform', $data)->with(['title'=>'Formulir Reset Password']);
+
+        }else{
+
+            echo "Token Reset Password Kadaluarsa, silahkan coba lagi";
+
+        }
+
+    }
+
+    public function resetpassword_handler(Request $request){
+
+        if(!empty($request->session()->get('token'))){
+            
+            $validator = Validator::make($request->all(), [
+                'password_new' => ['required', 'same:password_confirmation', Password::min(6)->mixedCase()->numbers()->letters()]
+            ]);
+    
+            if($validator->fails()){
+    
+                return redirect('forgetpassword/'.$request->session()->get('token'))->withErrors($validator);
+    
+            }else{
+    
+                $data = [
+                    'password' => password_hash($request->post('password_new'), PASSWORD_DEFAULT)
+                ];
+
+                Users::where('email', $request->session()->get('email'))->update($data);
+
+                $request->session()->flush();
+
+                return redirect('login')->with('success', 'Password Anda Berhasil Diubah, Silahkan Login Kembali');
+    
+            }
+
+
+        }else{
+
+            echo "Token Reset Password Kadaluarsa, silahkan coba lagi";
 
         }
 

@@ -65,6 +65,15 @@ Route::post('auth/adminlogin', [Auth::class, 'adminlogin_handler']);
 Route::post('location/getkabupaten', [\App\Http\Controllers\Location::class, 'kabupaten']);
 Route::post('location/getkecamatan', [\App\Http\Controllers\Location::class, 'kecamatan']);
 
+# Lupa Password
+Route::get('forgetpassword', [Auth::class, 'forgetpassword']);
+# Lupa Password Handler
+Route::post('forgetpassword_handler', [Auth::class, 'forgetpassword_handler']);
+# Form Reset Password
+Route::get('forgetpassword/{token}', [Auth::class, 'resetpassword_view']);
+# Reset Password Action
+Route::post('resetpassword_handler', [Auth::class, 'resetpassword_handler']);
+
 //--------------------------------------------------------------------------------------
 // *************************************************************************************
 //---------------------------------------------------------------------------------------
