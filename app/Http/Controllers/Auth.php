@@ -406,7 +406,7 @@ class Auth extends Controller
                     $session = array(
                         'isAdmin' => true,
                         'id_admin' => $x->id_admin,
-                        'nama' => $x->nama_admin
+                        'nama' => $x->nama
                     );
                     
                     # simpan session
