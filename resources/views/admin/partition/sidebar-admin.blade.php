@@ -96,7 +96,7 @@
                         alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">Rizal Pratama</a>
+                    <a href="#" class="d-block">{{ session()->get('nama') }}</a>
                 </div>
             </div>
 
