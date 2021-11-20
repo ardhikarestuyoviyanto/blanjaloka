@@ -193,12 +193,20 @@ Route::prefix('sellers')->group(function () {
     
     # Modul Produk
     Route::prefix('produk')->group(function () {
-        
         # Data Produk
         Route::get('/', [ProdukSellers::class, 'index'])->middleware('sessionusers');
         # Tambah Produk
         Route::get('add', [ProdukSellers::class, 'addproduk'])->middleware('sessionusers');
-        
+        # Input Produk
+        Route::post('insert', [ProdukSellers::class, 'inputproduk'])->middleware('sessionusers');
+        # Edit Form
+        Route::get('edit/{id}', [ProdukSellers::class, 'editproduk'])->middleware('sessionusers');
+        # Update Produk
+        Route::post('update', [ProdukSellers::class, 'updateproduk'])->middleware('sessionusers');
+        # Delete Produk
+        Route::post('delete', [ProdukSellers::class, 'deleteproduk'])->middleware('sessionusers');
+        #Delete foto Produk
+        Route::post('delete/foto', [ProdukSellers::class, 'deletefotoproduk'])->middleware('sessionusers');
     });
     
     # Modul Setting

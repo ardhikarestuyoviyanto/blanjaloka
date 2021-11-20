@@ -178,6 +178,8 @@ return [
         //facebook
         Laravel\Socialite\SocialiteServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
+        Laravolt\Indonesia\ServiceProvider::class
+
 
     ],
 
@@ -235,6 +237,8 @@ return [
 
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        'Indonesia' => Laravolt\Indonesia\Facade::class
+
     ],
 
 ];

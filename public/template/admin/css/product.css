@@ -1,0 +1,32 @@
+
+.hidden{
+    display: none;
+}
+.image-upload>input {
+  display: none;
+}
+.upload-icon {
+  width: 70px;
+  height: 70px;
+  border: 2px solid #5642BE;
+  border-style: dotted;
+  border-radius: 18px;
+  float: left;
+}
+.upload-icon .icon {
+  width: 30px;
+  height: 30px;
+  margin: 19px;
+  cursor: pointer;
+}
+.prev {
+  display: none;
+  width: 70px;
+  height: 70px;
+  margin: 2px;
+  border-radius: 15px;
+}
+
+.prev:hover{
+    border: 2px solid #f5f8fa;
+}
