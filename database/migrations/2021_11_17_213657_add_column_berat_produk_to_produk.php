@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIdPenjualToProduk extends Migration
+class AddColumnBeratProdukToProduk extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,9 @@ class AddIdPenjualToProduk extends Migration
     {
         Schema::table('produk', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('id_penjual');
-            $table->foreign('id_penjual')->references('id_penjual')->on('penjual');
+            $table->float('berat_produk');
+            $table->integer('total_views');
+            $table->timestamps();
         });
     }
 
@@ -29,8 +30,7 @@ class AddIdPenjualToProduk extends Migration
     {
         Schema::table('produk', function (Blueprint $table) {
             //
-            $table->dropForeign(['id_penjual']);
-            $table->dropColumn(['id_penjual']);
+            $table->dropColumn(['berat_produk', 'total_views', 'created_at', 'updated_at']);
         });
     }
 }

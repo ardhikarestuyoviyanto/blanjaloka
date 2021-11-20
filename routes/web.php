@@ -193,7 +193,6 @@ Route::prefix('sellers')->group(function () {
 
     # Modul Produk
     Route::prefix('produk')->group(function () {
-        
         # Data Produk
         Route::get('/', [ProdukSellers::class, 'index'])->middleware('sessionusers');
         # Tambah Produk
@@ -206,6 +205,8 @@ Route::prefix('sellers')->group(function () {
         Route::post('update', [ProdukSellers::class, 'updateproduk'])->middleware('sessionusers');
         # Delete Produk
         Route::post('delete', [ProdukSellers::class, 'deleteproduk'])->middleware('sessionusers');
+        #Delete foto Produk
+        Route::post('delete/foto', [ProdukSellers::class, 'deletefotoproduk'])->middleware('sessionusers');
     });
 
     # Modul Setting

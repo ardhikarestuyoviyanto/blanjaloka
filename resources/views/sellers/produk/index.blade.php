@@ -21,12 +21,26 @@
                 <div class="card">
                     <div class="card-header">
                         Data Produk
-
-                        <div class="float-right d-none d-sm-inline-block">
-                            <a href="{{ url('sellers/produk/add') }}" class="btn btn-primary btn-sm">Tambah</a>
-                        </div>
-
                     </div>
+                    <form action="{{url('sellers/produk')}}" method="get">
+                        <div class="card-header bg-white">
+                            <div class="mb-3 row">
+                                <label for="nis" class="col-sm-2 col-form-label">Kategori Produk</label>
+                                <div class="col-sm-10">
+                                    <select class="custom-select" required name="kategoriproduk" onchange="this.form.submit()">
+                                        <option selected value="">- PILIH KATEGORI PRODUK -</option>
+                                        @foreach($kategori as $k)
+                                            @if($k->id_kategori == @$_GET['kategoriproduk']):
+                                                <option selected value="{{$k->id_kategori}}">- {{$k->nama_kategori}}</option>
+                                            @else:
+                                                <option value="{{$k->id_kategori}}">- {{$k->nama_kategori}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="card-body">
                         <table class="table table-bordered table-hover" id="kategoritable">
                             <thead>
@@ -34,36 +48,55 @@
                                     <th style="width:10px;">No</th>
                                     <th>Nama Produk</th>
                                     <th>Harga</th>
-                                    <th style="width: 120px">Total Produk</th>
-                                    <th>Status</th>
-                                    <th style="width:10px;" class='notexport'>Aksi</th>
+                                    <th>Stok</th>
+                                    <th>Penjualan</th>
+                                    <th style="width:10px;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($produk as $no => $p)
-                                    @if ($p->penjual_id == session()->get('id_users'))
-                                        <tr>
-                                            <td>{{ $no + 1 }}</td>
-                                            <td>{{ $p->nama_produk }}</td>
-                                            <td>Rp{{ $p->harga }}</td>
-                                            <td>{{ $p->jumlah_produk }}</td>
-                                            <td>
-                                                @if ($p->status_produk == '1')
-                                                    <i class="text-primary">Tersedia</i>
-                                                @else
-                                                <i class="text-danger">Kosong</i>
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="{{ url('sellers/produk/edit/'.$p->id_produk) }}">
-                                                    <span class="badge badge-success"><i class="fas fa-edit"></i></span>
-                                                </a>
-                                                <a href="#" data-id="<?= $p->id_produk; ?>" class="delete" data-toggle="tooltip" title="Hapus" data-placement="top">
-                                                    <span class="badge badge-danger"><i class="fas fa-trash"></i></span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                @php
+                                    $fotoproduk = explode(',', $p->foto_produk);
+                                @endphp
+                                    <tr>
+                                        <td style="vertical-align: middle;" class="text-center">{{ $no + 1 }}</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-sm-1">
+                                                    <img src="{{asset('assets/admin/foto_produk/'.$fotoproduk[0])}}" alt="" width="60" height="60">
+                                                </div>
+                                                <div class="col-sm ml-4">
+                                                    @if($p->status_produk == 'on')
+                                                        {{ $p->nama_produk }}
+                                                    @else
+                                                        <del>{{ $p->nama_produk }}</del>
+                                                        <i><small class="text-danger text-bold ml-2">Diarsipkan</small></i>
+                                                    @endif
+                                                    <br>
+                                                    <small><i class="far fa-heart text-danger"></i> 0</small>
+                                                    <small style="margin-left: 4px;"><i class="far fa-eye text-info"></i> 0</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle;">
+                                            @if($p->potongan_harga == 0)
+                                                Rp. {{ $p->harga }}
+                                            @else
+                                                <del>Rp. {{$p->harga}}</del> <br>
+                                                Rp. {{$p->harga - $p->potongan_harga}} <i><small class="text-danger text-bold">(Diskon {{number_format($p->potongan_harga / $p->harga * 100, 0, '.', '')}}%)</small></i>
+                                            @endif
+                                        </td>
+                                        <td style="vertical-align: middle;">{{ $p->jumlah_produk.' '.ucfirst(strtolower($p->nama_satuan)) }}</td>
+                                        <td style="vertical-align: middle;">{{'0 '.ucfirst(strtolower($p->nama_satuan))}}</td>
+                                        <td class="text-center" style="vertical-align: middle;">
+                                            <a href="{{ url('sellers/produk/edit/'.$p->id_produk) }}" data-toggle="tooltip" title="Lihat" data-placement="top">
+                                                <span class="badge badge-success"><i class="fas fa-edit"></i></span>
+                                            </a>
+                                            <a href="#" data-id_produk="{{$p->id_produk}}" data-nama_produk="{{$p->nama_produk}}" class="delete" data-toggle="tooltip" title="Hapus" data-placement="top">
+                                                <span class="badge badge-danger"><i class="fas fa-trash"></i></span>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -80,155 +113,35 @@
             $('[data-toggle="tooltip"]').tooltip();
 
             $('#kategoritable').DataTable({
-                "responsive": true,
-                dom: 'Bfrtip',
-                buttons: [{
-                        extend: 'excel',
-                        text: 'Excel',
-                        className: 'btn btn-success btn-sm active',
-                        exportOptions: {
-                            columns: ':not(.notexport)'
-                        }
-
-                    },
-                    {
-                        extend: 'pdf',
-                        text: 'PDF',
-                        className: 'btn btn-sm btn-success',
-                        exportOptions: {
-                            columns: ':not(.notexport)'
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        text: 'Print',
-                        className: 'btn btn-success btn-sm active',
-                        exportOptions: {
-                            columns: ':not(.notexport)'
-                        }
-
-                    },
-
-                ],
+                "responsive": true
             });
 
-            //----------------------------
+            //----------------------------------------------------------------------------------------
 
-            // insert form
-            $('#tambahform').submit(function(e) {
+            $('.delete').click(function(e){
                 e.preventDefault();
-
-                $.ajax({
-                    url: "{{ url('sellers/produk/kategori/insert') }}",
-                    type: "POST",
-                    data: new FormData(this),
-                    dataType: 'JSON',
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    beforeSend: function() {
-                        $('.spinner').show();
-                    },
-                    complete: function() {
-                        $('.spinner').hide();
-                    },
-                    success: function(data) {
-                        swal(data.pesan)
-                            .then((result) => {
-                                location.reload();
-                            });
-                    },
-                    error: function(err) {
-                        alert(err);
-                    }
+                swal({
+                    title: "Hapus Produk "+$(this).data('nama_produk'),
+                    text: "Produk ini akan dihapus selamanya dari aplikasi, apakah anda ingin melanjutkan ?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
                 })
-            });
-
-            //-------------------------------------
-
-            //show modal update form 
-            $('.edit').click(function(e) {
-                e.preventDefault();
-                $.ajax({
-                    data: {
-                        'id_kategori': $(this).data('id'),
-                        '_token': "{{ csrf_token() }}"
-                    },
-                    type: 'POST',
-                    url: "{{ url('admin/produk/kategori/get') }}",
-                    success: function(data) {
-                        $('#id_kategori').val(data[0].id_kategori);
-                        $('#nama_kategori').val(data[0].nama_kategori);
-                        $('.icon_kategori').val(data[0].icon_kategori);
-
-                        $('#editmodal').modal('show');
-                    },
-                    error: function(err) {
-                        alert(err);
-                        console.log(err);
-                    }
-                });
-            });
-
-
-            //----------------------------------------
-            // edit form
-            $('#editform').submit(function(e) {
-                e.preventDefault();
-
-                $.ajax({
-                    url: "{{ url('admin/produk/kategori/update') }}",
-                    type: "POST",
-                    data: new FormData(this),
-                    dataType: 'JSON',
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    beforeSend: function() {
-                        $('.spinner').show();
-                    },
-                    complete: function() {
-                        $('.spinner').hide();
-                    },
-                    success: function(data) {
-                        swal(data.pesan)
-                            .then((result) => {
-                                location.reload();
-                            });
-                    },
-                    error: function(err) {
-                        alert(err);
-                    }
-                })
-            });
-
-            //----------------------------------------------
-            // hapus form
-            $('.delete').click(function(e) {
-                e.preventDefault();
-                var confirmed = confirm('Hapus Produk Ini ?');
-
-                if (confirmed) {
-
-                    $.ajax({
-                        data: {
-                            'id_produk': $(this).data('id'),
-                            '_token': "{{ csrf_token() }}"
-                        },
-                        type: 'POST',
-                        url: "{{ url('sellers/produk/delete') }}",
-                        success: function(data) {
-                            swal(data.pesan)
-                                .then((result) => {
+                .then((willDelete) => {
+                    if(willDelete) {
+                        $.ajax({
+                            data:{'id_produk':$(this).data('id_produk'), '_token': "{{csrf_token()}}"},
+                            url: "{{ url('sellers/produk/delete') }}",
+                            type: "POST",
+                            success: function(e){
+                                swal(e.pesan)
+                                .then((value) => {
                                     location.reload();
                                 });
-                        },
-                        error: function(err) {
-                            alert(err);
-                            console.log(err);
-                        }
-                    });
-                }
+                            }
+                        });
+                    }
+                });
             });
 
         });
