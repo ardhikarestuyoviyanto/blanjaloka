@@ -190,7 +190,7 @@ Route::post('sellers/daftar_handler', [Auth::class, 'sellersregister_handler'])-
 Route::prefix('sellers')->group(function () {
     # Homepage Sellers
     Route::get('/', [DashboardSellers::class, 'index'])->middleware('sessionusers');
-
+    
     # Modul Produk
     Route::prefix('produk')->group(function () {
         # Data Produk
@@ -208,15 +208,20 @@ Route::prefix('sellers')->group(function () {
         #Delete foto Produk
         Route::post('delete/foto', [ProdukSellers::class, 'deletefotoproduk'])->middleware('sessionusers');
     });
-
+    
     # Modul Setting
     Route::prefix('setting')->group(function () {
         
         # Akun Saya
         Route::get('akun', [SettingSellers::class, 'akun'])->middleware('sessionusers');
-
+        Route::post('akunsaya', [SettingSellers::class, 'settingakun'])->middleware('sessionusers');
+        
         # Toko Saya
         Route::get('toko', [SettingSellers::class, 'toko'])->middleware('sessionusers');
+        Route::post('tokosaya', [SettingSellers::class, 'settingtoko'])->middleware('sessionusers');
+        Route::post('logotoko', [SettingSellers::class, 'settinglogotoko'])->middleware('sessionusers');
+        Route::post('logotokoedit', [SettingSellers::class, 'settinglogotokoedit'])->middleware('sessionusers');
+        Route::post('fototoko', [SettingSellers::class, 'settingfototoko'])->middleware('sessionusers');
 
 
     });
