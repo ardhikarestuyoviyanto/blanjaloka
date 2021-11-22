@@ -1,5 +1,6 @@
 @extends('sellers/master-sellers')
 @section('content')
+@php session()->forget('pin'); @endphp
 <link rel="stylesheet" href="{{asset('template/admin/css/product.css')}}">
 <div class="content-wrapper">
     <div class="content-header">

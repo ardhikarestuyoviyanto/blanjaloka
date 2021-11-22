@@ -60,78 +60,7 @@
     <!-- END OF CAROUSEL BANNER -->
 
     <!-- Pilih Lokasi Pasar dan Banner add Kecil -->
-    <section class="mt-4 mt-xl-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 mb-3">
-                    <h5 class="fw-bold fs-6">Pilih Lokasi Pasar</h5>
-                    <a href="#" class="text-decoration-none text-black" data-bs-target="#locationModal"
-                        data-bs-toggle="modal">
-                        <div class="d-flex shadow-sm border-r-sip px-3 border align-items-center">
-                            <span><i class="bi bi-geo-alt-fill cai-color-text"></i>Tambahkan Alamat, <span
-                                    class="text-secondary">agar lebih mudah...</span> </span>
-                            <i class="bi bi-chevron-down d-inline ms-auto fs-3 text-secondary"></i>
-                        </div>
-                    </a>
-                    <!-- Modal -->
-                    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content border-r-sip">
-                                <div class="modal-body p-4">
-                                    <h5 class="mb-4">Tambahkan Lokasi</h5>
-                                    <div class="input-group mb-3">
-                                        <!-- <div class="input-group-text">@</div> -->
-                                        <i class="input-group-text bi bi-search border-r-sip fs-5 text-secondary"></i>
-                                        <input type="text" class="form-control border-r-sip py-2" id="autoSizingInputGroup"
-                                            value="Jalan RE. Martadinata" readonly>
-                                    </div>
-                                    <a href="#" class="text-decoration-none text-black">
-                                        <div class="px-3">
-                                            <p class="fw-bold nopadding">Jalan RE. Martadinata</p>
-                                            <p>Jalan RE. Martadinata, Ngronggo Kediri, Jawa Timur</p>
-                                        </div>
-                                    </a>
-                                    <hr class="mx-3">
-                                    <a href="#" class="text-decoration-none text-black">
-                                        <div class="px-3">
-                                            <p class="fw-bold nopadding">Jalan RE. Martadinata</p>
-                                            <p>Jalan RE. Martadinata, Ngronggo Kediri, Jawa Timur</p>
-                                        </div>
-                                    </a>
-                                    <hr class="mx-3">
-                                    <a href="#" class="text-decoration-none text-black">
-                                        <div class="px-3">
-                                            <p class="fw-bold nopadding">Jalan RE. Martadinata</p>
-                                            <p>Jalan RE. Martadinata, Ngronggo Kediri, Jawa Timur</p>
-                                        </div>
-                                    </a>
-                                    <hr class="mx-3">
-                                    <a href="#" class="text-decoration-none text-black">
-                                        <div class="px-3">
-                                            <p class="fw-bold nopadding">Jalan RE. Martadinata</p>
-                                            <p>Jalan RE. Martadinata, Ngronggo Kediri, Jawa Timur</p>
-                                        </div>
-                                    </a>
-                                    <hr class="mx-3">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="offset-0 offset-xl-1 col-xl-5 col-12">
-                    <a href="#">
-                        <div class="text-white position-relative text-center fw-bold">
-                            <p class="position-absolute top-50 start-50 translate-middle fs-xl-2">Dapatkan Voucer gratis
-                                ongkir hanya dengan login pada bulan AGUSTUS</p>
-                            <img class="w-100" src="{{ asset('assets/blanjaloka/img/modern-market.png') }}" alt="">
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    @include('web/pembeli/beranda/pasar')
     <!-- End of Pilih Lokasi Pasar dan Banner add Kecil -->
 
     <!-- KATEGORI SECTION -->
@@ -233,7 +162,7 @@
                 </div>
             </div>
 
-            <duv class="row">
+            <div class="row">
                 <div class="col-xl-3 col-6">
                     <a href="product.html" class="text-decoration-none text-black">
                         <div class="card mb-3">

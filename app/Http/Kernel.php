@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         # Tambah class middleware sessionusers
         'sessionusers' => \App\Http\Middleware\SessionUsers::class,
         # Tambah class middleware sessionadmin
-        'sessionadmin' => \App\Http\Middleware\SessionAdmin::class
+        'sessionadmin' => \App\Http\Middleware\SessionAdmin::class,
+        # Pin Verification Akun Sellers
+        'pinsellers' => \App\Http\Middleware\PinVerificationSellers::class
     ];
 }

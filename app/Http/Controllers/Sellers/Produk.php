@@ -7,8 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\ProdukModels;
 use App\Models\Kategori;
 use App\Models\SatuanProdukModel;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class Produk extends Controller{

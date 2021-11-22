@@ -1,5 +1,6 @@
 @extends('sellers/master-sellers')
 @section('content')
+@php session()->forget('pin'); @endphp
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">

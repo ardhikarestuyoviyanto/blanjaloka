@@ -178,7 +178,8 @@ return [
         //facebook
         Laravel\Socialite\SocialiteServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
-        Laravolt\Indonesia\ServiceProvider::class
+        Laravolt\Indonesia\ServiceProvider::class,
+        Andes2912\IndoBank\IndoBankServiceProvider::class,
 
 
     ],

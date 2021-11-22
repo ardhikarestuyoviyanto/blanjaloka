@@ -128,6 +128,17 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="#"
+                            class="nav-link {{ $sidebar === 'Pesanan' ? 'active' : '' }}">
+                            <i class="fas fa-shopping-cart nav-icon"></i>
+                            <p>
+                                Pesanan
+                            </p>
+                        </a>
+                    </li>
+
+
                     @if ($sidebar == 'Tambah Produk' || $sidebar == 'Produk Saya')
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link active">
@@ -157,9 +168,40 @@
                             </a>
                         </li>
                     </ul>
-                    </li>
+                </li>
 
-                @if ($sidebar == 'Akun Saya' || $sidebar == 'Toko Saya')
+                @if ($sidebar == 'Penghasilan Saya' || $sidebar == 'Saldo Saya')
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                    @else
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                @endif
+                <i class="fas fa-dollar-sign nav-icon"></i>
+                <p>
+                    Modul Keuangan
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ url('sellers/keuangan/penghasilan') }}"
+                            class="nav-link {{ $sidebar === 'Penghasilan Saya' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Penghasilan Saya</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('sellers/keuangan/saldo') }}"
+                            class="nav-link {{ $sidebar === 'Saldo Saya' ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Saldo Saya</p>
+                        </a>
+                    </li>
+                </ul>
+                </li>
+
+                @if ($sidebar == 'Akun Saya' || $sidebar == 'Toko Saya' || $sidebar == 'Alamat Toko' || $sidebar == 'Rekening Bank')
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link active">
                     @else
@@ -192,7 +234,7 @@
 
                     <li class="nav-item">
                         <a href="{{ url('sellers/setting/alamat') }}"
-                            class="nav-link {{ $sidebar === 'Data Diri' ? 'active' : '' }}">
+                            class="nav-link {{ $sidebar === 'Alamat Toko' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Alamat Toko</p>
                         </a>
@@ -200,7 +242,7 @@
 
                     <li class="nav-item">
                         <a href="{{ url('sellers/setting/rekening') }}"
-                            class="nav-link {{ $sidebar === 'Data Diri' ? 'active' : '' }}">
+                            class="nav-link {{ $sidebar === 'Rekening Bank' ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Rekening Bank</p>
                         </a>

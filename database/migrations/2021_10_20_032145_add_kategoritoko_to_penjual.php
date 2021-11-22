@@ -22,6 +22,7 @@ class AddKategoritokoToPenjual extends Migration
             $table->string('no_ktp', 300)->nullable();
             $table->string('no_rekening', 300)->nullable();
             $table->string('nama_bank', 200)->nullable();
+            $table->string('atas_nama_bank', 300)->nullable();
             $table->string('foto_ktp', 300)->nullable();
             $table->string('foto_penjual_ktp', 300)->nullable();
             $table->unsignedBigInteger('id_kategoritoko')->nullable();
@@ -40,7 +41,7 @@ class AddKategoritokoToPenjual extends Migration
         Schema::table('penjual', function (Blueprint $table) {
             //
             $table->dropForeign('id_kategoritoko');
-            $table->dropColumn(['foto_toko', 'no_toko', 'embbed_maps_toko', 'alamat_toko', 'no_ktp', 'no_rekening', 'nama_ktp', 'no_rekening', 'nama_bank', 'foto_ktp', 'foto_penjual_ktp', 'id_kategoritoko']);
+            $table->dropColumn(['foto_toko', 'no_toko', 'embbed_maps_toko', 'alamat_toko', 'no_ktp', 'no_rekening', 'nama_ktp', 'no_rekening', 'nama_bank', 'foto_ktp', 'foto_penjual_ktp', 'id_kategoritoko', 'atas_nama_bank']);
         });
     }
 }

@@ -211,18 +211,34 @@ Route::prefix('sellers')->group(function () {
     
     # Modul Setting
     Route::prefix('setting')->group(function () {
-        
-        # Akun Saya
-        Route::get('akun', [SettingSellers::class, 'akun'])->middleware('sessionusers');
-        Route::post('akunsaya', [SettingSellers::class, 'settingakun'])->middleware('sessionusers');
-        
-        # Toko Saya
-        Route::get('toko', [SettingSellers::class, 'toko'])->middleware('sessionusers');
-        Route::post('tokosaya', [SettingSellers::class, 'settingtoko'])->middleware('sessionusers');
-        Route::post('logotoko', [SettingSellers::class, 'settinglogotoko'])->middleware('sessionusers');
-        Route::post('logotokoedit', [SettingSellers::class, 'settinglogotokoedit'])->middleware('sessionusers');
-        Route::post('fototoko', [SettingSellers::class, 'settingfototoko'])->middleware('sessionusers');
+        /* 
+            Ketika anda menambahkan middleware pinsellers
+            Tipe Route nya harus any
+            Route::any (saat menggunakan middleware pinsellers. disarankan controllers harus merender sebuah views)
+        */
+        # Create PIN Penjual
+        Route::post('createpin', [SettingSellers::class, 'createPinSellers'])->middleware('sessionusers');
 
+        # Akun Saya
+        Route::any('akun', [SettingSellers::class, 'akun'])->middleware('sessionusers')->middleware('pinsellers');
+        Route::post('akun/update/fotoktp', [SettingSellers::class, 'updatefotoktp'])->middleware('sessionusers');
+        Route::post('akun/update/fotopenjualktp', [SettingSellers::class, 'updatefotopenjualktp'])->middleware('sessionusers');
+        Route::post('akun/update', [SettingSellers::class, 'settingakun'])->middleware('sessionusers');
+        Route::post('akun/update/pin', [SettingSellers::class, 'updatepinpenjual'])->middleware('sessionusers');
+
+        # Toko Saya
+        Route::any('toko', [SettingSellers::class, 'toko'])->middleware('sessionusers')->middleware('pinsellers');
+        Route::post('toko/foto/delete', [SettingSellers::class, 'deletefototoko'])->middleware('sessionusers');
+        Route::post('toko/update', [SettingSellers::class, 'updatetoko'])->middleware('sessionusers');
+        Route::post('toko/logo', [SettingSellers::class, 'updatelogoToko'])->middleware('sessionusers');
+
+        # Akun Saya
+        Route::any('alamat', [SettingSellers::class, 'alamatToko'])->middleware('sessionusers')->middleware('pinsellers');
+        Route::post('alamat/update', [SettingSellers::class, 'updateAlamatToko'])->middleware('sessionusers');
+        
+        # Rekenng Bank
+        Route::any('rekening', [SettingSellers::class, 'rekening'])->middleware('sessionusers')->middleware('pinsellers');
+        Route::post('rekening/update', [SettingSellers::class, 'updaterekening'])->middleware('sessionusers');
 
     });
 
@@ -230,6 +246,8 @@ Route::prefix('sellers')->group(function () {
 
 # Login Berhasil Penjual & Pembeli
 Route::get('/index', [DashboardCustomers::class, 'index'])->middleware('sessionusers');
+Route::post('pasar/detail', [DashboardCustomers::class, 'getdetailpasar'])->middleware('sessionusers');
+Route::post('pasar/terapkan', [DashboardCustomers::class, 'terapkanpasar'])->middleware('sessionusers');
 # Setting Customers
 Route::prefix('setting')->group(function () {
     # Laman Profil
